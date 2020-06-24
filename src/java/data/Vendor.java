@@ -16,7 +16,7 @@ package com.google.data;
 import java.util.*;
 
 /**
- * A class representing a billing vendor object.
+ * A data container for a billing vendor object.
  */
 public class Account {
     private final String vendorID;
@@ -28,9 +28,10 @@ public class Account {
         this.vendorID = vendorID;
         this.legacyVendorID = legacyVendorID;
         this.nextGenVendorID = nextGenVendorID;
+        accountList = new ArrayList<Account>();
     }
 
-    public void addAccount(Account account) } {
+    public void addAccount(Account account) {
         accountList.add(account);
     }
 

@@ -14,7 +14,7 @@
 package com.google.data;
 
 /**
- * A class representing a billing account object.
+ * A data container for a billing account object.
  */
 public class Account {
     private final String accountID;
