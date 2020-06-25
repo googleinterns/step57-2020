@@ -21,19 +21,19 @@ public class Account {
     private final String vendorID;
     private final String entity;
     private final String currency;
-    private final String profileID;
+    private final String direction;
     private final String legacyAccountID;
     private final int nextGenAccountID;
     private final String matchingMode;
     private final String agregationMode;
 
-    public Account(String accountID, String vendorID, String entity, String currency, String profileID, 
+    public Account(String accountID, String vendorID, String entity, String currency, String direction, 
         String legacyAccountID, int nextGenAccountID, String matchingMode, String agregationMode) {
         this.accountID = accountID;
         this.vendorID = vendorID;
         this.entity = entity;
         this.currency = currency;
-        this.profileID = profileID;
+        this.direction = direction;
         this.legacyAccountID = legacyAccountID;
         this.nextGenAccountID = nextGenAccountID;
         this.matchingMode = matchingMode;
@@ -73,12 +73,12 @@ public class Account {
         this.currency = currency
     }
 
-    public String getProfileID() {
-        return profileID;
+    public String getDirection() {
+        return direction;
     }
 
-    public void setProfileID(String profileID) {
-        this.profileID = profileID
+    public void setDirection(String direction) {
+        this.direction = direction
     }
 
     public String getLegacyAccountID() {
