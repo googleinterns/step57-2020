@@ -11,23 +11,26 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package com.google.data;
+package java.data;
 
 import java.util.*;
 
-/**
- * A class representing a billing vendor object.
- */
+/** A class representing a billing vendor object. */
 public class Vendor {
     private final String vendorID;
     private final String legacyVendorID;
     private final int nextGenVendorID;
     private final ArrayList<Account> accountList;
 
+    public Vendor() {
+        accountList = new ArrayList<Account>();
+    }
+
     public Vendor(String vendorID, String legacyVendorID, int nextGenVendorID) {
         this.vendorID = vendorID;
         this.legacyVendorID = legacyVendorID;
         this.nextGenVendorID = nextGenVendorID;
+        accountList = new ArrayList<Account>();
     }
 
     public void addAccount(Account account) {

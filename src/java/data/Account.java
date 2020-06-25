@@ -11,11 +11,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package com.google.data;
+package java.data;
 
-/**
- * A class representing a billing account object.
- */
+/** A class representing a billing account object. */
 public class Account {
     private final String accountID;
     private final String vendorID;
