@@ -15,10 +15,13 @@
 package javatests;
 
 import java.util.*;
-import org.junitAssert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import static org.junit.Assert.assertTrue;
+import data.Account;
+import data.Vendor;
 
 @RunWith(JUnit4.class)
 public final class VendorTest {
@@ -29,19 +32,20 @@ public final class VendorTest {
         String legVendID = "legVend_27";
         int nextGenVendorID = 17;
 
-        Vendor vendor = new Vendor(vendorID, legacyVendorID, nextGenVendorID);
+        Vendor vendor = new Vendor(vendorID, legVendID, nextGenVendorID);
 
-        // Test that the constructor set the Vendor fields with the correct data.66
+        // Test that the constructor set the Vendor fields with the correct data.
         assertTrue("Vendor Constructor incorrectly set vendorID field.", 
             vendor.getVendorID().equals(vendorID));
         assertTrue("Vendor Constructor incorrectly set legacyVendorID field.", 
             vendor.getLegacyVendorID().equals(legVendID));
         assertTrue("Vendor Constructor incorrectly set nextGenVendorID field.", 
-            vendor.getNextGenVendorID().equals(nextGenVendorID));   
+            vendor.getNextGenVendorID() == nextGenVendorID);   
         assertTrue("Vendor Constructor incorrectly initialize accountList.", 
-            vendor.getAccounts().equals(nextGenVendorID));             
+            vendor.getAccounts().size() == 0);             
     }
 
+    @Test
     public void testGetAccountsMethodWithNoElements() {
         Vendor vendor = new Vendor();
 
@@ -50,6 +54,7 @@ public final class VendorTest {
             vendor.getAccounts().size() == 0);
     }
 
+    @Test
     public void testAddAccountMethod() {
         // Create Account feilds.
         String accountID = "acc_12";
