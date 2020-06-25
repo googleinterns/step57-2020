@@ -20,17 +20,19 @@ public class Account {
     private final String accountID;
     private final String vendorID;
     private final String entity;
+    private final String currency;
     private final String profileID;
     private final String legacyAccountID;
     private final int nextGenAccountID;
     private final String matchingMode;
     private final String agregationMode;
 
-    public Account(String accountID, String vendorID, String entity, String profileID, 
+    public Account(String accountID, String vendorID, String entity, String currency, String profileID, 
         String legacyAccountID, int nextGenAccountID, String matchingMode, String agregationMode) {
         this.accountID = accountID;
         this.vendorID = vendorID;
         this.entity = entity;
+        this.currency = currency;
         this.profileID = profileID;
         this.legacyAccountID = legacyAccountID;
         this.nextGenAccountID = nextGenAccountID;
@@ -61,6 +63,14 @@ public class Account {
 
     public void setEntity(String entity) {
         this.entity = entity;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency
     }
 
     public String getProfileID() {
