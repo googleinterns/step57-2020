@@ -37,7 +37,7 @@ public class Account {
 
     // Create getter and setter methods for each field.
     public String getVendorID() {
-        return vendorID;
+        return vendorID; 
     }
 
     public void setVendorID(String vendorID) {
@@ -46,7 +46,7 @@ public class Account {
 
     public String getLegacyVendorID() {
         return legacyVendorID;
-    }
+    } 
 
     public void setLegacyVendorID(String legacyVendorID) {
         this.legacyVendorID = legacyVendorID;
