@@ -13,54 +13,93 @@
 // limitations under the License.
 package com.google.data;
 
-import java.util.*;
-
 /**
- * A data container for a billing vendor object.
+ * A class representing a billing account object.
  */
 public class Account {
+    private final String accountID;
     private final String vendorID;
-    private final String legacyVendorID;
-    private final int nextGenVendorID;
-    private final ArrayList<Account> accountList;
+    private final String entity;
+    private final String profileID;
+    private final String legacyAccountID;
+    private final int nextGenAccountID;
+    private final String matchingMode;
+    private final String agregationMode;
 
-    public Account(String vendorID, String legacyVendorID, int nextGenVendorID) {
+    public Account(String accountID, String vendorID, String entity, String profileID, 
+        String legacyAccountID, int nextGenAccountID, String matchingMode, String agregationMode) {
+        this.accountID = accountID;
         this.vendorID = vendorID;
-        this.legacyVendorID = legacyVendorID;
-        this.nextGenVendorID = nextGenVendorID;
-        accountList = new ArrayList<Account>();
-    }
-
-    public void addAccount(Account account) {
-        accountList.add(account);
+        this.entity = entity;
+        this.profileID = profileID;
+        this.legacyAccountID = legacyAccountID;
+        this.nextGenAccountID = nextGenAccountID;
+        this.matchingMode = matchingMode;
+        this.agregationMode = agregationMode;
     }
 
     // Create getter and setter methods for each field.
+    public String getAccountID() {
+        return accountID;
+    }
+
+    public void setAccountID(String accountID) {
+        this.accountID = accountID;
+    }
+
     public String getVendorID() {
-        return vendorID; 
+        return vendorID;  
     }
 
     public void setVendorID(String vendorID) {
         this.vendorID = vendorID;
     }
 
-    public String getLegacyVendorID() {
-        return legacyVendorID;
-    } 
-
-    public void setLegacyVendorID(String legacyVendorID) {
-        this.legacyVendorID = legacyVendorID;
+    public String getEntity() {
+        return entity;
     }
 
-    public int getNextGenVendorID() {
-        return nextGenVendorID;
-    }
- 
-    public void setNextGenVendorID(int nextGenVendorID) {
-        this. nextGenVendorID = nextGenVendorID;
+    public void setEntity(String entity) {
+        this.entity = entity;
     }
 
-    public ArrayList<Account> getAccounts() {
-        return accountList;
+    public String getProfileID() {
+        return profileID;
+    }
+
+    public void setProfileID(String profileID) {
+        this.profileID = profileID
+    }
+
+    public String getLegacyAccountID() {
+        return legacyAccountID;
+    }
+
+    public void setLegacyAccountID(String legacyAccountID) {
+        this.legacyAccountID = legacyAccountID;
+    }
+
+    public int getNextGenAccountID() {
+        return nextGenAccountID;
+    }
+
+    public void setNextGenAccountID(int nextGenAccountID) {
+        this.nextGenAccountID = nextGenAccountID;
+    }
+
+    public String getMatchingMode() {
+        return matchingMode;
+    }
+
+    public void setMatchingMode(String matchingMode) {
+        this.matchingMode = matchingMode;
+    }
+
+    public String getAgregationMode() {
+        return agregationMode;
+    }
+
+    public void setAgregationMode(String agregationMode) {
+        this.agregationMode = agregationMode;
     }
 }

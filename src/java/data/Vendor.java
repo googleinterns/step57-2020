@@ -16,28 +16,27 @@ package com.google.data;
 import java.util.*;
 
 /**
- * A data container for a billing vendor object.
+ * A class representing a billing vendor object.
  */
-public class Account {
+public class Vendor {
     private final String vendorID;
     private final String legacyVendorID;
     private final int nextGenVendorID;
     private final ArrayList<Account> accountList;
 
-    public Account(String vendorID, String legacyVendorID, int nextGenVendorID) {
+    public Vendor(String vendorID, String legacyVendorID, int nextGenVendorID) {
         this.vendorID = vendorID;
         this.legacyVendorID = legacyVendorID;
         this.nextGenVendorID = nextGenVendorID;
-        accountList = new ArrayList<Account>();
     }
 
-    public void addAccount(Account account) {
+    public void addAccount(Account account) } {
         accountList.add(account);
     }
 
     // Create getter and setter methods for each field.
     public String getVendorID() {
-        return vendorID;
+        return vendorID; 
     }
 
     public void setVendorID(String vendorID) {
@@ -46,7 +45,7 @@ public class Account {
 
     public String getLegacyVendorID() {
         return legacyVendorID;
-    }
+    } 
 
     public void setLegacyVendorID(String legacyVendorID) {
         this.legacyVendorID = legacyVendorID;
