@@ -30,7 +30,7 @@ public class Vendor {
         this.nextGenVendorID = nextGenVendorID;
     }
 
-    public void addAccount(Account account) } {
+    public void addAccount(Account account) {
         accountList.add(account);
     }
 
