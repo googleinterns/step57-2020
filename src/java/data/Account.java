@@ -25,10 +25,10 @@ public class Account {
     private final String legacyAccountID;
     private final int nextGenAccountID;
     private final String matchingMode;
-    private final String agregationMode;
+    private final String aggregationMode;
 
     public Account(String accountID, String vendorID, String entity, String currency, String direction, 
-        String legacyAccountID, int nextGenAccountID, String matchingMode, String agregationMode) {
+        String legacyAccountID, int nextGenAccountID, String matchingMode, String aggregationMode) {
         this.accountID = accountID;
         this.vendorID = vendorID;
         this.entity = entity;
@@ -37,7 +37,7 @@ public class Account {
         this.legacyAccountID = legacyAccountID;
         this.nextGenAccountID = nextGenAccountID;
         this.matchingMode = matchingMode;
-        this.agregationMode = agregationMode;
+        this.agregationMode = aggregationMode;
     }
 
     // Create getter and setter methods for each field.
@@ -105,11 +105,11 @@ public class Account {
         this.matchingMode = matchingMode;
     }
 
-    public String getAgregationMode() {
-        return agregationMode;
+    public String getAggregationMode() {
+        return aggregationMode;
     }
 
-    public void setAgregationMode(String agregationMode) {
-        this.agregationMode = agregationMode;
+    public void setAggregationMode(String aggregationMode) {
+        this.aggregationMode = agregationMode;
     }
 }
