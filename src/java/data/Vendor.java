@@ -55,7 +55,7 @@ public class Account {
     public int getNextGenVendorID() {
         return nextGenVendorID;
     }
-
+ 
     public void setNextGenVendorID(int nextGenVendorID) {
         this. nextGenVendorID = nextGenVendorID;
     }
