@@ -38,7 +38,6 @@ public class Account {
         this.aggregationMode = aggregationMode;
     }
 
-    // Create getter and setter methods for each field.
     public String getAccountID() {
         return accountID;
     }

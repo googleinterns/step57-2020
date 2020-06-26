@@ -33,11 +33,6 @@ public class Vendor {
         accountList = new ArrayList<Account>();
     }
 
-    public void addAccount(Account account) {
-        accountList.add(account);
-    }
-
-    // Create getter and setter methods for each field.
     public String getVendorID() {
         return vendorID; 
     }
@@ -59,7 +54,11 @@ public class Vendor {
     }
  
     public void setNextGenVendorID(int nextGenVendorID) {
-        this. nextGenVendorID = nextGenVendorID;
+        this.nextGenVendorID = nextGenVendorID;
+    }
+
+    public void addAccount(Account account) {
+        accountList.add(account);
     }
 
     public ArrayList<Account> getAccounts() {
