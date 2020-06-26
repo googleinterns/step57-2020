@@ -36,6 +36,13 @@
       <version>1.9.59</version>
     </dependency>
 
+    <dependency>  <!-- allows for unit testing -->
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
