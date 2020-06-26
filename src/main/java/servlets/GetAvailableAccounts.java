@@ -20,12 +20,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/login")
+@WebServlet("/GetAvailableAccounts")
 public class GetAvailableAccounts extends HttpServlet {
+
+  // given a vendor ID, returns JSON array containing available account IDs
+  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // GET method
-  }
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // POST method
   }
 }

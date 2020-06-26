@@ -20,12 +20,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/login")
+@WebServlet("/ReadData")
 public class ReadData extends HttpServlet {
+  // Returns a read-only copy of the request vendorID configuration
+  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // GET method
-  }
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // POST method
   }
 }

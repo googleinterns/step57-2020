@@ -20,12 +20,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/login")
+@WebServlet("/Login")
 public class Login extends HttpServlet {
+
+  // returns Boolean if a user is logged in and has write permissions
+  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // GET method
-  }
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // POST method
   }
 }

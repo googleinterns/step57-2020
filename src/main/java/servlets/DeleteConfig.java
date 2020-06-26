@@ -20,11 +20,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/login")
+@WebServlet("/DeleteConfig")
 public class DeleteConfig extends HttpServlet {
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // GET method
-  }
+
+  // Accepts a vendorID and deletes the appropriate files, returning a success status
+  @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // POST method
   }

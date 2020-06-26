@@ -20,11 +20,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/login")
+@WebServlet("/UpdateBilling")
 public class UpdateBilling extends HttpServlet {
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // GET method
-  }
+  // updates billing configuration using form data
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // POST method
   }

@@ -20,12 +20,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/login")
+@WebServlet("/GetAvailableVendors")
 public class GetAvailableVendors extends HttpServlet {
+  // returns JSON array containing available vendor IDs
+  @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // GET method
-  }
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // POST method
   }
 }
