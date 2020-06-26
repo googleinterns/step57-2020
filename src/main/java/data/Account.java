@@ -25,8 +25,10 @@ public class Account {
     private String matchingMode;
     private String aggregationMode;
 
-    public Account(String accountID, String vendorID, String entity, String currency, String direction, 
-        String legacyAccountID, int nextGenAccountID, String matchingMode, String aggregationMode) {
+    public Account(String accountID, String vendorID, String entity, 
+        String currency, String direction, String legacyAccountID, 
+        int nextGenAccountID, String matchingMode, String aggregationMode) {
+
         this.accountID = accountID;
         this.vendorID = vendorID;
         this.entity = entity;
