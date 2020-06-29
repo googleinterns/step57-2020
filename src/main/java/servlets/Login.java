@@ -23,11 +23,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 
-  // returns Boolean if a user is logged in and has write permissions
+  // Returns whether user is logged in or logged out, with a URL to either login or logout
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // GET method
     response.setContentType("text/html;");
-    response.getWriter().println("true");
+    response.getWriter().println("{\"isLoggedOut\":{\"login_url\":\"/loginURL\"}," +
+            "\"isLoggedIn\":{}}");
   }
 }
