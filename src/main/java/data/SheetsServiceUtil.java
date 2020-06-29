@@ -27,6 +27,6 @@ public class SheetsServiceUtil {
     AppIdentityCredential credential = SheetsAuthUtil.authorize();
 
     return new Sheets.Builder(new UrlFetchTransport(), new JacksonFactory(), credential)
-    .build();
+      .build();
   }
 }

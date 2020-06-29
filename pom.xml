@@ -49,7 +49,7 @@
       <version>1.30.9</version>
     </dependency>
 
-    <dependency>
+    <dependency> <!-- used to connect to sheets API using appengine-->
       <groupId>com.google.api-client</groupId>
       <artifactId>google-api-client-appengine</artifactId>
       <version>1.30.9</version>
