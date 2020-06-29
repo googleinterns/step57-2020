@@ -15,22 +15,22 @@ package data;
 
 /** A class representing a billing account object. */
 public class Account {
-    private String accountID;
-    private String vendorID;
-    private String entity;
-    private String currency;
-    private String direction;
-    private String legacyAccountID;
-    private int nextGenAccountID;
-    private String matchingMode;
-    private String aggregationMode;
+  private String accountID;
+  private String vendorID;
+  private String entity;
+  private String currency;
+  private String direction;
+  private String legacyAccountID;
+  private int nextGenAccountID;
+  private String matchingMode;
+  private String aggregationMode;
 
-    public Account(String accountID, String vendorID, String entity, 
-        String currency, String direction, String legacyAccountID, 
-        int nextGenAccountID, String matchingMode, String aggregationMode) {
+  public Account(String accountID, String vendorID, String entity, 
+    String currency, String direction, String legacyAccountID, 
+    int nextGenAccountID, String matchingMode, String aggregationMode) {
 
-        this.accountID = accountID;
-        this.vendorID = vendorID;
+    this.accountID = accountID;
+    this.vendorID = vendorID;
         this.entity = entity;
         this.currency = currency;
         this.direction = direction;

@@ -29,7 +29,7 @@ import java.util.List;
 /** A class that updates the Account and Vendor spreadsheets */
 public class SheetsConverter {
 
-  // IGNORE COMMENTED OUT SECTIONS 
+  // IGNORE COMMENTED OUT SECTIONS! 
 
   private static Sheets sheetsService;
   private static final String SPREADSHEET_ID = "1QnVlh-pZHycxzgQuk0MN2nWOY6AGu9j4wGZaGzi_W9A";
