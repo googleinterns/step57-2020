@@ -26,5 +26,8 @@ public class GetAvailableVendors extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // GET method
+    String dummyResponse = "[\"CADE01\",\"VINCENT01\",\"CHARLIE01\",\"JAKE01\",\"IAN01\"]";
+    response.setContentType("text/html;");
+    response.getWriter().println(dummyResponse);
   }
 }

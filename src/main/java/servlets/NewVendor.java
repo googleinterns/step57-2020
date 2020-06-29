@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/NewVendor")
 public class NewVendor extends HttpServlet {
-  // given form data from vendor creation, a vendor object is created
+  // Given a form data from vendor creation, a vendor object is created
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // POST method

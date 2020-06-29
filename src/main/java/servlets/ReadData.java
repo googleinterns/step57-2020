@@ -26,5 +26,19 @@ public class ReadData extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // GET method
+    response.setContentType("text/html;");
+    response.getWriter().println(
+            "{ \"legacy_customer_id\": \"STRING\", " +
+            "\"next_gen_customer_id\": \"INT\", \"accounts\": [ { \"legacy_account_id\": " +
+            "\"STRING\", \"next_gen_customer_id\": \"INT\", \"settlement_attributes\": " +
+            "{ \"currency_code\": \"STRING\", \"direction\": \"STRING\", \"entity\": " +
+            "\"STRING\" }, \"settlement_config\": { \"matching_mode\": \"STRING\" }, " +
+            "\"product_account_key\": \"STRING\", \"aggregation_mode\": \"STRING\" }, " +
+            "{ \"legacy_account_id\": \"STRING\", \"next_gen_customer_id\": \"INT\"," +
+            " \"settlement_attributes\": { \"currency_code\": \"STRING\", \"direction\": " +
+            "\"STRING\", \"entity\": \"STRING\" }, \"settlement_config\": { \"matching_mode\": " +
+            "\"STRING\" }, \"product_account_key\": \"STRING\", \"aggregation_mode\": " +
+            "\"STRING\" } ] }"
+    );
   }
 }

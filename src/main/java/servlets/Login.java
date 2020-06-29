@@ -27,5 +27,7 @@ public class Login extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // GET method
+    response.setContentType("text/html;");
+    response.getWriter().println("true");
   }
 }
