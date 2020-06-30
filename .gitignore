@@ -24,4 +24,6 @@
 hs_err_pid*
 
 target/
+# hide client information
+src/main/resources/
 .idea
