@@ -33,4 +33,10 @@ import data.SheetsServiceUtil;
 public final class SheetsConverterTest {
  private static final String SPREADSHEET_ID = "1QnVlh-pZHycxzgQuk0MN2nWOY6AGu9j4wGZaGzi_W9A";
 
+  // Can't test anything yet due to Auth complications.
+  
+  @Test
+  public void testUpdateSheetMethod() {
+    // A test method is necessary or else a build failure will occur.
+  }
 }
