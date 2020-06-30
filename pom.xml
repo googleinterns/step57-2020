@@ -43,6 +43,35 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>  <!-- used to connect to sheets API -->
+      <groupId>com.google.api-client</groupId>
+      <artifactId>google-api-client</artifactId>
+      <version>1.30.9</version>
+    </dependency>
+
+    <dependency>  <!-- used to connect to sheets API using appengine-->
+      <groupId>com.google.api-client</groupId>
+      <artifactId>google-api-client-appengine</artifactId>
+      <version>1.30.9</version>
+     </dependency>
+
+    <dependency>  <!-- OAuth required for Sheets API use -->
+      <groupId>com.google.oauth-client</groupId>
+      <artifactId>google-oauth-client-jetty</artifactId>
+      <version>1.23.0</version>
+    </dependency>
+
+    <dependency>  <!-- allows access to sheets API -->
+      <groupId>com.google.apis</groupId>  
+      <artifactId>google-api-services-sheets</artifactId>
+      <version>v4-rev493-1.23.0</version>
+    </dependency>
+
+    <dependency>  <!-- allows access to JSON packages -->
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20150729</version>
+    </dependency>
   </dependencies>
 
   <build>
