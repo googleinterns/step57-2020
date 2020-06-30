@@ -32,7 +32,8 @@ public class SheetsAuthUtil {
          
     // Build GoogleClientSecrets from JSON file.
     InputStream in = SheetsAuthUtil.class.getResourceAsStream("/google-sheets-api.json");
-    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JacksonFactory.getDefaultInstance(), new InputStreamReader(in));
+    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
+      JacksonFactory.getDefaultInstance(), new InputStreamReader(in));
 
     List<String> scopes = Arrays.asList(SheetsScopes.SPREADSHEETS);
  
