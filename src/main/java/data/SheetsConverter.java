@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/** A class that updates the Account and Vendor spreadsheets */
+/** A class that updates the Account and Vendor spreadsheets. */
 public class SheetsConverter {
 
   // IGNORE COMMENTED OUT SECTIONS! 
