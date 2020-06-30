@@ -1,80 +1,79 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Read File Configuration</title>
-        <link rel="stylesheet" href="readfile.css">
-        <script src="/scripts/script.js"></script>
-    </head>
-    <body id="body">
-        <h1>Billing Configuration Sync Tool</h1>
-        </br>
-        <h2>Read Configuration</h2> 
-        <!-- Links Div -->
-        <div>
-        </div>
-        <!-- Search Div -->
-        <div>
-            <form>  
-                <p>Customer ID:</p>
-                <textarea></textarea>
-                </br>
-                <p>Account ID:</p>
-                <textarea></textarea>
-                </br>
-                <input type="submit">
-            </form>
-        </div>
-        </br>
-        <!-- Text Box Div -->
-        <div id="textbox">
-            <p>{
-              "legacy_customer_id": "STRNG",
-              "next_gen_customer_id": "INT",
-              "accounts":[
-                {
-                  "legacy_account_id": "STRING",
-                  "next_gen_customer_id": "INT",
-                  "settlement_attributes": {
-                    "currency_code": "STRING",
-                    "direction": "STRING",
-                    "entity": "STRING"
-                  },
-                  "settlement_config": {
-                    "matching_mode": "STRING"
-                  },
-                  "product_account_key": "STRING",
-                  "aggregation_mode": "STRING"
-                },
-                {
-                  "legacy_account_id": "STRING",
-                  "next_gen_customer_id": "INT",
-                  "settlement_attributes": {
-                    "currency_code": "STRING",
-                    "direction": "STRING",
-                    "entity": "STRING"
-                  },
-                  "settlement_config": {
-                    "matching_mode": "STRING"
-                  },
-                  "product_account_key": "STRING",
-                  "aggregation_mode": "STRING"
-                }
-              ]
-            }
-            </p>
-        </div>
-        </br>
-        <!-- Checkbox Div -->
-        <div>
-          <p>Select what format to view the file in:</p>
-          <form>
-            <input type="checkbox" id="option1" name="option1" value="EasyRead">
-            <label for="option1">Spreadsheet Format</label><br>
-            <input type="checkbox" id="option2" name="option2" value="EngRead">
-            <label for="option2">JSON/GCL Format</label><br>
-            <input type="submit">
-          </form>
-        </div>
-    </body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Read File Configuration</title>
+    <link rel="stylesheet" href="readfile.css">
+    <script src="/scripts/script.js"></script>
+  </head>
+  <body>
+    <h1>Billing Configuration Sync Tool</h1>
+    </br>
+    <h2>Read Configuration</h2> 
+    <div id="links">
+    </div>
+    <!-- Search Div -->
+    <div>
+    <form>  
+      <p>Customer ID:</p>
+      <textarea></textarea>
+      </br>
+      <p>Account ID:</p>
+      <textarea></textarea>
+      </br>
+      <input type="submit">
+    </form>
+    </div>
+    </br>
+    <!-- Text Box Div -->
+    <div id="textbox">
+      <p>{
+        "legacy_customer_id": "STRING",
+        "next_gen_customer_id": "INT",
+        "accounts": [
+          {
+            "legacy_account_id": "STRING",
+            "next_gen_customer_id": "INT",
+            "settlement_attributes": {
+              "currency_code": "STRING",
+              "direction": "STRING",
+              "entity": "STRING"
+            },
+            "settlement_config": {
+              "matching_mode": "STRING"  
+            },
+            "product_account_key": "STRING",
+            "aggregation_mode": "STRING"
+          },
+          {
+            "legacy_account_id": "STRING",
+            "next_gen_customer_id": "INT",
+            "settlement_attributes": {
+              "currency_code": "STRING",
+              "direction": "STRING",
+              "entity": "STRING"
+            },
+            "settlement_config": {
+              "matching_mode": "STRING"
+            },
+            "product_account_key": "STRING",
+            "aggregation_mode": "STRING"
+          }
+        ]
+      }
+      </p>
+    </div>
+    </br>
+    <!-- Checkbox Div -->
+    <div>
+      <p>Select what format to view the file in:</p>
+      <form>
+        <input type="checkbox" id="option1" name="option1" value="EasyRead">
+        <label for="option1">Spreadsheet Format</label><br>
+        <input type="checkbox" id="option2" name="option2" value="EngRead">
+        <label for="option2">JSON/GCL Format</label><br>
+        <input type="submit">
+      </form>
+    </div>
+  </body>
 </html>
