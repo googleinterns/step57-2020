@@ -20,14 +20,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/GetAvailableAccounts")
-public class GetAvailableAccounts extends HttpServlet {
-
-  // given a vendor ID, returns JSON array containing available account IDs
+@WebServlet("/AccountServlet")
+public class AccountServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // GET method
-    String dummyResponse = "[\"CADE01\",\"VINCENT01\",\"CHARLIE01\",\"JAKE01\",\"IAN01\"]";
+    // GET method --> returns a JSON array of existing Vendor IDs
+    String dummyResponse = "[\"CADE_ACC01\",\"VINCENT_ACC01\",\"CHARLIE_ACC01\",\"JAKE_ACC01\"," +
+            "\"IAN_ACC01\"]";
     response.setContentType("text/html;");
     response.getWriter().println(dummyResponse);
   }

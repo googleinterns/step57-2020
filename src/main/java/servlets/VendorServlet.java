@@ -20,14 +20,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/GetAvailableVendors")
-public class GetAvailableVendors extends HttpServlet {
-  // returns JSON array containing available vendor IDs
+@WebServlet("/VendorServlet")
+public class VendorServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // GET method
+    // GET method --> returns a JSON array of existing Vendor IDs
     String dummyResponse = "[\"CADE01\",\"VINCENT01\",\"CHARLIE01\",\"JAKE01\",\"IAN01\"]";
     response.setContentType("text/html;");
     response.getWriter().println(dummyResponse);
+  }
+
+  @Override
+  public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // DELETE method --> deletes vendor configuration directory
   }
 }

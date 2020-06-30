@@ -20,12 +20,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/ReadData")
-public class ReadData extends HttpServlet {
-  // Returns a read-only copy of the request vendorID configuration
+@WebServlet("/BillingConfig")
+public class BillingConfig extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // GET method
+    // GET method --> returns entire billing config as JSON
     response.setContentType("text/html;");
     response.getWriter().println(
             "{ \"legacy_customer_id\": \"STRING\", " +
@@ -40,5 +39,10 @@ public class ReadData extends HttpServlet {
             "\"STRING\" }, \"product_account_key\": \"STRING\", \"aggregation_mode\": " +
             "\"STRING\" } ] }"
     );
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // POST method --> overwrites the existing configuration or creates a new one
   }
 }
