@@ -19,15 +19,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 
+  private static final String CONTENT_TYPE_TEXT_HTML = "text/html;";
+  private static final String REDIRECT_LINK = "";       // TODO @Vincent
+
   // Returns whether user is logged in or logged out, with a URL to either login or logout
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // GET method
-    response.setContentType("text/html;");
+    UserService userService = UserServiceFactory.getUserService();
+
+    response.setContentType(CONTENT_TYPE_TEXT_HTML);
     response.getWriter().println("{\"isLoggedOut\":{\"login_url\":\"/loginURL\"}," +
             "\"isLoggedIn\":{}}");
   }
