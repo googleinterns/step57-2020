@@ -38,6 +38,12 @@ public class LoginServlet extends HttpServlet {
     if (UserAuthUtil.isUserLoggedIn()) {
       out.println("User is logged in. Logout below");
       out.println(UserAuthUtil.getLogoutURL(REDIRECT_LINK));
+
+      if (UserAuthUtil.isUserAuthorized()) {
+        out.println("User is authorized");
+      } else {
+        out.println("User is not authorized");
+      }
     } else {
       out.println("User is logged out. Login below");
       out.println(UserAuthUtil.getLoginURL(REDIRECT_LINK));
