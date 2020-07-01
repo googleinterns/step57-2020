@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import data.JsonConverter;
 import data.Vendor;
 
@@ -45,14 +46,13 @@ public final class JsonConverterTest {
       input = null;
     }
 
-    while(input.hasNextLine())
-    {
+    while(input.hasNextLine()) {
       fileContent += input.nextLine();
     }
 
     // Test that the file isn't empty and has the right content.
-    assertTrue("createFile() didn't add any content to the file when is should've",
-      !fileContent.equals(""));
+    assertFalse("createFile() didn't add any content to the file when is should've",
+      fileContent.equals(""));
     assertTrue("createFile() didn't add the right content to the file.", 
       fileContent.equals(expectedFileContent));
   }
