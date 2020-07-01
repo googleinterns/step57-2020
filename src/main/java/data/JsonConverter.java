@@ -1,4 +1,3 @@
-
 // Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,8 +24,8 @@ import org.json.JSONObject;
 public class JsonConverter {
   private static final String FILE_PATH_BASE = "data/";
   
-  public File createFile() {
-    String fileName = FILE_PATH_BASE + "practiceFile";
+  public File createFile(String vendorID) {
+    String fileName = FILE_PATH_BASE + vendorID;
 
     // Create a JSON object to write to the file.
     JSONObject parentObject = new JSONObject();
@@ -49,7 +48,7 @@ public class JsonConverter {
   }
 
   public boolean updateFile(Vendor vendor) {
-    createFile();
+    createFile(vendor.getVendorID());
     return true;
   }
 }
