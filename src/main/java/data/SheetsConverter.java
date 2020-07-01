@@ -26,11 +26,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/** A class that updates the Account and Vendor spreadsheets */
+/** A class that updates the Account and Vendor spreadsheets. */
 public class SheetsConverter {
-
-  // IGNORE COMMENTED OUT SECTIONS! 
-
   private static Sheets sheetsService;
   private static final String SPREADSHEET_ID = "1QnVlh-pZHycxzgQuk0MN2nWOY6AGu9j4wGZaGzi_W9A";
   private final String ACCOUNT_TITLE = "Account Sheet";
@@ -38,17 +35,8 @@ public class SheetsConverter {
 
   public boolean updateSheets(ArrayList<Vendor> vendorList) 
     throws GeneralSecurityException, IOException {
-    
     writeToSheet();
-
-    // Create a list of all the accounts that the vendors have.
-    // ArrayList<Account> accounts = getVendorAccounts(vendorList);
-        
-    // Create the Account spreadsheet.
-    // updateAccountSheet(accounts);
-    // Create the Vendor spreadsheet.
-    // updateVendorSheet(vendorList);
-      return true;
+    return true;
   }
 
   // Enter unimportant data to a spreadsheet.
@@ -67,34 +55,4 @@ public class SheetsConverter {
       .setValueInputOption("RAW")
       .execute();
   }
-
-  // Get all the vendors' accounts and store them in an ArrayList.
-  // public ArrayList<Account> getVendorAccounts(ArrayList<Vendor> vendorList) {
-  //     ArrayList<Account> accounts = new ArrayList<Account>();
-
-  //     for(int i = 0; i < vendorList.size(); i++) {
-  //         accounts.addAll(vendorList.get(i).getAccounts());
-  //     }
-  //     return accounts;
-  // }
-
-  // Update the existing Account spreadsheet with the updated data.
-  // public void updateAccountSheet(ArrayList<Account> accounts) {
-    // Alphabatize the list by AccountID. POSSIBLY MAKE COMPARATORS IN THE VENDOR AND ACCOUNT CLASSES
-
-    // Actually update the Account sheet.
-    // writeToSheet(new ValueRange);
-  // }
-
-  // Update the existing Vendor spreadsheet with the updated data.
-  // public void updateVendorSheet(ArrayList<Vendor> vendorList) {
-    // Alphabatize the list by VendorID. POSSIBLY MAKE COMPARATORS IN THE VENDOR AND ACCOUNT CLASSES
-
-    // Actually update the Vendor sheet.
-    // writeToSheet(new ValueRange);
-  // }
-
-  // public void writeToSheet(ValueRange contents) {
-    // implement when you actually get data.
-  // }
 }
