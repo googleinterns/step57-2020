@@ -15,26 +15,33 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import util.UserAuthUtil;
 
 @WebServlet("/Login")
-public class Login extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
   private static final String CONTENT_TYPE_TEXT_HTML = "text/html;";
-  private static final String REDIRECT_LINK = "";       // TODO @Vincent
+  private static final String REDIRECT_LINK = "/Login";       // TODO @Vincent
 
   // Returns whether user is logged in or logged out, with a URL to either login or logout
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    UserService userService = UserServiceFactory.getUserService();
-
     response.setContentType(CONTENT_TYPE_TEXT_HTML);
-    response.getWriter().println("{\"isLoggedOut\":{\"login_url\":\"/loginURL\"}," +
-            "\"isLoggedIn\":{}}");
+    PrintWriter out = response.getWriter();
+    if (UserAuthUtil.isUserLoggedIn()) {
+      out.println("User is logged in. Logout below");
+      out.println(UserAuthUtil.getLogoutURL(REDIRECT_LINK));
+    } else {
+      out.println("User is logged out. Login below");
+      out.println(UserAuthUtil.getLoginURL(REDIRECT_LINK));
+    }
+    out.println("{\"isLoggedOut\":{\"login_url\":\"/loginURL\"},\"isLoggedIn\":{}}");
   }
 }
