@@ -24,6 +24,10 @@
 hs_err_pid*
 
 target/
+
 # hide client information
 src/main/resources/
+# ignore the billing files so they aren't committed all the time.
+data/
+
 .idea
