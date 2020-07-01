@@ -20,7 +20,7 @@ import com.google.api.client.googleapis.extensions.appengine.auth.oauth2.AppIden
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-/** A class to create a Sheets instance */
+/** A class to create a Sheets instance. */
 public class SheetsServiceUtil {
 
   public static Sheets getSheetsService() throws IOException, GeneralSecurityException {

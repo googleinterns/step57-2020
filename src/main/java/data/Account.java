@@ -15,100 +15,100 @@ package data;
 
 /** A class representing a billing account object. */
 public class Account {
-    private String accountID;
-    private String vendorID;
-    private String entity;
-    private String currency;
-    private String direction;
-    private String legacyAccountID;
-    private int nextGenAccountID;
-    private String matchingMode;
-    private String aggregationMode;
+  private String accountID;
+  private String vendorID;
+  private String entity;
+  private String currency;
+  private String direction;
+  private String legacyAccountID;
+  private int nextGenAccountID;
+  private String matchingMode;
+  private String aggregationMode;
 
-    public Account(String accountID, String vendorID, String entity, 
-        String currency, String direction, String legacyAccountID, 
-        int nextGenAccountID, String matchingMode, String aggregationMode) {
+  public Account(String accountID, String vendorID, String entity, 
+    String currency, String direction, String legacyAccountID, 
+    int nextGenAccountID, String matchingMode, String aggregationMode) {
 
-        this.accountID = accountID;
-        this.vendorID = vendorID;
-        this.entity = entity;
-        this.currency = currency;
-        this.direction = direction;
-        this.legacyAccountID = legacyAccountID;
-        this.nextGenAccountID = nextGenAccountID;
-        this.matchingMode = matchingMode;
-        this.aggregationMode = aggregationMode;
-    }
+    this.accountID = accountID;
+    this.vendorID = vendorID;
+    this.entity = entity;
+    this.currency = currency;
+    this.direction = direction;
+    this.legacyAccountID = legacyAccountID;
+    this.nextGenAccountID = nextGenAccountID;
+    this.matchingMode = matchingMode;
+    this.aggregationMode = aggregationMode;
+  }
 
-    public String getAccountID() {
-        return accountID;
-    }
+  public String getAccountID() {
+    return accountID;
+  }
 
-    public void setAccountID(String accountID) {
-        this.accountID = accountID;
-    }
+  public void setAccountID(String accountID) {
+    this.accountID = accountID;
+  }
 
-    public String getVendorID() {
-        return vendorID;  
-    }
+  public String getVendorID() {
+    return vendorID;  
+  }
 
-    public void setVendorID(String vendorID) {
-        this.vendorID = vendorID;
-    }
+  public void setVendorID(String vendorID) {
+    this.vendorID = vendorID;
+  }
 
-    public String getEntity() {
-        return entity;
-    }
+  public String getEntity() {
+    return entity;
+  }
 
-    public void setEntity(String entity) {
-        this.entity = entity;
-    }
+  public void setEntity(String entity) {
+    this.entity = entity;
+  }
 
-    public String getCurrency() {
-        return currency;
-    }
+  public String getCurrency() {
+    return currency;
+  }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
+  public void setCurrency(String currency) {
+    this.currency = currency;
+  }
 
-    public String getDirection() {
-        return direction;
-    }
+  public String getDirection() {
+    return direction;
+  }
 
-    public void setDirection(String direction) {
-        this.direction = direction;
-    }
+  public void setDirection(String direction) {
+    this.direction = direction;
+  }
 
-    public String getLegacyAccountID() {
-        return legacyAccountID;
-    }
+  public String getLegacyAccountID() {
+    return legacyAccountID;
+  }
 
-    public void setLegacyAccountID(String legacyAccountID) {
-        this.legacyAccountID = legacyAccountID;
-    }
+  public void setLegacyAccountID(String legacyAccountID) {
+    this.legacyAccountID = legacyAccountID;
+  }
 
-    public int getNextGenAccountID() {
-        return nextGenAccountID;
-    }
+  public int getNextGenAccountID() {
+    return nextGenAccountID;
+  }
 
-    public void setNextGenAccountID(int nextGenAccountID) {
-        this.nextGenAccountID = nextGenAccountID;
-    }
+  public void setNextGenAccountID(int nextGenAccountID) {
+    this.nextGenAccountID = nextGenAccountID;
+  }
 
-    public String getMatchingMode() {
-        return matchingMode;
-    }
+  public String getMatchingMode() {
+    return matchingMode;
+  }
 
-    public void setMatchingMode(String matchingMode) {
-        this.matchingMode = matchingMode;
-    }
+  public void setMatchingMode(String matchingMode) {
+    this.matchingMode = matchingMode;
+  }
 
-    public String getAggregationMode() {
-        return aggregationMode;
-    }
+  public String getAggregationMode() {
+    return aggregationMode;
+  }
 
-    public void setAggregationMode(String aggregationMode) {
-        this.aggregationMode = aggregationMode;
-    }
+  public void setAggregationMode(String aggregationMode) {
+    this.aggregationMode = aggregationMode;
+  }
 }
