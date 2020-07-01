@@ -1,5 +1,6 @@
 package util;
 
+import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
@@ -13,10 +14,16 @@ public class UserAuthUtil {
     return userServ.createLoginURL(redirect);
   }
   public static String getLogoutURL(String redirect) {
-    UserService userServ = UserServiceFactory.getUserService();
-    return userServ.createLogoutURL(redirect);
+    return UserServiceFactory.getUserService().createLogoutURL(redirect);
   }
-  public static String getUser() {
-
+  public static User getUser() {
+    return UserServiceFactory.getUserService().getCurrentUser();
+  }
+  public static boolean isUserAuthorized() {
+    return getDomainName().equals("google.com");
+  }
+  private static String getDomainName() {
+    String email = getUser().getEmail();
+    return email.substring(email.indexOf('@') + 1);
   }
 }
