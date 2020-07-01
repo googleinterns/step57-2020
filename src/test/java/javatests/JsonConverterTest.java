@@ -30,11 +30,39 @@ import data.Vendor;
 /** Test the functionality of the JsonConverter class. */
 @RunWith(JUnit4.class)
 public final class JsonConverterTest {
+
+  /** Test that createFile() successfully creates a new file. */  
   @Test
-  public void testCreateFileMethod() {
-    // Test that the method can create a file with content.
+  public void testCreateFileMethodCreatesNewFile() {
+    String vendorID = "vend_1";
+    String legVendID = "legVend_27";
+    int nextGenVendorID = 17;
+    Vendor vendor = new Vendor(vendorID, legVendID, nextGenVendorID);
+
     JsonConverter converter = new JsonConverter();
-    File file = converter.createFile();
+    File file = converter.createFile(vendor.getVendorID());
+
+    Scanner input;
+    try {
+      input = new Scanner(file);
+    } catch(FileNotFoundException e) {
+      input = null;
+    }
+
+    assertFalse("createFile() didn't correctly create a new file.",
+      input == null);
+  }
+
+  /** Test that createFile() writes the expected content to a file. */
+  @Test
+  public void testCreateFileMethodWritesExpectedContent() {
+    String vendorID = "vend_1";
+    String legVendID = "legVend_27";
+    int nextGenVendorID = 17;
+    Vendor vendor = new Vendor(vendorID, legVendID, nextGenVendorID);
+
+    JsonConverter converter = new JsonConverter();
+    File file = converter.createFile(vendor.getVendorID());
 
     String expectedFileContent = "{\"Vehicle\":{\"Car\":\"Blue Tacoma\"}}";
     String fileContent = "";
@@ -50,23 +78,19 @@ public final class JsonConverterTest {
       fileContent += input.nextLine();
     }
 
-    // Test that the file isn't empty and has the right content.
-    assertFalse("createFile() didn't add any content to the file when is should've",
-      fileContent.equals(""));
     assertTrue("createFile() didn't add the right content to the file.", 
       fileContent.equals(expectedFileContent));
   }
 
+  /** Test that updateFile() return true for prototype. */
   @Test
   public void testUpdateFileMethod() throws IOException {
-    // For the protoype, updateFile() calls createFile() and returns true.
-    JsonConverter converter = new JsonConverter();
     Vendor vendor = new Vendor();
+    JsonConverter converter = new JsonConverter();
 
     boolean expectedResponse = true;
     boolean actualResponse = converter.updateFile(vendor);
 
-    // Test that the actual and expected responses are the same.
     assertTrue("updateFile() didn't return true when it should have.", 
       expectedResponse == actualResponse);
   }
