@@ -16,8 +16,9 @@ package data;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 import org.json.JSONObject;
 
 /** A class that creates a config file from a Vendor object. */
@@ -50,5 +51,26 @@ public class JsonConverter {
   public boolean updateFile(Vendor vendor) {
     createFile(vendor.getVendorID());
     return true;
+  }
+
+  /** Retrieve and return the contents of the desired configuration. */
+  public String getConfig(String vendorID) {
+    String configContents = "";
+
+    // Retrieve the file with the corresponding vendorID.
+    File config = new File(FILE_PATH_BASE + vendorID);
+
+    Scanner input;
+    try {
+      input = new Scanner(config);
+    } catch(FileNotFoundException e) {
+      return null;
+    }
+
+    while(input.hasNextLine()) {
+      configContents += input.nextLine();
+    }
+
+    return configContents;
   }
 }

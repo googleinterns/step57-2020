@@ -82,7 +82,7 @@ public final class JsonConverterTest {
       fileContent.equals(expectedFileContent));
   }
 
-  /** Test that updateFile() return true for prototype. */
+  /** Test that updateFile() returns true for prototype. */
   @Test
   public void testUpdateFileMethod() throws IOException {
     Vendor vendor = new Vendor();
@@ -92,6 +92,38 @@ public final class JsonConverterTest {
     boolean actualResponse = converter.updateFile(vendor);
 
     assertTrue("updateFile() didn't return true when it should have.", 
+      expectedResponse == actualResponse);
+  }
+
+  /** 
+   * Test that getConfig() returns the expected file content. 
+   * The vendorID must match an existing filepath in the filesystem.
+   */
+  @Test
+  public void testGetConfigMethod() {
+    JsonConverter converter = new JsonConverter();
+    String vendorID = "vend_1";
+    String expectedResponse = "{\"Vehicle\":{\"Car\":\"Blue Tacoma\"}}";
+
+    String actualResponse = converter.getConfig(vendorID);
+
+    assertTrue("getConfig() didn't return the expected file content.",
+      expectedResponse.equals(actualResponse));
+  }
+
+  /** 
+   * Test that getConfig() returns null when faulty vendorID is passed in. 
+   * The vendorID must match an existing filepath in the filesystem.
+   */
+  @Test 
+  public void testGetConfigMethodWithFakeVendorID() {
+    JsonConverter converter = new JsonConverter();
+    String vendorID = "fakeVendorID";
+    String expectedResponse = null;
+
+    String actualResponse = converter.getConfig(vendorID);
+
+    assertTrue("getConfig() didn't return null when it should have.",
       expectedResponse == actualResponse);
   }
 }
