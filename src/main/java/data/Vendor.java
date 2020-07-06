@@ -17,51 +17,51 @@ import java.util.*;
 
 /** A class representing a billing vendor object. */
 public class Vendor {
-    private String vendorID;
-    private String legacyVendorID;
-    private int nextGenVendorID;
-    private ArrayList<Account> accountList;
+  private String vendorID;
+  private String legacyVendorID;
+  private int nextGenVendorID;
+  private ArrayList<Account> accountList;
 
-    public Vendor() {
-        accountList = new ArrayList<Account>();
-    }
+  public Vendor() {
+    accountList = new ArrayList<Account>();
+  }
 
-    public Vendor(String vendorID, String legacyVendorID, int nextGenVendorID) {
-        this.vendorID = vendorID;
-        this.legacyVendorID = legacyVendorID;
-        this.nextGenVendorID = nextGenVendorID;
-        accountList = new ArrayList<Account>();
-    }
+  public Vendor(String vendorID, String legacyVendorID, int nextGenVendorID) {
+    this.vendorID = vendorID;
+    this.legacyVendorID = legacyVendorID;
+    this.nextGenVendorID = nextGenVendorID;
+    accountList = new ArrayList<Account>();
+  }
 
-    public String getVendorID() {
-        return vendorID; 
-    }
+  public String getVendorID() {
+    return vendorID; 
+  }
 
-    public void setVendorID(String vendorID) {
-        this.vendorID = vendorID;
-    }
+  public void setVendorID(String vendorID) {
+    this.vendorID = vendorID;
+  }
 
-    public String getLegacyVendorID() {
-        return legacyVendorID;
-    } 
+  public String getLegacyVendorID() {
+    return legacyVendorID;
+  } 
 
-    public void setLegacyVendorID(String legacyVendorID) {
-        this.legacyVendorID = legacyVendorID;
-    }
+  public void setLegacyVendorID(String legacyVendorID) {
+    this.legacyVendorID = legacyVendorID;
+  }
 
-    public int getNextGenVendorID() {
-        return nextGenVendorID;
-    }
+  public int getNextGenVendorID() {
+    return nextGenVendorID;
+  }
  
-    public void setNextGenVendorID(int nextGenVendorID) {
-        this.nextGenVendorID = nextGenVendorID;
-    }
+  public void setNextGenVendorID(int nextGenVendorID) {
+    this.nextGenVendorID = nextGenVendorID;
+  }
 
-    public void addAccount(Account account) {
-        accountList.add(account);
-    }
+  public void addAccount(Account account) {
+    accountList.add(account);
+  }
 
-    public ArrayList<Account> getAccounts() {
-        return accountList;
-    }
+  public ArrayList<Account> getAccounts() {
+    return accountList;
+  }
 }
