@@ -53,7 +53,7 @@ public class JsonConverter {
     return true;
   }
 
-  /** Retreive and return the contents of the desired configuration */
+  /** Retreive and return the contents of the desired configuration. */
   public String getConfig(String vendorID) {
     String configContents = "";
 
