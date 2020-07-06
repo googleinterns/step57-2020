@@ -95,7 +95,10 @@ public final class JsonConverterTest {
       expectedResponse == actualResponse);
   }
 
-  /** Test that getConfig() returns the expected file content. */
+  /** 
+   * Test that getConfig() returns the expected file content. 
+   * The vendorID must match an existing filepath in the filesystem.
+   */
   @Test
   public void testGetConfigMethod() {
     JsonConverter converter = new JsonConverter();
@@ -108,7 +111,10 @@ public final class JsonConverterTest {
       expectedResponse.equals(actualResponse));
   }
 
-  /** Test that getConfig() returns null when faulty vendorID is passed in. */
+  /** 
+   * Test that getConfig() returns null when faulty vendorID is passed in. 
+   * The vendorID must match an existing filepath in the filesystem.
+   */
   @Test 
   public void testGetConfigMethodWithFakeVendorID() {
     JsonConverter converter = new JsonConverter();
