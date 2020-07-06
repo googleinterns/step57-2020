@@ -36,18 +36,9 @@ public class LoginServlet extends HttpServlet {
     response.setContentType(CONTENT_TYPE_TEXT_HTML);
     PrintWriter out = response.getWriter();
     if (UserAuthUtil.isUserLoggedIn()) {
-      out.println("User is logged in. Logout below");
       out.println(UserAuthUtil.getLogoutURL(REDIRECT_LINK));
-
-      if (UserAuthUtil.isUserAuthorized()) {
-        out.println("User is authorized");
-      } else {
-        out.println("User is not authorized");
-      }
     } else {
-      out.println("User is logged out. Login below");
       out.println(UserAuthUtil.getLoginURL(REDIRECT_LINK));
     }
-    out.println("{\"isLoggedOut\":{\"login_url\":\"/loginURL\"},\"isLoggedIn\":{}}");
   }
 }
