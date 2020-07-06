@@ -18,6 +18,7 @@ import java.util.*;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import org.apache.http.auth.AUTH;
 import org.junit.After;
 import org.junit.Assert.*;
 import org.junit.Before;
@@ -25,12 +26,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import util.UserAuthUtil;
-import static org.junit.Assert.assertEquals;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.appengine.tools.development.testing.LocalUserServiceTestConfig;
-import static org.junit.Assert.assertTrue;
+
 import java.security.GeneralSecurityException;
 import java.io.IOException;
+
+import static org.junit.Assert.*;
 
 
 /** Test the functionality of the SheetsConverter class. */
@@ -45,7 +47,7 @@ public final class UserAuthUtilTest {
 
   /* Allows local unit testing of cloud API
    * https://cloud.google.com/appengine/docs/standard/java/tools/localunittesting
-   * use the helper variable to set User settings
+   * (use the helper variable to set User settings)
    */
   private final LocalServiceTestHelper helper = new LocalServiceTestHelper(
           new LocalUserServiceTestConfig()).setEnvIsAdmin(true).setEnvIsLoggedIn(true);
@@ -73,11 +75,15 @@ public final class UserAuthUtilTest {
   public void testUnauthorizedUser() {
     // Check that unauthorized users are correctly identified.
     helper.setEnvEmail(UNAUTHORIZED_EMAIL);
-
+    boolean isAuthorized = UserAuthUtil.isUserAuthorized();
+    assertFalse("User should be marked as unauthorized", isAuthorized);
   }
 
   @Test
   public void testAuthorizedUser() {
-
+    // Check that authorized users are correctly identified.
+    helper.setEnvEmail(AUTHORIZED_EMAIL);
+    boolean isAuthorized = UserAuthUtil.isUserAuthorized();
+    assertTrue("User should be marked as unauthorized", isAuthorized);
   }
 }
