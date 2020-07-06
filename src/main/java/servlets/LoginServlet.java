@@ -28,9 +28,9 @@ import util.UserAuthUtil;
 public class LoginServlet extends HttpServlet {
 
   private static final String CONTENT_TYPE_TEXT_HTML = "text/html;";
-  private static final String REDIRECT_LINK = "/Login";       // TODO @Vincent
+  private static final String REDIRECT_LINK = "/Login";
 
-  // Returns  a URL to either login or logout
+  // Returns  a URL to either login or logout.
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType(CONTENT_TYPE_TEXT_HTML);

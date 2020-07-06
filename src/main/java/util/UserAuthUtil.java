@@ -6,8 +6,8 @@ import com.google.appengine.api.users.UserServiceFactory;
 
 public class UserAuthUtil {
   /**
-   * Returns a boolean for the user's login status
-   * @return user login status
+   * Returns a boolean for the user's login status.
+   * @return user login status.
    */
   public static boolean isUserLoggedIn() {
     UserService userServ = UserServiceFactory.getUserService();
@@ -15,8 +15,8 @@ public class UserAuthUtil {
   }
 
   /**
-   * @param redirect URL for webpage to return to after login
-   * @return URL for user to click to login
+   * @param redirect URL for webpage to return to after login.
+   * @return URL for user to click to login.
    */
   public static String getLoginURL(String redirect) {
     UserService userServ = UserServiceFactory.getUserService();
@@ -24,30 +24,30 @@ public class UserAuthUtil {
   }
 
   /**
-   * @param redirect URL for webpage to return to after logout
-   * @return URL for user to click to logout
+   * @param redirect URL for webpage to return to after logout.
+   * @return URL for user to click to logout.
    */
   public static String getLogoutURL(String redirect) {
     return UserServiceFactory.getUserService().createLogoutURL(redirect);
   }
 
   /**
-   * Helper method to return a User object
+   * Helper method to return a User object.
    */
   public static User getUser() {
     return UserServiceFactory.getUserService().getCurrentUser();
   }
 
   /**
-   * Determines whether a user is authorized to use the requested resource
-   * @return true when the user's email domain is "google.com"
+   * Determines whether a user is authorized to use the requested resource.
+   * @return true when the user's email domain is "google.com".
    */
   public static boolean isUserAuthorized() {
     return getDomainName().equals("google.com");
   }
 
   /**
-   * @return domain name from a user's email address
+   * @return domain name from a user's email address.
    */
   public static String getDomainName() {
     String email = getUser().getEmail();

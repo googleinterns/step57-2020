@@ -47,7 +47,7 @@ public final class UserAuthUtilTest {
 
   /* Allows local unit testing of cloud API
    * https://cloud.google.com/appengine/docs/standard/java/tools/localunittesting
-   * (use the helper variable to set User settings)
+   * (use the helper variable to set User settings).
    */
   private final LocalServiceTestHelper helper = new LocalServiceTestHelper(
           new LocalUserServiceTestConfig()).setEnvIsAdmin(true).setEnvIsLoggedIn(true);
