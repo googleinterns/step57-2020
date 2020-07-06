@@ -49,7 +49,7 @@ public class UserAuthUtil {
   /**
    * @return domain name from a user's email address
    */
-  private static String getDomainName() {
+  public static String getDomainName() {
     String email = getUser().getEmail();
     return email.substring(email.indexOf('@') + 1);
   }
