@@ -18,12 +18,16 @@ import java.util.*;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import org.junit.After;
 import org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import util.UserAuthUtil;
-
+import static org.junit.Assert.assertEquals;
+import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
+import com.google.appengine.tools.development.testing.LocalUserServiceTestConfig;
 import static org.junit.Assert.assertTrue;
 import java.security.GeneralSecurityException;
 import java.io.IOException;
@@ -39,20 +43,37 @@ public final class UserAuthUtilTest {
   private static final String AUTHORIZED_DOMAIN = "google.com";
   private static final String CONSTRUCTOR_DOMAIN = "gmail.com";
 
+  /* Allows local unit testing of cloud API
+   * https://cloud.google.com/appengine/docs/standard/java/tools/localunittesting
+   * use the helper variable to set User settings
+   */
+  private final LocalServiceTestHelper helper = new LocalServiceTestHelper(
+          new LocalUserServiceTestConfig()).setEnvIsAdmin(true).setEnvIsLoggedIn(true);
+
+  @Before
+  public void setUp() {
+    helper.setUp();
+    helper.setEnvAuthDomain(CONSTRUCTOR_DOMAIN);
+  }
+
+  @After
+  public void tearDown() {
+    helper.tearDown();
+  }
+
   @Test
   public void testGetDomainName() {
-    String emailAddress = "example@foobar.com";
-    String expectedDomainName = "foobar.com";
-//    String actualDomainName = UserAuthUtil.getDomainName();
+    // Ensure that domain name is properly extracted from the email address.
+    helper.setEnvEmail(UNAUTHORIZED_EMAIL);
+    String actualDomain = UserAuthUtil.getDomainName();
+    assertEquals("Domain name was incorrectly sliced", UNAUTHORIZED_DOMAIN, actualDomain);
   }
 
   @Test
   public void testUnauthorizedUser() {
-    // Check that unauthorized users are correctly identified
-    User user = new User(UNAUTHORIZED_EMAIL, CONSTRUCTOR_DOMAIN);
-    String expectedDomain = UNAUTHORIZED_DOMAIN;
-    String actualDomain = UserAuthUtil.getDomainName();
-    System.out.println(actualDomain);
+    // Check that unauthorized users are correctly identified.
+    helper.setEnvEmail(UNAUTHORIZED_EMAIL);
+
   }
 
   @Test
