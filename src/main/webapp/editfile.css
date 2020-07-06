@@ -9,10 +9,9 @@ body {
   width: 500px;
 }
 
-#textbox {
+#editform {
   border: solid 3px black;
   margin: auto;
   padding: 50px;
   width: 500px;
 }
-

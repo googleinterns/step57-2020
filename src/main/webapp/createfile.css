@@ -1,5 +1,6 @@
 body {
   text-align: center;
+  margin: auto;
 }
 
 #links {
@@ -9,10 +10,10 @@ body {
   width: 500px;
 }
 
-#textbox {
+#createform {
+  text-align: center;
   border: solid 3px black;
-  margin: auto;
-  padding: 50px;
   width: 500px;
+  padding: 50px;
+  margin: auto;
 }
-
