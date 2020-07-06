@@ -16,22 +16,39 @@ public class UserAuthUtil {
 
   /**
    * @param redirect URL for webpage to return to after login
-   * @return
+   * @return URL for user to click to login
    */
   public static String getLoginURL(String redirect) {
     UserService userServ = UserServiceFactory.getUserService();
     return userServ.createLoginURL(redirect);
   }
+
+  /**
+   * @param redirect URL for webpage to return to after logout
+   * @return URL for user to click to logout
+   */
   public static String getLogoutURL(String redirect) {
     return UserServiceFactory.getUserService().createLogoutURL(redirect);
   }
+
+  /**
+   * Helper method to return a User object
+   */
   public static User getUser() {
     return UserServiceFactory.getUserService().getCurrentUser();
   }
+
+  /**
+   * Determines whether a user is authorized to use the requested resource
+   * @return true when the user's email domain is "google.com"
+   */
   public static boolean isUserAuthorized() {
     return getDomainName().equals("google.com");
   }
 
+  /**
+   * @return domain name from a user's email address
+   */
   private static String getDomainName() {
     String email = getUser().getEmail();
     return email.substring(email.indexOf('@') + 1);
