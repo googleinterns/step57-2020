@@ -37,7 +37,7 @@ public class BillingConfig extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // GET method --> returns entire billing config as JSON
   try {
-    Sheets sheetsService = sheetsService = SheetsServiceUtil.getSheetsService();
+    Sheets sheetsService = SheetsServiceUtil.getSheetsService();
 
     ValueRange body = new ValueRange().setValues(Arrays.asList(
       Arrays.asList("Expenses January"), 
