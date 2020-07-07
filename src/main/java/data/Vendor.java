@@ -14,6 +14,7 @@
 package data;
 
 import java.util.*;
+import org.json.JSONObject;
 
 /** A class representing a billing vendor object. */
 public class Vendor {
@@ -63,5 +64,16 @@ public class Vendor {
 
   public ArrayList<Account> getAccounts() {
     return accountList;
+  }
+
+  // Create and return a JSON object that contains Vendor fields.
+  public JSONObject toJson() {
+    JSONObject JSONVendor = new JSONObject();
+
+    JSONVendor.put("Legacy_Vendor_ID", getLegacyVendorID());
+    JSONVendor.put("Next_Gen_Vendor_ID", getNextGenVendorID());
+    JSONVendor.put("Accounts", getAccounts());
+
+    return JSONVendor;
   }
 }

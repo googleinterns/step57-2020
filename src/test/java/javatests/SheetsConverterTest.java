@@ -32,11 +32,22 @@ import data.SheetsServiceUtil;
 @RunWith(JUnit4.class)
 public final class SheetsConverterTest {
  private static final String SPREADSHEET_ID = "1QnVlh-pZHycxzgQuk0MN2nWOY6AGu9j4wGZaGzi_W9A";
-
-  // Can't test anything yet due to Auth complications.
   
   @Test
-  public void testUpdateSheetMethod() {
-    // A test method is necessary or else a build failure will occur.
+  public void testUpdateSheetMethod() throws GeneralSecurityException, IOException{
+    // switch branches to JSON converter.
+    // Sheets sheetsService = sheetsService = SheetsServiceUtil.getSheetsService();
+
+    // ValueRange body = new ValueRange().setValues(Arrays.asList(
+    //   Arrays.asList("Expenses January"), 
+    //   Arrays.asList("books", "30"), 
+    //   Arrays.asList("pens", "10"),
+    //   Arrays.asList("Expenses February"), 
+    //   Arrays.asList("clothes", "20"),
+    //   Arrays.asList("shoes", "5")));
+    // UpdateValuesResponse result = sheetsService.spreadsheets().values()
+    //   .update(SPREADSHEET_ID, "A1", body)
+    //   .setValueInputOption("RAW")
+    //   .execute();
   }
 }

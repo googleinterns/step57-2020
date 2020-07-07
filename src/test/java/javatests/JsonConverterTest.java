@@ -53,77 +53,77 @@ public final class JsonConverterTest {
       input == null);
   }
 
-  /** Test that createFile() writes the expected content to a file. */
-  @Test
-  public void testCreateFileMethodWritesExpectedContent() {
-    String vendorID = "vend_1";
-    String legVendID = "legVend_27";
-    int nextGenVendorID = 17;
-    Vendor vendor = new Vendor(vendorID, legVendID, nextGenVendorID);
+  // /** Test that createFile() writes the expected content to a file. */
+  // @Test
+  // public void testCreateFileMethodWritesExpectedContent() {
+  //   String vendorID = "vend_1";
+  //   String legVendID = "legVend_27";
+  //   int nextGenVendorID = 17;
+  //   Vendor vendor = new Vendor(vendorID, legVendID, nextGenVendorID);
 
-    JsonConverter converter = new JsonConverter();
-    File file = converter.createFile(vendor.getVendorID());
+  //   JsonConverter converter = new JsonConverter();
+  //   File file = converter.createFile(vendor.getVendorID());
 
-    String expectedFileContent = "{\"Vehicle\":{\"Car\":\"Blue Tacoma\"}}";
-    String fileContent = "";
+  //   String expectedFileContent = "{\"Vehicle\":{\"Car\":\"Blue Tacoma\"}}";
+  //   String fileContent = "";
 
-    Scanner input;
-    try {
-      input = new Scanner(file);
-    } catch(FileNotFoundException e) {
-      input = null;
-    }
+  //   Scanner input;
+  //   try {
+  //     input = new Scanner(file);
+  //   } catch(FileNotFoundException e) {
+  //     input = null;
+  //   }
 
-    while(input.hasNextLine()) {
-      fileContent += input.nextLine();
-    }
+  //   while(input.hasNextLine()) {
+  //     fileContent += input.nextLine();
+  //   }
 
-    assertTrue("createFile() didn't add the right content to the file.", 
-      fileContent.equals(expectedFileContent));
-  }
+  //   assertTrue("createFile() didn't add the right content to the file.", 
+  //     fileContent.equals(expectedFileContent));
+  // }
 
-  /** Test that updateFile() returns true for prototype. */
-  @Test
-  public void testUpdateFileMethod() throws IOException {
-    Vendor vendor = new Vendor();
-    JsonConverter converter = new JsonConverter();
+  // /** Test that updateFile() returns true for prototype. */
+  // @Test
+  // public void testUpdateFileMethod() throws IOException {
+  //   Vendor vendor = new Vendor();
+  //   JsonConverter converter = new JsonConverter();
 
-    boolean expectedResponse = true;
-    boolean actualResponse = converter.updateFile(vendor);
+  //   boolean expectedResponse = true;
+  //   boolean actualResponse = converter.updateFile(vendor);
 
-    assertTrue("updateFile() didn't return true when it should have.", 
-      expectedResponse == actualResponse);
-  }
+  //   assertTrue("updateFile() didn't return true when it should have.", 
+  //     expectedResponse == actualResponse);
+  // }
 
-  /** 
-   * Test that getConfig() returns the expected file content. 
-   * The vendorID must match an existing filepath in the filesystem.
-   */
-  @Test
-  public void testGetConfigMethod() {
-    JsonConverter converter = new JsonConverter();
-    String vendorID = "vend_1";
-    String expectedResponse = "{\"Vehicle\":{\"Car\":\"Blue Tacoma\"}}";
+  // /** 
+  //  * Test that getConfig() returns the expected file content. 
+  //  * The vendorID must match an existing filepath in the filesystem.
+  //  */
+  // @Test
+  // public void testGetConfigMethod() {
+  //   JsonConverter converter = new JsonConverter();
+  //   String vendorID = "vend_1";
+  //   String expectedResponse = "{\"Vehicle\":{\"Car\":\"Blue Tacoma\"}}";
 
-    String actualResponse = converter.getConfig(vendorID);
+  //   String actualResponse = converter.getConfig(vendorID);
 
-    assertTrue("getConfig() didn't return the expected file content.",
-      expectedResponse.equals(actualResponse));
-  }
+  //   assertTrue("getConfig() didn't return the expected file content.",
+  //     expectedResponse.equals(actualResponse));
+  // }
 
-  /** 
-   * Test that getConfig() returns null when faulty vendorID is passed in. 
-   * The vendorID must match an existing filepath in the filesystem.
-   */
-  @Test 
-  public void testGetConfigMethodWithFakeVendorID() {
-    JsonConverter converter = new JsonConverter();
-    String vendorID = "fakeVendorID";
-    String expectedResponse = null;
+  // /** 
+  //  * Test that getConfig() returns null when faulty vendorID is passed in. 
+  //  * The vendorID must match an existing filepath in the filesystem.
+  //  */
+  // @Test 
+  // public void testGetConfigMethodWithFakeVendorID() {
+  //   JsonConverter converter = new JsonConverter();
+  //   String vendorID = "fakeVendorID";
+  //   String expectedResponse = null;
 
-    String actualResponse = converter.getConfig(vendorID);
+  //   String actualResponse = converter.getConfig(vendorID);
 
-    assertTrue("getConfig() didn't return null when it should have.",
-      expectedResponse == actualResponse);
-  }
+  //   assertTrue("getConfig() didn't return null when it should have.",
+  //     expectedResponse == actualResponse);
+  // }
 }
