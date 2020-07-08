@@ -115,31 +115,20 @@ public class Account {
     this.aggregationMode = aggregationMode;
   }
 
-  // Create and return a JSON object that contains Account fields.
-  public LinkedHashMap toJson() {
-    // Use LinkedHashMap to preserve order.
-    LinkedHashMap accountMap = new LinkedHashMap();
-    LinkedHashMap settlementAttributesMap = new LinkedHashMap();
+  /** Return a String representation of Account fields. */
+  public String toString() {
+    StringBuilder accountBuilder = new StringBuilder();
+    accountBuilder.append("{Legacy_Account_ID:" + getLegacyAccountID());
+    accountBuilder.append(",Next_Gen_Customer_ID:" +  getNextGenAccountID());
+    accountBuilder.append(",Settlement_Attributes:{");
+    accountBuilder.append("Currency_Code:" + getCurrency());
+    accountBuilder.append(",Direction:" + getDirection());
+    accountBuilder.append(",Entity:" + getEntity() + "}");
+    accountBuilder.append(",Settlement_Config:{");
+    accountBuilder.append("Matching_Mode:" + getMatchingMode() + "}");
+    accountBuilder.append(",Account_ID:" + getAccountID());
+    accountBuilder.append(",Aggregation_Mode:" + getAggregationMode() + "}}");
 
-    // Create a JSON objects to contain Account fields.
-    JSONObject settlementConfig = new JSONObject();
-
-    // Populate settlementConfig JSON object. LEARN HOW TO PUT QUOTES AROUND A VARIABLE
-    settlementConfig.put("Matching_Mode", getMatchingMode());
-
-    // Populate settlementAttributes JSON object.
-    settlementAttributesMap.put("Currency_Code", getCurrency());
-    settlementAttributesMap.put("Direction", getDirection());
-    settlementAttributesMap.put("Entity", getEntity());
-
-    // Populate JSON account object.
-    accountMap.put("Legacy_Account_ID", getLegacyAccountID());
-    accountMap.put("Next_Gen_Customer_ID", getNextGenAccountID());
-    accountMap.put("Settlement_Attributes", settlementAttributesMap);
-    accountMap.put("Settlement_Config", settlementConfig);
-    accountMap.put("Account_ID", getAccountID());
-    accountMap.put("Aggregation_Mode", getAggregationMode());
-
-    return accountMap;
+    return accountBuilder.toString();
   }
 }
