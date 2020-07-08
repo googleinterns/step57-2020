@@ -13,6 +13,8 @@
 // limitations under the License.
 package data;
 
+import servlets.BillingConfig;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /** A class representing a billing vendor object. */
@@ -31,6 +33,19 @@ public class Vendor {
     this.legacyVendorID = legacyVendorID;
     this.nextGenVendorID = nextGenVendorID;
     accountList = new ArrayList<Account>();
+  }
+
+  public Vendor(HttpServletRequest request, String vendorID, int numAccounts) {
+    // where does the account ID come from?
+    this.vendorID = vendorID;
+    String accountID = "dummy";
+    this.legacyVendorID = request.getParameter(BillingConfig.LEGACY_CUSTOMER_ID);
+    this.nextGenVendorID = Integer.parseInt(
+            request.getParameter(BillingConfig.NEXT_GEN_CUSTOMER_ID));
+    Account newAccount = new Account(request, accountID, vendorID);
+    accountList = new ArrayList<>();
+    accountList.add(newAccount);
+
   }
 
   public String getVendorID() {
