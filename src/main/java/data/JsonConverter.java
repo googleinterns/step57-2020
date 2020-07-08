@@ -24,36 +24,43 @@ import org.json.JSONObject;
 /** A class that creates a config file from a Vendor object. */
 public class JsonConverter {
   private static final String FILE_PATH_BASE = "data/";
-  
-  public File createFile(String vendorID) {
-    String fileName = FILE_PATH_BASE + vendorID;
-
-    // Create a JSON object to write to the file.
-    JSONObject parentObject = new JSONObject();
-    JSONObject JSONCar = new JSONObject();
-    JSONCar.put("Car", "Blue Tacoma");
-    parentObject.put("Vehicle", JSONCar);
-
-    // Write the JSON object to the file.
-    File file = null;
-    try {
-      file = new File(fileName);
-      BufferedWriter out = new BufferedWriter(new FileWriter(file));
-      out.write(parentObject.toString());
-      out.close();
-    } catch(IOException e) {
-      return null;
-    } 
-
-    return file;
-  }
 
   public boolean updateFile(Vendor vendor) {
-    createFile(vendor.getVendorID());
+    String jsonConfig = vendor.createConfig();
+
+    // Create and write the contents to a File.
+    File billingFile = buildFile(vendor.getVendorID(), jsonConfig);
+    
+    if(billingFile == null) {
+      return false;
+    }
     return true;
   }
 
-  /** Retrieve and return the contents of the desired configuration. */
+  /**
+   * Create a new billig config file.
+   * @param vendorID a String representing a Vendor's ID.
+   * @param jsonConfig a String filled with billing config content.
+   * @return File representing a newly built config file.
+   */
+  public File buildFile(String vendorID, String jsonConfig) {
+    File billingFile = null;
+    try {
+      billingFile = new File(FILE_PATH_BASE + vendorID);
+      BufferedWriter out = new BufferedWriter(new FileWriter(billingFile));
+      out.write(jsonConfig);
+      out.close();
+    } catch(IOException e) {
+      return null;
+    }
+    return billingFile;
+  }
+
+  /**
+   * Retrieve and return the contents of the desired configuration.
+   * @param vendorID a String representing a Vendor's ID.
+   * @return a String representing the desired billing config.
+   */
   public String getConfig(String vendorID) {
     String configContents = "";
 
