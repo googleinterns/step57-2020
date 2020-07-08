@@ -64,4 +64,27 @@ public class Vendor {
   public ArrayList<Account> getAccounts() {
     return accountList;
   }
+
+  /** Return a String representing a billing config's JSON content. */
+  public String createConfig() {
+    ArrayList<Account> accounts = getAccounts();
+    String config = toString();
+
+    for(int i = 0; i < accounts.size(); i++) {
+      config += accounts.get(i).toString();
+    }
+    config += "]}";
+
+    return config;
+  }
+
+  /** Return a String representation of Vendor fields. */
+  public String toString() {
+    StringBuilder vendorBuilder = new StringBuilder();
+    vendorBuilder.append("{Legacy_Vendor_ID:" + getLegacyVendorID());
+    vendorBuilder.append(",Next_Gen_Vendor_ID:" +  getNextGenVendorID());
+    vendorBuilder.append(",Accounts:[");
+
+    return vendorBuilder.toString();
+  }
 }
