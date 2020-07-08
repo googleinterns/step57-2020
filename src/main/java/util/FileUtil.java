@@ -21,6 +21,6 @@ public class FileUtil {
 
   /** return true when delete succeeds? */
   public static boolean deleteVendorConfig(String vendorID) {
-
+    return false;
   }
 }
