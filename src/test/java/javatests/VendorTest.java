@@ -15,7 +15,9 @@
 package javatests;
 
 import java.util.*;
-import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -25,58 +27,84 @@ import data.Vendor;
 
 @RunWith(JUnit4.class)
 public final class VendorTest {
-    @Test
-    public void testVendorConstructorWithValidInput() {
-        // Create Vendor fields.
-        String vendorID = "vend_1";
-        String legVendID = "legVend_27";
-        int nextGenVendorID = 17;
+  private Vendor vendor;
+  private Account account;
+  private final String VENDOR_ID = "vend_1";
+  private final String LEGACY_VENDOR_ID = "legVend_27";
+  private final int NEXT_GEN_VENDOR_ID = 17;
+  private final String ACCOUNT_ID = "acc_12";
+  private final String ENTITY = "shopper";
+  private final String CURRENCY = "USD";
+  private final String DIRECTION = "disbursement";
+  private final String LEGACY_ACCOUNT_ID = "legAcc_53";
+  private final int NEXT_GEN_ACCOUNT_ID = 17;
+  private final String MATCHING_MODE = "straight";
+  private final String AGGREGATION_MODE = "totalAgg"; 
+     
+  /** Create a Vendor and Account object. */
+  @Before
+  public void setUp() {
+    vendor = new Vendor(VENDOR_ID, LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID);
+    account = new Account(ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION, 
+      LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE);
+  }
 
-        Vendor vendor = new Vendor(vendorID, legVendID, nextGenVendorID);
-
-        // Test that the constructor set the Vendor fields with the correct data.
-        assertTrue("Vendor Constructor incorrectly set vendorID field.", 
-            vendor.getVendorID().equals(vendorID));
-        assertTrue("Vendor Constructor incorrectly set legacyVendorID field.", 
-            vendor.getLegacyVendorID().equals(legVendID));
-        assertTrue("Vendor Constructor incorrectly set nextGenVendorID field.", 
-            vendor.getNextGenVendorID() == nextGenVendorID);   
-        assertTrue("Vendor Constructor incorrectly initialize accountList.", 
-            vendor.getAccounts().size() == 0);             
+  /** Test that the constructor set the Vendor fields with the correct data. */
+  @Test
+  public void testVendorConstructorWithValidInput() {
+    assertTrue("Vendor Constructor incorrectly set vendorID field.", 
+      vendor.getVendorID().equals(VENDOR_ID));
+    assertTrue("Vendor Constructor incorrectly set legacyVendorID field.", 
+      vendor.getLegacyVendorID().equals(LEGACY_VENDOR_ID));
+    assertTrue("Vendor Constructor incorrectly set nextGenVendorID field.", 
+      vendor.getNextGenVendorID() == NEXT_GEN_VENDOR_ID);   
+    assertTrue("Vendor Constructor incorrectly initialize accountList.", 
+      vendor.getAccounts().size() == 0);             
     }
 
-    @Test
-    public void testGetAccountsMethodWithNoElements() {
-        Vendor vendor = new Vendor();
+  /** Test that the accountList starts null/empty. */
+  @Test
+  public void testGetAccountsMethodWithNoElements() {
+    Vendor vendor = new Vendor();
 
-        // Test that the accountList is null/empty.
-        assertTrue("The accountList wasn't empty when it should have been.", 
-            vendor.getAccounts().size() == 0);
+    assertTrue("The accountList wasn't empty when it should have been.", 
+      vendor.getAccounts().size() == 0);
     }
 
-    @Test
-    public void testAddAccountMethod() {
-        // Create Account feilds.
-        String accountID = "acc_12";
-        String vendorID = "vend-21";
-        String entity = "shopper";
-        String currency = "USD";
-        String direction = "disbursement";
-        String legacyAccountID = "legAcc_53";
-        int nextGenAccountID = 17;
-        String matchingMode = "straight";
-        String aggregationMode = "totalAgg"; 
+  /** Test that the account was correctly added to the Vendor. */
+  @Test
+  public void testAddAccountMethod() {
+    vendor.addAccount(account);
 
-        Account account = new Account(accountID, vendorID, entity, currency, 
-            direction, legacyAccountID, nextGenAccountID, matchingMode, aggregationMode);
-        Vendor vendor = new Vendor();
+    assertTrue("The account wasn't added to the Vendor when it should have.",
+      vendor.getAccounts().size() == 1);
+    assertTrue("A different account then expected was added to the Vendor.",
+      vendor.getAccounts().get(0).getAccountID().equals(ACCOUNT_ID));
+  }
 
-        vendor.addAccount(account);
+  /** Test that toString() returns a String representation of an Vendor object. */
+  @Test
+  public void testToString() {
+    String expectedResponse = "{Legacy_Vendor_ID:legVend_27,"
+      + "Next_Gen_Vendor_ID:17,Accounts:[";
+    String actualResponse = vendor.toString();
 
-        // Test that the account was correctly added to the Vendor.
-        assertTrue("The account wasn't added to the Vendor when it was supposed to.",
-            vendor.getAccounts().size() == 1);
-        assertTrue("A different account then expected was added to the Vendor.",
-            vendor.getAccounts().get(0).getAccountID().equals(accountID));
-    }
+    assertTrue("Vendor's toString() method returned an incorrect String.", 
+      expectedResponse.equals(actualResponse));
+  }
+
+  /** Test that createConfig() returns a billing configs String contents. */
+  @Test
+  public void testCreateConfig() {
+    vendor.addAccount(account);
+    String expectedResponse = "{Legacy_Vendor_ID:legVend_27," + 
+      "Next_Gen_Vendor_ID:17,Accounts:[{Legacy_Account_ID:legAcc_53," + 
+      "Next_Gen_Customer_ID:17,Settlement_Attributes:{Currency_Code:USD," +
+      "Direction:disbursement,Entity:shopper},Settlement_Config:{" + 
+      "Matching_Mode:straight},Account_ID:acc_12,Aggregation_Mode:totalAgg}}]}";
+    String actualResponse = vendor.createConfig();
+
+    assertTrue("Vendor's createConfig() method returned an incorect String.", 
+      expectedResponse.equals(actualResponse));
+  }
 }
