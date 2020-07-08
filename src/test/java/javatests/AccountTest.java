@@ -15,50 +15,70 @@
 package javatests;
 
 import java.util.*;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.json.JSONObject;
 import static org.junit.Assert.assertTrue;
 import data.Account;
 import data.Vendor;
 
 @RunWith(JUnit4.class)
 public final class AccountTest {
-    @Test
-    public void testAccountConstructorWithValidInput() {
-        // Create Account feilds.
-        String accountID = "acc_12";
-        String vendorID = "vend-21";
-        String entity = "shopper";
-        String currency = "USD";
-        String direction = "disbursement";
-        String legacyAccountID = "legAcc_53";
-        int nextGenAccountID = 17;
-        String matchingMode = "straight";
-        String aggregationMode = "totalAgg"; 
+  private Account account;
+  private final String ACCOUNT_ID = "acc_12";
+  private final String VENDOR_ID = "vend-21";
+  private final String ENTITY = "shopper";
+  private final String CURRENCY = "USD";
+  private final String DIRECTION = "disbursement";
+  private final String LEGACY_ACCOUNT_ID = "legAcc_53";
+  private final int NEXT_GEN_ACCOUNT_ID = 17;
+  private final String MATCHING_MODE = "straight";
+  private final String AGGREGATION_MODE = "totalAgg"; 
 
-        Account account = new Account(accountID, vendorID, entity, currency, 
-            direction, legacyAccountID, nextGenAccountID, matchingMode, aggregationMode);
+  /** Create an Account object. */
+  @Before
+  public void setUp() {
+    account = new Account(ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION, 
+      LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE);
+  }
 
-        // Test that the constructor set the Vendor fields with the correct data.
-        assertTrue("Account Constructor incorrectly set accountID field.", 
-            account.getAccountID().equals(accountID));
-        assertTrue("Account Constructor incorrectly set vendorID field.", 
-            account.getVendorID().equals(vendorID));
-        assertTrue("Account Constructor incorrectly set entity field.", 
-            account.getEntity().equals(entity));
-        assertTrue("Account Constructor incorrectly set currency field.", 
-            account.getCurrency().equals(currency));   
-        assertTrue("Account Constructor incorrectly set direction field.", 
-            account.getDirection().equals(direction));       
-        assertTrue("Account Constructor incorrectly set legacyAccountID field.", 
-            account.getLegacyAccountID().equals(legacyAccountID));  
-        assertTrue("Account Constructor incorrectly set nextGenAccountID field.", 
-            account.getNextGenAccountID() == nextGenAccountID);  
-        assertTrue("Account Constructor incorrectly set matchingMode field.", 
-            account.getMatchingMode().equals(matchingMode));  
-        assertTrue("Account Constructor incorrectly set aggregationMode field.", 
-            account.getAggregationMode().equals(aggregationMode));        
-    }
+  /** Test that the constructor set the Vendor fields with the correct data. */
+  @Test
+  public void testAccountConstructorWithValidInput() {
+    assertTrue("Account Constructor incorrectly set accountID field.", 
+      account.getAccountID().equals(ACCOUNT_ID));
+    assertTrue("Account Constructor incorrectly set vendorID field.", 
+      account.getVendorID().equals(VENDOR_ID));
+    assertTrue("Account Constructor incorrectly set entity field.", 
+      account.getEntity().equals(ENTITY));
+    assertTrue("Account Constructor incorrectly set currency field.", 
+      account.getCurrency().equals(CURRENCY));   
+    assertTrue("Account Constructor incorrectly set direction field.", 
+      account.getDirection().equals(DIRECTION));       
+    assertTrue("Account Constructor incorrectly set legacyAccountID field.", 
+      account.getLegacyAccountID().equals(LEGACY_ACCOUNT_ID));  
+    assertTrue("Account Constructor incorrectly set nextGenAccountID field.", 
+      account.getNextGenAccountID() == NEXT_GEN_ACCOUNT_ID);  
+    assertTrue("Account Constructor incorrectly set matchingMode field.", 
+      account.getMatchingMode().equals(MATCHING_MODE));  
+    assertTrue("Account Constructor incorrectly set aggregationMode field.", 
+      account.getAggregationMode().equals(AGGREGATION_MODE));        
+  }
+
+  /** Test that toJson returns a String representation of an Account object. */
+  @Test
+  public void testToStringMethod() {
+    String expectedResponse = "{Legacy_Account_ID:legAcc_53," + 
+      "Next_Gen_Customer_ID:17,Settlement_Attributes:{Currency_Code:USD," +
+      "Direction:disbursement,Entity:shopper},Settlement_Config:{" + 
+      "Matching_Mode:straight},Account_ID:acc_12,Aggregation_Mode:totalAgg}}";
+    String actualResponse = account.toString();
+
+    assertTrue("Account's toString() method returned an incorrect String.", 
+      expectedResponse.equals(actualResponse));
+  }
 }
