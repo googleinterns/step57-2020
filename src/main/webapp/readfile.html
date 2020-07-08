@@ -14,12 +14,12 @@
       <a href="deletefile.html">Delete Configuration</a>
     </div>
     <div>
-    <form>  
+    <form id="config-search">  
       <p>Customer ID:</p>
-      <textarea></textarea><br>
+      <input type="text" id="customer-id"><br>
       <p>Account ID:</p>
-      <textarea></textarea><br>
-      <input type="submit">
+      <input type="text" id="account-id"><br>
+      <button type="submit">Search</button>
     </form>
     </div><br>
     <div id="textbox">
@@ -61,7 +61,7 @@
     </div><br>
     <div>
       <p>Select what format to view the file in:</p>
-      <form>
+      <form id="format-selector">
         <input type="checkbox" id="option1" name="option1" value="finance-read">
         <label for="option1">Spreadsheet Format</label><br>
         <input type="checkbox" id="option2" name="option2" value="engineer-read">
