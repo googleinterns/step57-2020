@@ -13,6 +13,10 @@
 // limitations under the License.
 package data;
 
+import servlets.BillingConfig;
+
+import javax.servlet.http.HttpServletRequest;
+
 /** A class representing a billing account object. */
 public class Account {
   private String accountID;
@@ -38,6 +42,21 @@ public class Account {
     this.nextGenAccountID = nextGenAccountID;
     this.matchingMode = matchingMode;
     this.aggregationMode = aggregationMode;
+  }
+
+  public Account(HttpServletRequest request, String accountID, String vendorID) {
+    this.accountID = accountID;
+    this.vendorID = vendorID;
+    this.legacyAccountID = request.getParameter(BillingConfig.LEGACY_ACCOUNT_ID);
+    this.nextGenAccountID = Integer.parseInt(
+            request.getParameter(BillingConfig.NEXT_GEN_ACCOUNT_ID));
+    this.currency = request.getParameter(BillingConfig.CURRENCY_CODE);
+    this.direction = request.getParameter(BillingConfig.DIRECTION);
+    this.entity = request.getParameter(BillingConfig.ENTITY);
+    this.matchingMode = request.getParameter(BillingConfig.MATCHING_MODE);
+//    = request.getParameter(BillingConfig.PRODUCT_ACCOUNT_KEY);
+    // TODO: @Charlie, how should we use this data?
+    this.aggregationMode= request.getParameter(BillingConfig.AGGREGATION_MODE);
   }
 
   public String getAccountID() {
