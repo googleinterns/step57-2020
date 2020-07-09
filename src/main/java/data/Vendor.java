@@ -64,4 +64,19 @@ public class Vendor {
   public ArrayList<Account> getAccounts() {
     return accountList;
   }
+
+  /** Return a JSON String representing a billing config's content. */
+  public String buildJsonConfig() {
+    ArrayList<Account> accounts = getAccounts();
+    String config = String.format("{\"legacy_vendor_id\":%s," +
+      "\"next_gen_vendor_id\":%d,\"accounts\":[", getLegacyVendorID(), 
+      getNextGenVendorID());
+
+    for(int i = 0; i < accounts.size(); i++) {
+      config += accounts.get(i).toJson();
+    }
+    config += "]}";
+
+    return config;
+  }
 }
