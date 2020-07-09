@@ -1,0 +1,23 @@
+.body {
+  text-align: center;
+  margin: auto;
+}
+
+#links {
+  text-align: center;
+  margin: auto;
+  border: solid 3px black;
+  width: 500px;
+}
+
+#delete-search {
+  text-align: center;
+  margin: auto;
+  border: solid 3px black;
+  width: 500px;
+  padding: 50px;
+}
+
+.modal-content {
+  text-align: center;
+}
