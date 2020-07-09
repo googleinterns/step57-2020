@@ -81,27 +81,31 @@ public final class VendorTest {
       vendor.getAccounts().get(0).getAccountID().equals(ACCOUNT_ID));
   }
 
-  /** Test that toString() returns a String representation of an Vendor object. */
+  /** Test that toJson() returns a String representation of an Vendor object. */
   @Test
-  public void testToString() {
-    String expectedResponse = "{Legacy_Vendor_ID:legVend_27,"
-      + "Next_Gen_Vendor_ID:17,Accounts:[";
-    String actualResponse = vendor.toString();
+  public void testToJson() {
+     String expectedResponse = String.format("{\"legacy_vendor_id\":%s," +
+      "\"next_gen_vendor_id\":%d,\"accounts\":[", LEGACY_VENDOR_ID, 
+      NEXT_GEN_VENDOR_ID);
+    String actualResponse = vendor.toJson();
 
-    assertTrue("Vendor's toString() method returned an incorrect String.", 
+    assertTrue("Vendor's toJson() method returned an incorrect String.", 
       expectedResponse.equals(actualResponse));
   }
 
-  /** Test that createConfig() returns a billing configs String contents. */
+  /** Test that buildJsonConfig() returns a billing configs String contents. */
   @Test
-  public void testCreateConfig() {
+  public void testBuildJsonConfig() {
     vendor.addAccount(account);
-    String expectedResponse = "{Legacy_Vendor_ID:legVend_27," + 
-      "Next_Gen_Vendor_ID:17,Accounts:[{Legacy_Account_ID:legAcc_53," + 
-      "Next_Gen_Customer_ID:17,Settlement_Attributes:{Currency_Code:USD," +
-      "Direction:disbursement,Entity:shopper},Settlement_Config:{" + 
-      "Matching_Mode:straight},Account_ID:acc_12,Aggregation_Mode:totalAgg}}]}";
-    String actualResponse = vendor.createConfig();
+    String expectedResponse = String.format("{\"legacy_vendor_id\":%s," +
+      "\"next_gen_vendor_id\":%d,\"accounts\":[{\"legacy_account_id\":%s," +
+      "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
+      "\"currency_code\":%s,\"direction\":%s,\"entity\":%s}," +
+      "\"settlement_config\":{\"matching_mode\":%s},\"account_id\":%s," +
+      "\"aggregation_mode\":%s}}]}", LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID,
+      LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, CURRENCY, DIRECTION, ENTITY, 
+      MATCHING_MODE, ACCOUNT_ID,AGGREGATION_MODE);
+    String actualResponse = vendor.buildJsonConfig();
 
     assertTrue("Vendor's createConfig() method returned an incorect String.", 
       expectedResponse.equals(actualResponse));
