@@ -68,7 +68,9 @@ public class Vendor {
   /** Return a JSON String representing a billing config's content. */
   public String buildJsonConfig() {
     ArrayList<Account> accounts = getAccounts();
-    String config = toJson();
+    String config = String.format("{\"legacy_vendor_id\":%s," +
+      "\"next_gen_vendor_id\":%d,\"accounts\":[", getLegacyVendorID(), 
+      getNextGenVendorID());
 
     for(int i = 0; i < accounts.size(); i++) {
       config += accounts.get(i).toJson();
@@ -76,12 +78,5 @@ public class Vendor {
     config += "]}";
 
     return config;
-  }
-
-  /** Return a JSON String representation of Vendor fields. */
-  public String toJson() {
-    return String.format("{\"legacy_vendor_id\":%s," +
-      "\"next_gen_vendor_id\":%d,\"accounts\":[", getLegacyVendorID(), 
-      getNextGenVendorID());
   }
 }

@@ -79,17 +79,6 @@ public final class VendorTest {
     assertEquals(vendor.getAccounts().get(0).getAccountID(), ACCOUNT_ID);
   }
 
-  /** Test that toJson() returns a String representation of an Vendor object. */
-  @Test
-  public void testToJson() {
-     String expectedResponse = String.format("{\"legacy_vendor_id\":%s," +
-      "\"next_gen_vendor_id\":%d,\"accounts\":[", LEGACY_VENDOR_ID, 
-      NEXT_GEN_VENDOR_ID);
-    String actualResponse = vendor.toJson();
-
-    assertEquals(expectedResponse, actualResponse);
-  }
-
   /** Test that buildJsonConfig() returns a billing configs String contents. */
   @Test
   public void testBuildJsonConfig() {
