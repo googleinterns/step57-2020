@@ -65,26 +65,25 @@ public class Vendor {
     return accountList;
   }
 
-  /** Return a String representing a billing config's JSON content. */
-  public String createConfig() {
+  /** Return a JSON String representing a billing config's content. */
+  public String buildJsonConfig() {
     ArrayList<Account> accounts = getAccounts();
-    String config = toString();
+    String config = toJson();
 
     for(int i = 0; i < accounts.size(); i++) {
-      config += accounts.get(i).toString();
+      config += accounts.get(i).toJson();
     }
     config += "]}";
 
     return config;
   }
 
-  /** Return a String representation of Vendor fields. */
-  public String toString() {
-    StringBuilder vendorBuilder = new StringBuilder();
-    vendorBuilder.append("{Legacy_Vendor_ID:" + getLegacyVendorID());
-    vendorBuilder.append(",Next_Gen_Vendor_ID:" +  getNextGenVendorID());
-    vendorBuilder.append(",Accounts:[");
+  /** Return a JSON String representation of Vendor fields. */
+  public String toJson() {
+    String vendorJson = String.format("{\"legacy_vendor_id\":%s," +
+      "\"next_gen_vendor_id\":%d,\"accounts\":[", getLegacyVendorID(), 
+      getNextGenVendorID());
 
-    return vendorBuilder.toString();
+    return vendorJson;
   }
 }

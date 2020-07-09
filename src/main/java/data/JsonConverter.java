@@ -26,24 +26,21 @@ public class JsonConverter {
   private static final String FILE_PATH_BASE = "data/";
 
   public boolean updateFile(Vendor vendor) {
-    String jsonConfig = vendor.createConfig();
+    String jsonConfig = vendor.buildJsonConfig();
 
     // Create and write the contents to a File.
-    File billingFile = buildFile(vendor.getVendorID(), jsonConfig);
+    File billingFile = writeFile(vendor.getVendorID(), jsonConfig);
     
-    if(billingFile == null) {
-      return false;
-    }
-    return true;
+    return billingFile != null;
   }
 
   /**
-   * Create a new billig config file.
+   * Write a new billig config file to the local filesystem.
    * @param vendorID a String representing a Vendor's ID.
    * @param jsonConfig a String filled with billing config content.
    * @return File representing a newly built config file.
    */
-  public File buildFile(String vendorID, String jsonConfig) {
+  public File writeFile(String vendorID, String jsonConfig) {
     File billingFile = null;
     try {
       billingFile = new File(FILE_PATH_BASE + vendorID);

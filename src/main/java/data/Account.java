@@ -115,20 +115,16 @@ public class Account {
     this.aggregationMode = aggregationMode;
   }
 
-  /** Return a String representation of Account fields. */
-  public String toString() {
-    StringBuilder accountBuilder = new StringBuilder();
-    accountBuilder.append("{Legacy_Account_ID:" + getLegacyAccountID());
-    accountBuilder.append(",Next_Gen_Customer_ID:" +  getNextGenAccountID());
-    accountBuilder.append(",Settlement_Attributes:{");
-    accountBuilder.append("Currency_Code:" + getCurrency());
-    accountBuilder.append(",Direction:" + getDirection());
-    accountBuilder.append(",Entity:" + getEntity() + "}");
-    accountBuilder.append(",Settlement_Config:{");
-    accountBuilder.append("Matching_Mode:" + getMatchingMode() + "}");
-    accountBuilder.append(",Account_ID:" + getAccountID());
-    accountBuilder.append(",Aggregation_Mode:" + getAggregationMode() + "}}");
+  /** Return a JSON String representation of the fields. */
+  public String toJson() {
+    String accountJson = String.format("{\"legacy_account_id\":%s," +
+      "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
+      "\"currency_code\":%s,\"direction\":%s,\"entity\":%s}," +
+      "\"settlement_config\":{\"matching_mode\":%s},\"account_id\":%s," +
+      "\"aggregation_mode\":%s}}", getLegacyAccountID(), getNextGenAccountID(), 
+      getCurrency(), getDirection(), getEntity(), getMatchingMode(), 
+      getAccountID(), getAggregationMode());
 
-    return accountBuilder.toString();
+    return accountJson;
   }
 }
