@@ -72,6 +72,21 @@
       <artifactId>json</artifactId>
       <version>20150729</version>
     </dependency>
+
+    <dependency> <!-- gives access to appengine development tools  -->
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-tools-sdk</artifactId>
+      <version>1.9.64</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency> <!-- gives access to appengine test tools -->
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-testing</artifactId>
+      <version>1.9.64</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <build>

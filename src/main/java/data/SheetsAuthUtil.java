@@ -44,9 +44,6 @@ public class SheetsAuthUtil {
     return GoogleCredential.getApplicationDefault().createScoped(Collections.singleton(
        SheetsScopes.SPREADSHEETS));
        
-    // fromStream(SheetsAuthUtil.class.getResourceAsStream(
-    //   "/google-sheets-api.json")).createScoped(Collections.singleton(
-    //   SheetsScopes.SPREADSHEETS));
   }
 }
 

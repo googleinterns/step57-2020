@@ -36,6 +36,7 @@ public class BillingConfig extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // GET method --> returns entire billing config as JSON
+<<<<<<< HEAD
   try {
     Sheets sheetsService = SheetsServiceUtil.getSheetsService();
 
@@ -55,6 +56,9 @@ public class BillingConfig extends HttpServlet {
     }
 
 
+=======
+    // return null if vendor ID doesn't exist
+>>>>>>> 2c05ce2774bfaf649e42dd3b3497372e625ac36f
     response.setContentType("text/html;");
     response.getWriter().println(
             "{ \"legacy_customer_id\": \"STRING\", " +

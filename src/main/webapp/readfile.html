@@ -6,65 +6,58 @@
     <link rel="stylesheet" href="readfile.css">
   </head>
   <body>
-    <h1>Billing Configuration Sync Tool</h1>
-    </br>
+    <h1>Billing Configuration Sync Tool</h1><br>
     <h2>Read Configuration</h2> 
     <div id="links">
       <a href="editfile.html">Edit Configuration</a>
+      <a href="createfile.html">Create Configuration</a>
     </div>
-    <!-- Search Div -->
     <div>
     <form>  
       <p>Customer ID:</p>
-      <textarea></textarea>
-      </br>
+      <textarea></textarea><br>
       <p>Account ID:</p>
-      <textarea></textarea>
-      </br>
+      <textarea></textarea><br>
       <input type="submit">
     </form>
-    </div>
-    </br>
-    <!-- Text Box Div -->
+    </div><br>
     <div id="textbox">
-      <p>{
-        "legacy_customer_id": "STRING",
-        "next_gen_customer_id": "INT",
-        "accounts": [
-          {
-            "legacy_account_id": "STRING",
-            "next_gen_customer_id": "INT",
-            "settlement_attributes": {
-              "currency_code": "STRING",
-              "direction": "STRING",
-              "entity": "STRING"
-            },
-            "settlement_config": {
-              "matching_mode": "STRING"  
-            },
-            "product_account_key": "STRING",
-            "aggregation_mode": "STRING"
-          },
-          {
-            "legacy_account_id": "STRING",
-            "next_gen_customer_id": "INT",
-            "settlement_attributes": {
-              "currency_code": "STRING",
-              "direction": "STRING",
-              "entity": "STRING"
-            },
-            "settlement_config": {
-              "matching_mode": "STRING"
-            },
-            "product_account_key": "STRING",
-            "aggregation_mode": "STRING"
-          }
-        ]
-      }
+      <p>{<br>
+        "legacy_customer_id": "STRING",<br>
+        "next_gen_customer_id": "INT",<br>
+        "accounts": [<br>
+          {<br>
+            "legacy_account_id": "STRING",<br>
+            "next_gen_customer_id": "INT",<br>
+            "settlement_attributes": {<br>
+              "currency_code": "STRING",<br>
+              "direction": "STRING",<br>
+              "entity": "STRING"<br>
+            },<br>
+            "settlement_config": {<br>
+              "matching_mode": "STRING"<br>  
+            },<br>
+            "product_account_key": "STRING",<br>
+            "aggregation_mode": "STRING"<br>
+          },<br>
+          {<br>
+            "legacy_account_id": "STRING",<br>
+            "next_gen_customer_id": "INT",<br>
+            "settlement_attributes": {<br>
+              "currency_code": "STRING",<br>
+              "direction": "STRING",<br>
+              "entity": "STRING"<br>
+            },<br>
+            "settlement_config": {<br>
+              "matching_mode": "STRING"<br>
+            },<br>
+            "product_account_key": "STRING",<br>
+            "aggregation_mode": "STRING"<br>
+          }<br>
+        ]<br>
+      }<br>
       </p>
-    </div>
-    </br>
-    <!-- Checkbox Div -->
+    </div><br>
     <div>
       <p>Select what format to view the file in:</p>
       <form>
