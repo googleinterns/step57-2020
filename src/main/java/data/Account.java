@@ -55,7 +55,7 @@ public class Account {
     this.entity = request.getParameter(BillingConfig.ENTITY);
     this.matchingMode = request.getParameter(BillingConfig.MATCHING_MODE);
 //    = request.getParameter(BillingConfig.PRODUCT_ACCOUNT_KEY);
-    // TODO: @Charlie, how should we use this data?
+    // TODO: @Charlie should we throw this out?
     this.aggregationMode= request.getParameter(BillingConfig.AGGREGATION_MODE);
   }
 

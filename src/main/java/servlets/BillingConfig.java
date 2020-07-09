@@ -14,6 +14,10 @@
 
 package servlets;
 
+import data.JsonConverter;
+import data.Vendor;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Map;
@@ -26,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 public class BillingConfig extends HttpServlet {
   private static final String CONTENT_TYPE_TEXT_HTML = "text/html;";
 
+  public static final String VENDOR_ID = "vendor-id";
+  public static final String ACCOUNT_ID = "account-id";
   public static final String LEGACY_CUSTOMER_ID = "legacy-customer-id";
   public static final String NEXT_GEN_CUSTOMER_ID = "next-gen-customer-id";
   public static final String LEGACY_ACCOUNT_ID = "legacy-account-id";
@@ -41,37 +47,50 @@ public class BillingConfig extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // GET method --> returns entire billing config as JSON
     // return null if vendor ID doesn't exist
-    response.setContentType("text/html;");
-    response.getWriter().println(
-            "{ \"legacy_customer_id\": \"STRING\", " +
-            "\"next_gen_customer_id\": \"INT\", \"accounts\": [ { \"legacy_account_id\": " +
-            "\"STRING\", \"next_gen_customer_id\": \"INT\", \"settlement_attributes\": " +
-            "{ \"currency_code\": \"STRING\", \"direction\": \"STRING\", \"entity\": " +
-            "\"STRING\" }, \"settlement_config\": { \"matching_mode\": \"STRING\" }, " +
-            "\"product_account_key\": \"STRING\", \"aggregation_mode\": \"STRING\" }, " +
-            "{ \"legacy_account_id\": \"STRING\", \"next_gen_customer_id\": \"INT\"," +
-            " \"settlement_attributes\": { \"currency_code\": \"STRING\", \"direction\": " +
-            "\"STRING\", \"entity\": \"STRING\" }, \"settlement_config\": { \"matching_mode\": " +
-            "\"STRING\" }, \"product_account_key\": \"STRING\", \"aggregation_mode\": " +
-            "\"STRING\" } ] }"
-    );
+    String vendorID = request.getParameter(VENDOR_ID);
+    String accountID = request.getParameter(ACCOUNT_ID);
+    System.out.println(vendorID + accountID);
+    JsonConverter json = new JsonConverter();
+    String configText = "";
+
+    if (json.getConfig(vendorID) != null) {
+      configText = "found it";
+    } else {
+      configText = "didn't find it";
+    }
+
+    response.setContentType(CONTENT_TYPE_TEXT_HTML);
+    response.getWriter().println(configText);
+//    response.getWriter().println(
+//            "{ \"legacy_customer_id\": \"STRING\", " +
+//            "\"next_gen_customer_id\": \"INT\", \"accounts\": [ { \"legacy_account_id\": " +
+//            "\"STRING\", \"next_gen_customer_id\": \"INT\", \"settlement_attributes\": " +
+//            "{ \"currency_code\": \"STRING\", \"direction\": \"STRING\", \"entity\": " +
+//            "\"STRING\" }, \"settlement_config\": { \"matching_mode\": \"STRING\" }, " +
+//            "\"product_account_key\": \"STRING\", \"aggregation_mode\": \"STRING\" }, " +
+//            "{ \"legacy_account_id\": \"STRING\", \"next_gen_customer_id\": \"INT\"," +
+//            " \"settlement_attributes\": { \"currency_code\": \"STRING\", \"direction\": " +
+//            "\"STRING\", \"entity\": \"STRING\" }, \"settlement_config\": { \"matching_mode\": " +
+//            "\"STRING\" }, \"product_account_key\": \"STRING\", \"aggregation_mode\": " +
+//            "\"STRING\" } ] }"
+//    );
+  }
+
+  private String getConfig(String vendorID) {
+    String contents = "";
+    File config = new File("~/step/data/sample");
+    return contents;
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // POST method --> overwrites the existing configuration or creates a new one
     // currently assuming there is only one account --> add this to the form @Vincent?
-    System.out.println(request.getParameter(LEGACY_CUSTOMER_ID));
-    System.out.println(request.getParameter(NEXT_GEN_CUSTOMER_ID));
-    System.out.println(request.getParameter(LEGACY_ACCOUNT_ID));
-    System.out.println(request.getParameter(NEXT_GEN_ACCOUNT_ID));
-    System.out.println(request.getParameter(CURRENCY_CODE));
-    System.out.println(request.getParameter(DIRECTION));
-    System.out.println(request.getParameter(ENTITY));
-    System.out.println(request.getParameter(MATCHING_MODE));
-    System.out.println(request.getParameter(PRODUCT_ACCOUNT_KEY));
-    System.out.println(request.getParameter(AGGREGATION_MODE));
+    // TODO: can the vendor ID be appended to the request as a query string @vincent?
+    String tempVendorID = "ALPHA";
+    Vendor newVendor = new Vendor(request, tempVendorID, 1);
+    JsonConverter jsonConverter = new JsonConverter();
     response.setContentType(CONTENT_TYPE_TEXT_HTML);
-//    response.sendRedirect("/index.html");
+    response.sendRedirect("/index.html");
   }
 }

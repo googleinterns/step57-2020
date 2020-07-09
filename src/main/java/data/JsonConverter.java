@@ -59,6 +59,7 @@ public class JsonConverter {
 
     // Retrieve the file with the corresponding vendorID.
     File config = new File(FILE_PATH_BASE + vendorID);
+    System.out.println(config.getAbsolutePath());
 
     Scanner input;
     try {
