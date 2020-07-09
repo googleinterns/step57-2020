@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 package javatests;
 
 import java.util.*;
@@ -23,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.json.JSONObject;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import data.Account;
 import data.Vendor;
 
@@ -49,33 +49,30 @@ public final class AccountTest {
   /** Test that the constructor set the Vendor fields with the correct data. */
   @Test
   public void testAccountConstructorWithValidInput() {
-    assertTrue("Account Constructor incorrectly set accountID field.", 
-      account.getAccountID().equals(ACCOUNT_ID));
-    assertTrue("Account Constructor incorrectly set vendorID field.", 
-      account.getVendorID().equals(VENDOR_ID));
-    assertTrue("Account Constructor incorrectly set entity field.", 
-      account.getEntity().equals(ENTITY));
-    assertTrue("Account Constructor incorrectly set currency field.", 
-      account.getCurrency().equals(CURRENCY));   
-    assertTrue("Account Constructor incorrectly set direction field.", 
-      account.getDirection().equals(DIRECTION));       
-    assertTrue("Account Constructor incorrectly set legacyAccountID field.", 
-      account.getLegacyAccountID().equals(LEGACY_ACCOUNT_ID));  
+    assertEquals(account.getAccountID(), ACCOUNT_ID);
+    assertEquals(account.getVendorID(), VENDOR_ID);
+    assertEquals(account.getEntity(), ENTITY);
+    assertEquals(account.getCurrency(), CURRENCY);   
+    assertEquals(account.getDirection(), DIRECTION);       
+    assertEquals(account.getLegacyAccountID(), LEGACY_ACCOUNT_ID);  
     assertTrue("Account Constructor incorrectly set nextGenAccountID field.", 
       account.getNextGenAccountID() == NEXT_GEN_ACCOUNT_ID);  
-    assertTrue("Account Constructor incorrectly set matchingMode field.", 
-      account.getMatchingMode().equals(MATCHING_MODE));  
-    assertTrue("Account Constructor incorrectly set aggregationMode field.", 
-      account.getAggregationMode().equals(AGGREGATION_MODE));        
+    assertEquals(account.getMatchingMode(), MATCHING_MODE);  
+    assertEquals(account.getAggregationMode(), AGGREGATION_MODE);        
   }
 
-  // /** Test that toJson returns a LinkedHashMap of JSONObjects. */
-  // @Test
-  // public void testToJsonMethod() {
-  //   LinkedHashMap accountMap = account.toJson();
+  /** Test that toJson returns a String representation of an Account object. */
+  @Test
+  public void testToJsonMethod() {
+    String expectedResponse = String.format("{\"legacy_account_id\":%s," +
+      "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
+      "\"currency_code\":%s,\"direction\":%s,\"entity\":%s}," +
+      "\"settlement_config\":{\"matching_mode\":%s},\"account_id\":%s," +
+      "\"aggregation_mode\":%s}}", LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID,
+      CURRENCY, DIRECTION, ENTITY, MATCHING_MODE, ACCOUNT_ID,AGGREGATION_MODE); 
 
-  //   System.out.println(accountMap.toString());
-  //   // Create what the LinkedHashMap should be.
-  //   // Ask how I should test it.
-  // }
+    String actualResponse = account.toJson();
+
+    assertEquals(expectedResponse, actualResponse);
+  }
 }

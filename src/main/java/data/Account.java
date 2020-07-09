@@ -13,6 +13,9 @@
 // limitations under the License.
 package data;
 
+import java.util.*;
+import org.json.JSONObject;
+
 /** A class representing a billing account object. */
 public class Account {
   private String accountID;
@@ -110,5 +113,17 @@ public class Account {
 
   public void setAggregationMode(String aggregationMode) {
     this.aggregationMode = aggregationMode;
+  }
+
+  /** Return a JSON String representation of the fields. */
+  public String toJson() {
+    return String.format("{\"legacy_account_id\":%s," +
+      "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
+      "\"currency_code\":%s,\"direction\":%s,\"entity\":%s}," +
+      "\"settlement_config\":{\"matching_mode\":%s},\"account_id\":%s," +
+      "\"aggregation_mode\":%s}}", getLegacyAccountID(), getNextGenAccountID(), 
+      getCurrency(), getDirection(), getEntity(), getMatchingMode(), 
+      getAccountID(), getAggregationMode());
+
   }
 }

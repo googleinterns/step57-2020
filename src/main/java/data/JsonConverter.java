@@ -1,3 +1,4 @@
+ 
 // Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,96 +25,57 @@ import org.json.JSONObject;
 /** A class that creates a config file from a Vendor object. */
 public class JsonConverter {
   private static final String FILE_PATH_BASE = "data/";
-  
-  public File createFile(String vendorID) {
-    String fileName = FILE_PATH_BASE + vendorID;
 
-    // Create a JSON object to write to the file.
-    JSONObject parentObject = new JSONObject();
-    JSONObject JSONCar = new JSONObject();
-    JSONCar.put("Car", "Blue Tacoma");
-    parentObject.put("Vehicle", JSONCar);
+  public boolean updateFile(Vendor vendor) {
+    String jsonConfig = vendor.buildJsonConfig();
 
-    // Write the JSON object to the file.
-    File file = null;
+    // Create and write the contents to a File.
+    File billingFile = writeFile(vendor.getVendorID(), jsonConfig);
+    
+    return billingFile != null;
+  }
+
+  /**
+   * Write a new billig config file to the local filesystem.
+   * @param vendorID a String representing a Vendor's ID.
+   * @param jsonConfig a String filled with billing config content.
+   * @return File representing a newly built config file.
+   */
+  public File writeFile(String vendorID, String jsonConfig) {
+    File billingFile = null;
     try {
-      file = new File(fileName);
-      BufferedWriter out = new BufferedWriter(new FileWriter(file));
-      out.write(parentObject.toString());
+      billingFile = new File(FILE_PATH_BASE + vendorID);
+      BufferedWriter out = new BufferedWriter(new FileWriter(billingFile));
+      out.write(jsonConfig);
       out.close();
     } catch(IOException e) {
       return null;
-    } 
-
-    return file;
+    }
+    return billingFile;
   }
 
-  // public boolean updateFile(Vendor vendor) {
-  //   createFile(vendor.getVendorID());
+  /**
+   * Retrieve and return the contents of the desired configuration.
+   * @param vendorID a String representing a Vendor's ID.
+   * @return a String representing the desired billing config.
+   */
+  public String getConfig(String vendorID) {
+    String configContents = "";
 
-  //   JSONObject JSONVendor = vendor.toJson();
-  //   ArrayList<LinkedHashMap> JSONAccounts = createAccountJSONObjects(vendor.getAccounts());
+    // Retrieve the file with the corresponding vendorID.
+    File config = new File(FILE_PATH_BASE + vendorID);
 
-  //   // Create and write the contents to a File.
-  //   File billingFile = buildFile(vendor.getVendorID(), JSONVendor, JSONAccounts);
-    
-  //   if(billingFile == null) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
+    Scanner input;
+    try {
+      input = new Scanner(config);
+    } catch(FileNotFoundException e) {
+      return null;
+    }
 
-  // // Create the Account body of the JSON file.
-  // public ArrayList<LinkedHashMap> createAccountJSONObjects(ArrayList<Account> accounts) {       
-  //   ArrayList<LinkedHashMap> JSONAccounts = new ArrayList<LinkedHashMap>();
+    while(input.hasNextLine()) {
+      configContents += input.nextLine();
+    }
 
-  //   for(int i = 0; i < accounts.size(); i++) {
-  //     JSONAccounts.add(accounts.get(i).toJson());
-  //   }
-    
-  //   return JSONAccounts;
-  // }
-
-  // // Write the JSON objects to a file.
-  // public File buildFile(String vendorID, JSONObject JSONVendor, ArrayList<LinkedHashMap> JSONAccounts) {
-  //   File billingFile = null;
-  //   try {
-  //     billingFile = new File(FILE_PATH_BASE + vendorID);
-  //     BufferedWriter out = new BufferedWriter(new FileWriter(billingFile));
-  //     out.write(JSONVendor.toString());
-
-  //     for(int i = 0; i < JSONAccounts.size(); i++) {
-  //       out.write(JSONAccounts.get(i).toString());
-  //     }
-
-  //     out.close();
-  //   } catch(IOException e) {
-  //     return null;
-  //   }
-  //   return billingFile;
-  // }
-
-
-  // /** Retrieve and return the contents of the desired configuration. */
-  // public String getConfig(String vendorID) {
-  //   String configContents = "";
-
-  //   // Retrieve the file with the corresponding vendorID.
-  //   File config = new File(FILE_PATH_BASE + vendorID);
-
-  //   Scanner input;
-  //   try {
-  //     input = new Scanner(config);
-  //   } catch(FileNotFoundException e) {
-  //     return null;
-  //   }
-
-  //   while(input.hasNextLine()) {
-  //     configContents += input.nextLine();
-  //   }
-
-  //   return configContents;
-  // }
+    return configContents;
+  }
 }
-
-// do a string builder for vendor and accounts
