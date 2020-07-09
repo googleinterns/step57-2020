@@ -19,3 +19,7 @@ $('#deleteForm').on('submit', function(e){
   $('#deleteModal').modal('show');
   e.preventDefault();
 });
+
+//getAccountId() and getCustomerId()... these are async fetch functions
+
+// TODO: OAuth stuff
