@@ -13,17 +13,13 @@
 // limitations under the License.
 package data;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import org.json.JSONObject;
 
 /** A class that creates a config file from a Vendor object. */
 public class JsonConverter {
-  private static final String FILE_PATH_BASE = "data/";
+  private static final String FILE_PATH_BASE = "";
   
   public File createFile(String vendorID) {
     String fileName = FILE_PATH_BASE + vendorID;
@@ -59,8 +55,6 @@ public class JsonConverter {
 
     // Retrieve the file with the corresponding vendorID.
     File config = new File(FILE_PATH_BASE + vendorID);
-    System.out.println(config.getAbsolutePath());
-
     Scanner input;
     try {
       input = new Scanner(config);

@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/BillingConfig")
 public class BillingConfig extends HttpServlet {
   private static final String CONTENT_TYPE_TEXT_HTML = "text/html;";
+  private static final String REDIRECT_READFILE = "/index.html";
 
   public static final String VENDOR_ID = "vendor-id";
   public static final String ACCOUNT_ID = "account-id";
@@ -54,32 +55,14 @@ public class BillingConfig extends HttpServlet {
     String configText = "";
 
     if (json.getConfig(vendorID) != null) {
-      configText = "found it";
+      configText = json.getConfig(vendorID);
     } else {
-      configText = "didn't find it";
+      configText = "Error finding " + vendorID + "'s configuration";
     }
 
     response.setContentType(CONTENT_TYPE_TEXT_HTML);
     response.getWriter().println(configText);
-//    response.getWriter().println(
-//            "{ \"legacy_customer_id\": \"STRING\", " +
-//            "\"next_gen_customer_id\": \"INT\", \"accounts\": [ { \"legacy_account_id\": " +
-//            "\"STRING\", \"next_gen_customer_id\": \"INT\", \"settlement_attributes\": " +
-//            "{ \"currency_code\": \"STRING\", \"direction\": \"STRING\", \"entity\": " +
-//            "\"STRING\" }, \"settlement_config\": { \"matching_mode\": \"STRING\" }, " +
-//            "\"product_account_key\": \"STRING\", \"aggregation_mode\": \"STRING\" }, " +
-//            "{ \"legacy_account_id\": \"STRING\", \"next_gen_customer_id\": \"INT\"," +
-//            " \"settlement_attributes\": { \"currency_code\": \"STRING\", \"direction\": " +
-//            "\"STRING\", \"entity\": \"STRING\" }, \"settlement_config\": { \"matching_mode\": " +
-//            "\"STRING\" }, \"product_account_key\": \"STRING\", \"aggregation_mode\": " +
-//            "\"STRING\" } ] }"
-//    );
-  }
-
-  private String getConfig(String vendorID) {
-    String contents = "";
-    File config = new File("~/step/data/sample");
-    return contents;
+    response.sendRedirect(REDIRECT_READFILE);
   }
 
   @Override
