@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import data.Account;
 import data.Vendor;
 
@@ -51,10 +52,8 @@ public final class VendorTest {
   /** Test that the constructor set the Vendor fields with the correct data. */
   @Test
   public void testVendorConstructorWithValidInput() {
-    assertTrue("Vendor Constructor incorrectly set vendorID field.", 
-      vendor.getVendorID().equals(VENDOR_ID));
-    assertTrue("Vendor Constructor incorrectly set legacyVendorID field.", 
-      vendor.getLegacyVendorID().equals(LEGACY_VENDOR_ID));
+    assertEquals(vendor.getVendorID(), VENDOR_ID);
+    assertEquals(vendor.getLegacyVendorID(), LEGACY_VENDOR_ID);
     assertTrue("Vendor Constructor incorrectly set nextGenVendorID field.", 
       vendor.getNextGenVendorID() == NEXT_GEN_VENDOR_ID);   
     assertTrue("Vendor Constructor incorrectly initialize accountList.", 
@@ -77,8 +76,7 @@ public final class VendorTest {
 
     assertTrue("The account wasn't added to the Vendor when it should have.",
       vendor.getAccounts().size() == 1);
-    assertTrue("A different account then expected was added to the Vendor.",
-      vendor.getAccounts().get(0).getAccountID().equals(ACCOUNT_ID));
+    assertEquals(vendor.getAccounts().get(0).getAccountID(), ACCOUNT_ID);
   }
 
   /** Test that toJson() returns a String representation of an Vendor object. */
@@ -89,8 +87,7 @@ public final class VendorTest {
       NEXT_GEN_VENDOR_ID);
     String actualResponse = vendor.toJson();
 
-    assertTrue("Vendor's toJson() method returned an incorrect String.", 
-      expectedResponse.equals(actualResponse));
+    assertEquals(expectedResponse, actualResponse);
   }
 
   /** Test that buildJsonConfig() returns a billing configs String contents. */
@@ -107,7 +104,6 @@ public final class VendorTest {
       MATCHING_MODE, ACCOUNT_ID,AGGREGATION_MODE);
     String actualResponse = vendor.buildJsonConfig();
 
-    assertTrue("Vendor's createConfig() method returned an incorect String.", 
-      expectedResponse.equals(actualResponse));
+    assertEquals(expectedResponse, actualResponse);
   }
 }

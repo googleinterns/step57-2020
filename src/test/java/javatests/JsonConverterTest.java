@@ -25,6 +25,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 import data.JsonConverter;
 import data.Vendor;
 import data.Account;
@@ -78,8 +79,7 @@ public final class JsonConverterTest {
 
     String actualResponse = converter.getConfig(vendorID);
 
-    assertTrue("getConfig() didn't return the expected file content.",
-      expectedResponse.equals(actualResponse));
+    assertEquals(expectedResponse, actualResponse);
   }
 
   /** 
@@ -100,7 +100,7 @@ public final class JsonConverterTest {
 
   /** Test that writeFile() returns a File with the expected content. */
   @Test
-  public void testWriteFile() {
+  public void testWriteFile() throws FileNotFoundException {
     JsonConverter converter = new JsonConverter();
     vendor.addAccount(account);
 
@@ -116,17 +116,13 @@ public final class JsonConverterTest {
 
     File file = converter.writeFile(vendor.getVendorID(), vendor.buildJsonConfig());
     Scanner input = null;
-    try {
-      input = new Scanner(file);
-    } catch(FileNotFoundException e) {
-      e.printStackTrace();
-    }
+    input = new Scanner(file);
+
 
     while(input.hasNextLine()) {
       actualResponse += input.nextLine();
     }
 
-    assertTrue("writeFile() returned a file with incorrect contents.", 
-      expectedResponse.equals(actualResponse));
+    assertEquals(expectedResponse, actualResponse);
   }
 }
