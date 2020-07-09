@@ -80,10 +80,8 @@ public class Vendor {
 
   /** Return a JSON String representation of Vendor fields. */
   public String toJson() {
-    String vendorJson = String.format("{\"legacy_vendor_id\":%s," +
+    return String.format("{\"legacy_vendor_id\":%s," +
       "\"next_gen_vendor_id\":%d,\"accounts\":[", getLegacyVendorID(), 
       getNextGenVendorID());
-
-    return vendorJson;
   }
 }
