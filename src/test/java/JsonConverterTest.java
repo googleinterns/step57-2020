@@ -29,7 +29,7 @@ import data.Vendor;
 @RunWith(JUnit4.class)
 public final class JsonConverterTest {
 
-  /** Test that createFile() successfully creates a new file. */  
+  /** Test that createFile() successfully creates a new file. */
   @Test
   public void testCreateFileMethodCreatesNewFile() {
     String vendorID = "vend_1";
@@ -76,7 +76,7 @@ public final class JsonConverterTest {
       fileContent += input.nextLine();
     }
 
-    assertTrue("createFile() didn't add the right content to the file.", 
+    assertTrue("createFile() didn't add the right content to the file.",
       fileContent.equals(expectedFileContent));
   }
 
@@ -89,12 +89,12 @@ public final class JsonConverterTest {
     boolean expectedResponse = true;
     boolean actualResponse = converter.updateFile(vendor);
 
-    assertTrue("updateFile() didn't return true when it should have.", 
+    assertTrue("updateFile() didn't return true when it should have.",
       expectedResponse == actualResponse);
   }
 
-  /** 
-   * Test that getConfig() returns the expected file content. 
+  /**
+   * Test that getConfig() returns the expected file content.
    * The vendorID must match an existing filepath in the filesystem.
    */
   @Test
@@ -103,23 +103,23 @@ public final class JsonConverterTest {
     String vendorID = "vend_1";
     String expectedResponse = "{\"Vehicle\":{\"Car\":\"Blue Tacoma\"}}";
 
-    String actualResponse = converter.getConfig(vendorID);
+    String actualResponse = converter.getConfig(vendorID, true);
 
     assertTrue("getConfig() didn't return the expected file content.",
       expectedResponse.equals(actualResponse));
   }
 
-  /** 
-   * Test that getConfig() returns null when faulty vendorID is passed in. 
+  /**
+   * Test that getConfig() returns null when faulty vendorID is passed in.
    * The vendorID must match an existing filepath in the filesystem.
    */
-  @Test 
+  @Test
   public void testGetConfigMethodWithFakeVendorID() {
     JsonConverter converter = new JsonConverter();
     String vendorID = "fakeVendorID";
     String expectedResponse = null;
 
-    String actualResponse = converter.getConfig(vendorID);
+    String actualResponse = converter.getConfig(vendorID, true);
 
     assertTrue("getConfig() didn't return null when it should have.",
       expectedResponse == actualResponse);

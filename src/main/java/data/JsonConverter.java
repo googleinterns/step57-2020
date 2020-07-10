@@ -19,7 +19,7 @@ import org.json.JSONObject;
 
 /** A class that creates a config file from a Vendor object. */
 public class JsonConverter {
-  private static final String FILE_PATH_BASE = "";
+  private static final String FILE_PATH_BASE = "../../src/main/resources/";
   
   public File createFile(String vendorID) {
     String fileName = FILE_PATH_BASE + vendorID;
@@ -49,12 +49,22 @@ public class JsonConverter {
     return true;
   }
 
-  /** Retrieve and return the contents of the desired configuration. */
-  public String getConfig(String vendorID) {
+  /** Retrieve and return the contents of the desired configuration.
+   * @param vendorID raw vendor id
+   * @param isTesting Maven sources test files from a separate working directory than runtime files.
+   *                 Test cases should indicate isTesting = true so the filepath is correct.
+   */
+  public String getConfig(String vendorID, boolean isTesting) {
+    String basePath = "";
+    if (!isTesting) {
+      //  Non-test cases should use the indicated filepath prefix
+      basePath = FILE_PATH_BASE;
+    }
     String configContents = "";
 
     // Retrieve the file with the corresponding vendorID.
-    File config = new File(FILE_PATH_BASE + vendorID);
+    File config = new File(basePath + vendorID);
+    System.out.println(config.getAbsolutePath());
     Scanner input;
     try {
       input = new Scanner(config);
