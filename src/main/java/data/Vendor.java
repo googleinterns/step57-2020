@@ -45,7 +45,6 @@ public class Vendor {
     Account newAccount = new Account(request, accountID, vendorID);
     accountList = new ArrayList<>();
     accountList.add(newAccount);
-
   }
 
   public String getVendorID() {

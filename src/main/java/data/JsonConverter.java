@@ -24,7 +24,7 @@ public class JsonConverter {
   
   public File createFile(String vendorID, boolean isTesting) {
     String basePath = "";
-    // base file path should change based on testing status
+    // Base file path should change based on testing status.
     if (!isTesting) {
       basePath = FILE_PATH_BASE;
     } else {
