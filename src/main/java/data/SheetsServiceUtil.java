@@ -32,10 +32,7 @@ import com.google.api.services.sheets.v4.Sheets;
 public class SheetsServiceUtil {
 
   public static Sheets getSheetsService() throws IOException, GeneralSecurityException {
-    GoogleCredential credential = SheetsAuthUtil.authorize();
-
-    return new Sheets.Builder(new UrlFetchTransport(), new JacksonFactory(), credential)
-      .setApplicationName("App Engine default service account")
-      .build();
+    // Create a spreadsheet by using the OAuth tokens.
+    return null;
   }
 }
