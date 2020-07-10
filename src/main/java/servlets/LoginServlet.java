@@ -35,6 +35,8 @@ public class LoginServlet extends HttpServlet {
   private final String REDIRECT_URI = "redirect_uri=";
   private final String OAUTH_LOGIN_URI = "https://accounts.google.com/o/oauth2/v2/auth";
   private final String RESPONSE_TYPE = "response_type=code";
+  private final String OAUTH_CALLBACK_SERVLET = "/api/oauth/callback/sheets";
+  private final String ENVIRONMENT_VARIABLE = "DOMAIN";
 
   // Returns a URL to either login and get OAuth tokens or to logout.
   @Override
@@ -60,8 +62,8 @@ public class LoginServlet extends HttpServlet {
   // Build a valid redirect URI to the OAuthCallbackServlet.
   private String getRedirectUri() {
     try {
-      URI domainUri = URI.create(System.getenv().get("DOMAIN"));
-      return domainUri.resolve("/api/oauth/callback/sheets").toString();
+      URI domainUri = URI.create(System.getenv().get(ENVIRONMENT_VARIABLE));
+      return domainUri.resolve(OAUTH_CALLBACK_SERVLET).toString();
     } catch (NullPointerException e) {
       LOGGER.severe("The DOMAIN environment variable is not set.");
       throw e;
