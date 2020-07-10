@@ -50,7 +50,6 @@ public class BillingConfig extends HttpServlet {
     // return null if vendor ID doesn't exist
     String vendorID = request.getParameter(VENDOR_ID);
     String accountID = request.getParameter(ACCOUNT_ID);
-    System.out.println(vendorID + accountID);
     JsonConverter json = new JsonConverter();
     String configText = "";
 

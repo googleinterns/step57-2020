@@ -20,9 +20,17 @@ import org.json.JSONObject;
 /** A class that creates a config file from a Vendor object. */
 public class JsonConverter {
   private static final String FILE_PATH_BASE = "../../src/main/resources/";
+  private static final String TEST_PATH_BASE = "src/test/resources/";
   
-  public File createFile(String vendorID) {
-    String fileName = FILE_PATH_BASE + vendorID;
+  public File createFile(String vendorID, boolean isTesting) {
+    String basePath = "";
+    // base file path should change based on testing status
+    if (!isTesting) {
+      basePath = FILE_PATH_BASE;
+    } else {
+      basePath = TEST_PATH_BASE;
+    }
+    String fileName = basePath + vendorID;
 
     // Create a JSON object to write to the file.
     JSONObject parentObject = new JSONObject();
@@ -44,8 +52,8 @@ public class JsonConverter {
     return file;
   }
 
-  public boolean updateFile(Vendor vendor) {
-    createFile(vendor.getVendorID());
+  public boolean updateFile(Vendor vendor, boolean isTesting) {
+    createFile(vendor.getVendorID(), isTesting);
     return true;
   }
 
@@ -57,14 +65,14 @@ public class JsonConverter {
   public String getConfig(String vendorID, boolean isTesting) {
     String basePath = "";
     if (!isTesting) {
-      //  Non-test cases should use the indicated filepath prefix
       basePath = FILE_PATH_BASE;
+    } else {
+      basePath = TEST_PATH_BASE;
     }
     String configContents = "";
 
     // Retrieve the file with the corresponding vendorID.
     File config = new File(basePath + vendorID);
-    System.out.println(config.getAbsolutePath());
     Scanner input;
     try {
       input = new Scanner(config);

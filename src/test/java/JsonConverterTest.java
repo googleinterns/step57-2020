@@ -38,7 +38,7 @@ public final class JsonConverterTest {
     Vendor vendor = new Vendor(vendorID, legVendID, nextGenVendorID);
 
     JsonConverter converter = new JsonConverter();
-    File file = converter.createFile(vendor.getVendorID());
+    File file = converter.createFile(vendor.getVendorID(), true);
 
     Scanner input;
     try {
@@ -60,7 +60,7 @@ public final class JsonConverterTest {
     Vendor vendor = new Vendor(vendorID, legVendID, nextGenVendorID);
 
     JsonConverter converter = new JsonConverter();
-    File file = converter.createFile(vendor.getVendorID());
+    File file = converter.createFile(vendor.getVendorID(), true);
 
     String expectedFileContent = "{\"Vehicle\":{\"Car\":\"Blue Tacoma\"}}";
     String fileContent = "";
@@ -87,7 +87,7 @@ public final class JsonConverterTest {
     JsonConverter converter = new JsonConverter();
 
     boolean expectedResponse = true;
-    boolean actualResponse = converter.updateFile(vendor);
+    boolean actualResponse = converter.updateFile(vendor, true);
 
     assertTrue("updateFile() didn't return true when it should have.",
       expectedResponse == actualResponse);
