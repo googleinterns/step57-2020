@@ -1,4 +1,3 @@
-
 # Compiled class file
 *.class
 
@@ -30,4 +29,6 @@ src/main/resources/
 # ignore the billing files so they aren't committed all the time.
 data/
 
+# hide test files
+src/main/resources/
 .idea
