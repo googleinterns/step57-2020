@@ -45,8 +45,8 @@ public class Account {
   }
 
   public Account(HttpServletRequest request, String accountID, String vendorID) {
-    this.accountID = accountID;
     this.vendorID = vendorID;
+    this.accountID = request.getParameter(BillingConfig.ACCOUNT_ID);
     this.legacyAccountID = request.getParameter(BillingConfig.LEGACY_ACCOUNT_ID);
     this.nextGenAccountID = Integer.parseInt(
             request.getParameter(BillingConfig.NEXT_GEN_ACCOUNT_ID));
@@ -54,8 +54,6 @@ public class Account {
     this.direction = request.getParameter(BillingConfig.DIRECTION);
     this.entity = request.getParameter(BillingConfig.ENTITY);
     this.matchingMode = request.getParameter(BillingConfig.MATCHING_MODE);
-//    = request.getParameter(BillingConfig.PRODUCT_ACCOUNT_KEY);
-    // TODO: @Charlie should we throw this out?
     this.aggregationMode= request.getParameter(BillingConfig.AGGREGATION_MODE);
   }
 

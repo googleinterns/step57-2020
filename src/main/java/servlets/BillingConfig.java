@@ -41,7 +41,6 @@ public class BillingConfig extends HttpServlet {
   public static final String DIRECTION = "direction";
   public static final String ENTITY = "entity";
   public static final String MATCHING_MODE = "matching-mode";
-  public static final String PRODUCT_ACCOUNT_KEY = "product-account-key";
   public static final String AGGREGATION_MODE = "aggregation-mode";
 
   @Override
