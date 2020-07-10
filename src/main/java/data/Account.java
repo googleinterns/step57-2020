@@ -14,7 +14,6 @@
 package data;
 
 import java.util.*;
-import org.json.JSONObject;
 
 /** A class representing a billing account object. */
 public class Account {

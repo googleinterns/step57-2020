@@ -20,45 +20,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.util.*;
-import java.security.GeneralSecurityException;
-import com.google.api.services.sheets.v4.Sheets;
-import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
-import com.google.api.services.sheets.v4.model.ValueRange;
-
-import data.SheetsConverter;
-import data.SheetsServiceUtil;
-
 @WebServlet("/BillingConfig")
 public class BillingConfig extends HttpServlet {
-  private static final String SPREADSHEET_ID = "1QnVlh-pZHycxzgQuk0MN2nWOY6AGu9j4wGZaGzi_W9A";
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // GET method --> returns entire billing config as JSON
-<<<<<<< HEAD
-  try {
-    Sheets sheetsService = SheetsServiceUtil.getSheetsService();
-
-    ValueRange body = new ValueRange().setValues(Arrays.asList(
-      Arrays.asList("Expenses January"), 
-      Arrays.asList("books", "30"), 
-      Arrays.asList("pens", "10"),
-      Arrays.asList("Expenses February"), 
-      Arrays.asList("clothes", "20"),
-      Arrays.asList("shoes", "5")));
-
-      UpdateValuesResponse result = sheetsService.spreadsheets().values()
-      .update(SPREADSHEET_ID, "A1", body)
-      .setValueInputOption("RAW")
-      .execute();
-    } catch (GeneralSecurityException e) {
-    }
-
-
-=======
     // return null if vendor ID doesn't exist
->>>>>>> 2c05ce2774bfaf649e42dd3b3497372e625ac36f
     response.setContentType("text/html;");
     response.getWriter().println(
             "{ \"legacy_customer_id\": \"STRING\", " +
