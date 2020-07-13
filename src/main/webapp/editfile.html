@@ -11,42 +11,53 @@
     <div id="links">
       <a href="readfile.html">Read Configuration</a>
       <a href="createfile.html">Create Configuration</a>
+      <a href="deletefile.html">Delete Configuration</a>
     </div>
     <div>
-      <form>
+      <form id="config-search">
         <p>Customer ID:</p>
-        <textarea></textarea><br>
+        <input list="customer-ids">
+        <datalist id="customer-ids">
+          <option value="Customer 1">
+          <option value="Customer 2">
+          <option value="Customer 3">
+        </datalist>
         <p>Account ID:</p>
-        <textarea></textarea><br>
-        <input type="submit">
+        <input list="account-ids">
+        <datalist id="account-ids">
+          <option value="Account 1">
+          <option value="Account 2">
+          <option value="Account 3">
+        </datalist><br>
+        <button type="submit">Search</button>
       </form>
     </div><br>
     <div id="editform">
-      <form>
+      <form id="edit-form">
         <span>Legacy Customer ID:</span>
-        <input type="text"><br>
+        <input type="text" id="legacy-customer-id"><br>
         <span>Next Gen Customer ID:</span>
-        <input type="text"><br>
+        <input type="text" id="next-gen-customer-id"><br>
         <p>ACCOUNT</p>
         <span>Legacy Account ID:</span>
-        <input type="text"><br>
-        <span>Next Gen Customer ID:</span>
-        <input type="text"><br>
+        <input type="text" id="legacy-account-id"><br>
+        <span>Next Gen Account ID:</span>
+        <input type="text" id="next-gen-account-id"><br>
         <p>SETTLEMENT ATTRIBUTES</p>
         <span>Currency Code:</span>
-        <input type="text"><br>
+        <input type="text" id="currency-code"><br>
         <span>Direction:</span>
-        <input type="text"><br>
+        <input type="text" id="direction"><br>
         <span>Entity:</span>
-        <input type="text"><br>
+        <input type="text" id="entity"><br>
         <p>SETTLEMENT CONFIG</p>
         <span>Matching Mode:</span>
-        <input type="text"><br>
+        <input type="text" id="matching-mode"><br>
         <p>ACCOUNT</p>
         <span>Product Account Key:</span>
-        <input type="text"><br>
+        <input type="text" id="product-account-key"><br>
         <span>Aggregation Mode:</span>
-        <input type="text"><br>
+        <input type="text" id="aggregation-mode"><br>
         <input type="submit">
       </form>
     </div>
