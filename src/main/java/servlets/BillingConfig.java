@@ -52,8 +52,8 @@ public class BillingConfig extends HttpServlet {
     JsonConverter json = new JsonConverter();
     String configText = "";
 
-    if (json.getConfig(vendorID, false) != null) {
-      configText = json.getConfig(vendorID, false);
+    if (json.getConfig(vendorID) != null) {
+      configText = json.getConfig(vendorID);
     } else {
       configText = "Error finding " + vendorID + "'s configuration";
     }

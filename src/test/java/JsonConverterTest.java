@@ -33,8 +33,11 @@ import data.Account;
 /** Test the functionality of the JsonConverter class. */
 @RunWith(JUnit4.class)
 public final class JsonConverterTest {
+  private static final String TEST_PATH_BASE = "src/test/resources/";
+
   private Vendor vendor;
   private Account account;
+  private JsonConverter converter;
   private final String VENDOR_ID = "vend_1";
   private final String LEGACY_VENDOR_ID = "legVend_27";
   private final int NEXT_GEN_VENDOR_ID = 17;
@@ -50,6 +53,7 @@ public final class JsonConverterTest {
   /** Create a Vendor and Account object. */
   @Before
   public void setUp() {
+    converter = new JsonConverter(TEST_PATH_BASE);
     vendor = new Vendor(VENDOR_ID, LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID);
     account = new Account(ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION,
             LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE);
@@ -58,10 +62,9 @@ public final class JsonConverterTest {
   /** Test that updateFile() returns true. */
   @Test
   public void testUpdateFileMethod() throws IOException {
-    JsonConverter converter = new JsonConverter();
 
     boolean expectedResponse = true;
-    boolean actualResponse = converter.updateFile(vendor, true);
+    boolean actualResponse = converter.updateFile(vendor);
 
     assertTrue("updateFile() didn't return true when it should have.",
             expectedResponse == actualResponse);
@@ -73,11 +76,10 @@ public final class JsonConverterTest {
    */
   @Test
   public void testGetConfigMethod() {
-    JsonConverter converter = new JsonConverter();
     String vendorID = "vend_1";
     String expectedResponse = "{\"legacy_vendor_id\":legVend_27,\"next_gen_vendor_id\":17,\"accounts\":[]}";
 
-    String actualResponse = converter.getConfig(vendorID, true);
+    String actualResponse = converter.getConfig(vendorID);
 
     assertEquals(expectedResponse, actualResponse);
   }
@@ -88,11 +90,10 @@ public final class JsonConverterTest {
    */
   @Test
   public void testGetConfigMethodWithFakeVendorID() {
-    JsonConverter converter = new JsonConverter();
     String vendorID = "fakeVendorID";
     String expectedResponse = null;
 
-    String actualResponse = converter.getConfig(vendorID, true);
+    String actualResponse = converter.getConfig(vendorID);
 
     assertTrue("getConfig() didn't return null when it should have.",
             expectedResponse == actualResponse);
@@ -101,7 +102,6 @@ public final class JsonConverterTest {
   /** Test that writeFile() returns a File with the expected content. */
   @Test
   public void testWriteFile() throws FileNotFoundException {
-    JsonConverter converter = new JsonConverter();
     vendor.addAccount(account);
 
     String expectedResponse = String.format("{\"legacy_vendor_id\":%s," +
@@ -114,7 +114,7 @@ public final class JsonConverterTest {
             MATCHING_MODE, ACCOUNT_ID,AGGREGATION_MODE);
     String actualResponse = "";
 
-    File file = converter.writeFile(vendor.getVendorID(), vendor.buildJsonConfig(), true);
+    File file = converter.writeFile(vendor.getVendorID(), vendor.buildJsonConfig());
     Scanner input = null;
     input = new Scanner(file);
 

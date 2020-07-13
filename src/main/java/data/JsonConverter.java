@@ -20,10 +20,18 @@ import org.json.JSONObject;
 /** A class that creates a config file from a Vendor object. */
 public class JsonConverter {
   private static final String FILE_PATH_BASE = "../../src/main/resources/";
-  private static final String TEST_PATH_BASE = "src/test/resources/";
 
-  public File createFile(String vendorID, boolean isTesting) {
-    String basePath = getFilePathBase(isTesting);
+  private String basePath;
+
+  public JsonConverter() {
+    basePath = FILE_PATH_BASE;
+  }
+
+  public JsonConverter(String filePathName) {
+    basePath = filePathName;
+  }
+
+  public File createFile(String vendorID) {
     String fileName = basePath + vendorID;
     // Create a JSON object to write to the file.
     JSONObject parentObject = new JSONObject();
@@ -43,24 +51,22 @@ public class JsonConverter {
     return file;
   }
 
-  public boolean updateFile(Vendor vendor, boolean isTesting) {
+  public boolean updateFile(Vendor vendor) {
     String jsonConfig = vendor.buildJsonConfig();
     // Create and write the contents to a File.
-    File billingFile = writeFile(vendor.getVendorID(), jsonConfig, isTesting);
+    File billingFile = writeFile(vendor.getVendorID(), jsonConfig);
 
     return billingFile != null;
   }
 
   /**
-   * Write a new billig config file to the local filesystem.
+   * Write a new billing config file to the local filesystem.
    *
    * @param vendorID   a String representing a Vendor's ID.
    * @param jsonConfig a String filled with billing config content.
    * @return File representing a newly built config file.
    */
-  public File writeFile(String vendorID, String jsonConfig, boolean isTesting) {
-    String basePath = getFilePathBase(isTesting);
-
+  public File writeFile(String vendorID, String jsonConfig) {
     File billingFile = null;
     try {
       billingFile = new File(basePath + vendorID);
@@ -77,16 +83,12 @@ public class JsonConverter {
    * Retrieve and return the contents of the desired configuration.
    *
    * @param vendorID  raw vendor id
-   * @param isTesting Maven sources test files from a separate working directory than runtime files.
-   *                  Test cases should indicate isTesting = true so the filepath is correct.
    */
-  public String getConfig(String vendorID, boolean isTesting) {
-    String basePath = getFilePathBase(isTesting);
+  public String getConfig(String vendorID) {
     String configContents = "";
 
     // Retrieve the file with the corresponding vendorID.
     File config = new File(basePath + vendorID);
-    System.out.println(config.getAbsolutePath());
 
     Scanner input;
     try {
@@ -100,13 +102,5 @@ public class JsonConverter {
     }
 
     return configContents;
-  }
-
-  private String getFilePathBase(boolean isTesting) {
-    if (isTesting) {
-      return TEST_PATH_BASE;
-    } else {
-      return FILE_PATH_BASE;
-    }
   }
 }
