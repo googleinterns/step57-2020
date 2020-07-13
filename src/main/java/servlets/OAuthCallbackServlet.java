@@ -87,5 +87,15 @@ public class OAuthCallbackServlet extends HttpServlet {
     response.getWriter().printf("<h1>the access token for the Sheets API is %s</h1>", accessToken);
   }
 
-  
+  // Build a valid redirect URI to the OAuthCallbackServlet.
+  private String getRedirectUri() {
+    try {
+      URI domainUri = URI.create(System.getenv().get(ENVIRONMENT_VARIABLE));
+      return domainUri.resolve(OAUTH_CALLBACK_SERVLET).toString();
+    } catch (NullPointerException e) {
+      LOGGER.severe("The DOMAIN environment variable is not set.");
+      throw e;
+    }
+  }
+
 }
