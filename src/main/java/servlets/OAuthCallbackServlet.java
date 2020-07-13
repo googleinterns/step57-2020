@@ -98,4 +98,20 @@ public class OAuthCallbackServlet extends HttpServlet {
     }
   }
 
+  private String getClientSecret() {
+    String clientSecret = CLIENT_SECRET;
+    File secret = new File(SECRET_FILEPATH);
+ 
+    Scanner input;
+    try {
+      input = new Scanner(secret);
+    } catch(FileNotFoundException e) {
+      return null;
+    }
+ 
+    while(input.hasNextLine()) {
+      clientSecret += input.nextLine();
+    }
+    return clientSecret;
+  }
 }
