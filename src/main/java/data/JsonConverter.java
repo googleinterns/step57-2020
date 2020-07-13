@@ -14,41 +14,67 @@
 // limitations under the License.
 package data;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import org.json.JSONObject;
 
 /** A class that creates a config file from a Vendor object. */
 public class JsonConverter {
-  private static final String FILE_PATH_BASE = "data/";
+  private static final String DEFAULT_FILE_PATH = "../../src/main/resources/";
+
+  private String basePath;
+
+  public JsonConverter() {
+    basePath = DEFAULT_FILE_PATH;
+  }
+
+  public JsonConverter(String filePathName) {
+    basePath = filePathName;
+  }
+
+  public File createFile(String vendorID) {
+    String fileName = basePath + vendorID;
+    // Create a JSON object to write to the file.
+    JSONObject parentObject = new JSONObject();
+    JSONObject JSONCar = new JSONObject();
+    JSONCar.put("Car", "Blue Tacoma");
+    parentObject.put("Vehicle", JSONCar);
+    // Write the JSON object to the file.
+    File file = null;
+    try {
+      file = new File(fileName);
+      BufferedWriter out = new BufferedWriter(new FileWriter(file));
+      out.write(parentObject.toString());
+      out.close();
+    } catch (IOException e) {
+      return null;
+    }
+    return file;
+  }
 
   public boolean updateFile(Vendor vendor) {
     String jsonConfig = vendor.buildJsonConfig();
-
     // Create and write the contents to a File.
     File billingFile = writeFile(vendor.getVendorID(), jsonConfig);
-    
+
     return billingFile != null;
   }
 
   /**
-   * Write a new billig config file to the local filesystem.
-   * @param vendorID a String representing a Vendor's ID.
+   * Write a new billing config file to the local filesystem.
+   *
+   * @param vendorID   a String representing a Vendor's ID.
    * @param jsonConfig a String filled with billing config content.
    * @return File representing a newly built config file.
    */
   public File writeFile(String vendorID, String jsonConfig) {
     File billingFile = null;
     try {
-      billingFile = new File(FILE_PATH_BASE + vendorID);
+      billingFile = new File(basePath + vendorID);
       BufferedWriter out = new BufferedWriter(new FileWriter(billingFile));
       out.write(jsonConfig);
       out.close();
-    } catch(IOException e) {
+    } catch (IOException e) {
       return null;
     }
     return billingFile;
@@ -56,14 +82,12 @@ public class JsonConverter {
 
   /**
    * Retrieve and return the contents of the desired configuration.
-   * @param vendorID a String representing a Vendor's ID.
-   * @return a String representing the desired billing config.
    */
   public String getConfig(String vendorID) {
     String configContents = "";
 
     // Retrieve the file with the corresponding vendorID.
-    File config = new File(FILE_PATH_BASE + vendorID);
+    File config = new File(basePath + vendorID);
 
     Scanner input;
     try {
