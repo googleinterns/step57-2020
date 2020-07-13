@@ -20,6 +20,3 @@ $('#deleteForm').on('submit', function(e){
   e.preventDefault();
 });
 
-//getAccountId() and getCustomerId()... these are async fetch functions
-
-// TODO: OAuth stuff
