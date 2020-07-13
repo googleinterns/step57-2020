@@ -16,6 +16,7 @@ package servlets;
 import com.google.gson.JsonParser;
 import java.io.*;
 import java.util.*;
+import java.util.logging.Logger;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -34,20 +35,24 @@ import com.google.gson.JsonElement;
 /** A servlet to request access and refresh tokens. */
 @WebServlet("/api/oauth/callback/sheets")
 public class OAuthCallbackServlet extends HttpServlet {
-  // Token request parameters.
+  private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
   private final String CLIENT_ID = "client_id=150737768611-svndjtlklolq53g4ass4r3sqal2i31p5.apps.googleusercontent.com";
   private final String GRANT_TYPE = "grant_type=authorization_code";
-  private final String CODE = "https://accounts.google.com/o/oauth2/v2/auth";
   private final String TOKEN_URI = "https://oauth2.googleapis.com/token";
+  private final String CODE = "code=";
   private final String CLIENT_SECRET = "client_secret=";
-  private final String REDIRECT_URI = "redirect_uri= SOME CALLBACK URI";
+  private final String REDIRECT_URI = "redirect_uri=";
   private final String SECRET_FILEPATH = "../../src/main/resources/secret.txt";
+  private final String OAUTH_CALLBACK_SERVLET = "/api/oauth/callback/sheets";
+  private final String ENVIRONMENT_VARIABLE = "DOMAIN";
 
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String error = request.getParameter("error");
     String code = request.getParameter("code");
+
+    System.out.println("CODE: "+ code);
 
     // Print any error the OAuth provider gave us.
     if (error != null && !error.isEmpty()) {
@@ -62,13 +67,8 @@ public class OAuthCallbackServlet extends HttpServlet {
       return;
     }
 
-    String tokenRequestBody = String.format("%s?%s&%s&%s&%s", GRANT_TYPE, CODE,
-      REDIRECT_URI, CLIENT_ID, CLIENT_SECRET);
-
-
-
-    System.out.println(getClientSecret());
-
+    String tokenRequestBody = String.format("%s&%s&%s&%s&%s", GRANT_TYPE, CODE + code,
+      getRedirectUri(), CLIENT_ID, getClientSecret());
 
     // Request the tokens.
     HttpClient httpClient = HttpClient.newHttpClient();
@@ -91,7 +91,7 @@ public class OAuthCallbackServlet extends HttpServlet {
   private String getRedirectUri() {
     try {
       URI domainUri = URI.create(System.getenv().get(ENVIRONMENT_VARIABLE));
-      return domainUri.resolve(OAUTH_CALLBACK_SERVLET).toString();
+      return REDIRECT_URI + domainUri.resolve(OAUTH_CALLBACK_SERVLET).toString();
     } catch (NullPointerException e) {
       LOGGER.severe("The DOMAIN environment variable is not set.");
       throw e;
