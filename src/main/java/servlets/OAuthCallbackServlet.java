@@ -14,8 +14,8 @@
 package servlets;
 
 import com.google.gson.JsonParser;
-import java.io.IOException;
-import java.io.FileInputStream;
+import java.io.*;
+import java.util.*;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -39,10 +39,9 @@ public class OAuthCallbackServlet extends HttpServlet {
   private final String GRANT_TYPE = "grant_type=authorization_code";
   private final String CODE = "https://accounts.google.com/o/oauth2/v2/auth";
   private final String TOKEN_URI = "https://oauth2.googleapis.com/token";
-
-  // Figure out a way to secure method to retrieve the client secret.
-  private final String CLIENT_SECRET = "";
+  private final String CLIENT_SECRET = "client_secret=";
   private final String REDIRECT_URI = "redirect_uri= SOME CALLBACK URI";
+  private final String SECRET_FILEPATH = "../../src/main/resources/secret.txt";
 
 
   @Override
@@ -66,6 +65,11 @@ public class OAuthCallbackServlet extends HttpServlet {
     String tokenRequestBody = String.format("%s?%s&%s&%s&%s", GRANT_TYPE, CODE,
       REDIRECT_URI, CLIENT_ID, CLIENT_SECRET);
 
+
+
+    System.out.println(getClientSecret());
+
+
     // Request the tokens.
     HttpClient httpClient = HttpClient.newHttpClient();
     HttpRequest tokenRequest = HttpRequest.newBuilder(URI.create(TOKEN_URI))
@@ -82,4 +86,6 @@ public class OAuthCallbackServlet extends HttpServlet {
     response.setContentType("text/html");
     response.getWriter().printf("<h1>the access token for the Sheets API is %s</h1>", accessToken);
   }
+
+  
 }
