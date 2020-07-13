@@ -81,8 +81,6 @@ public class JsonConverter {
 
   /**
    * Retrieve and return the contents of the desired configuration.
-   *
-   * @param vendorID  raw vendor id
    */
   public String getConfig(String vendorID) {
     String configContents = "";
