@@ -16,17 +16,26 @@ package data;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.googleapis.extensions.appengine.auth.oauth2.AppIdentityCredential;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.sheets.v4.Sheets;
+
 
 /** A class to create a Sheets instance. */
 public class SheetsServiceUtil {
 
   public static Sheets getSheetsService() throws IOException, GeneralSecurityException {
-    AppIdentityCredential credential = SheetsAuthUtil.authorize();
+    GoogleCredential credential = SheetsAuthUtil.authorize();
 
     return new Sheets.Builder(new UrlFetchTransport(), new JacksonFactory(), credential)
+      .setApplicationName("App Engine default service account")
       .build();
   }
 }
