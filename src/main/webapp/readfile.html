@@ -14,12 +14,22 @@
       <a href="deletefile.html">Delete Configuration</a>
     </div>
     <div>
-    <form method="get" action="/BillingConfig" id="config-search">
-      <label for="vendor-id">Vendor/Customer ID:</label>
-      <input type="text" name="vendor-id" id="vendor-id"><br>
-      <label for="account-id">Account ID:</label>
-      <input type="text" name="account-id" id="account-id"><br>
-      <input type="submit">
+    <form id="config-search" action="/BillingConfig" method="get">
+      <p>Customer ID:</p>
+      <input list="customer-ids">
+      <datalist id="customer-ids">
+        <option value="Customer 1">
+        <option value="Customer 2">
+        <option value="Customer 3">
+      </datalist>
+      <p>Account ID:</p>
+      <input list="account-ids">
+      <datalist id="account-ids">
+        <option value="Account 1">
+        <option value="Account 2">
+        <option value="Account 3">
+      </datalist><br>
+      <button type="submit">Search</button>
     </form>
     </div><br>
     <div id="textbox">
@@ -52,7 +62,7 @@
             "settlement_config": {<br>
               "matching_mode": "STRING"<br>
             },<br>
-            "product_account_key": "STRING",<br>
+            "account_id": "STRING",<br>
             "aggregation_mode": "STRING"<br>
           }<br>
         ]<br>

@@ -24,13 +24,22 @@
       <a href="editfile.html">Edit Configuration</a>
       <a href="createfile.html">Create Configuration</a>
     </div><br>
-    <!-- Should be a dropdown later on. -->
     <div id="delete-search">
-      <form onsubmit="openModal()" id="delete-form">
+      <form id="delete-form">
         <span>Customer ID:</span>
-        <input type="text" id="customer-id"><br>
+        <input list="customer-ids">
+        <datalist id="customer-ids">
+          <option value="Customer 1">
+          <option value="Customer 2">
+          <option value="Customer 3">
+        </datalist><br>
         <span>Account ID:</span>
-        <input type="text" id="account-id"><br>
+        <input list="account-ids">
+        <datalist id="account-ids">
+          <option value="Account 1">
+          <option value="Account 2">
+          <option value="Account 3">
+        </datalist><br>
         <button type="button" class="btn-primary" data-toggle="modal"
         data-target="#deleteModal">Submit</button>
       </form>

@@ -16,9 +16,19 @@
     <div>
       <form id="config-search">
         <p>Customer ID:</p>
-        <input type="text" id="customer-id"><br>
+        <input list="customer-ids">
+        <datalist id="customer-ids">
+          <option value="Customer 1">
+          <option value="Customer 2">
+          <option value="Customer 3">
+        </datalist>
         <p>Account ID:</p>
-        <input type="text" id="account-id"><br>
+        <input list="account-ids">
+        <datalist id="account-ids">
+          <option value="Account 1">
+          <option value="Account 2">
+          <option value="Account 3">
+        </datalist><br>
         <button type="submit">Search</button>
       </form>
     </div><br>
