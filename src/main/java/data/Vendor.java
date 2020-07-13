@@ -42,7 +42,7 @@ public class Vendor {
     this.legacyVendorID = request.getParameter(BillingConfig.LEGACY_CUSTOMER_ID);
     this.nextGenVendorID = Integer.parseInt(
             request.getParameter(BillingConfig.NEXT_GEN_CUSTOMER_ID));
-    Account newAccount = new Account(request, accountID, vendorID);
+    Account newAccount = new Account(request);
     accountList = new ArrayList<>();
     accountList.add(newAccount);
   }

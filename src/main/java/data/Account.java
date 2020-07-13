@@ -31,9 +31,9 @@ public class Account {
   private String matchingMode;
   private String aggregationMode;
 
-  public Account(String accountID, String vendorID, String entity, 
-    String currency, String direction, String legacyAccountID, 
-    int nextGenAccountID, String matchingMode, String aggregationMode) {
+  public Account(String accountID, String vendorID, String entity, String currency,
+                 String direction, String legacyAccountID, int nextGenAccountID,
+                 String matchingMode, String aggregationMode) {
 
     this.accountID = accountID;
     this.vendorID = vendorID;
@@ -46,8 +46,8 @@ public class Account {
     this.aggregationMode = aggregationMode;
   }
 
-  public Account(HttpServletRequest request, String accountID, String vendorID) {
-    this.vendorID = vendorID;
+  public Account(HttpServletRequest request) {
+    this.vendorID = request.getParameter(BillingConfig.VENDOR_ID);
     this.accountID = request.getParameter(BillingConfig.ACCOUNT_ID);
     this.legacyAccountID = request.getParameter(BillingConfig.LEGACY_ACCOUNT_ID);
     this.nextGenAccountID = Integer.parseInt(
