@@ -1,3 +1,4 @@
+ 
 // Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,12 +20,12 @@ import org.json.JSONObject;
 
 /** A class that creates a config file from a Vendor object. */
 public class JsonConverter {
-  private static final String FILE_PATH_BASE = "../../src/main/resources/";
+  private static final String DEFAULT_FILE_PATH = "../../src/main/resources/";
 
   private String basePath;
 
   public JsonConverter() {
-    basePath = FILE_PATH_BASE;
+    basePath = DEFAULT_FILE_PATH;
   }
 
   public JsonConverter(String filePathName) {

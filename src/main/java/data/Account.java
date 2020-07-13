@@ -17,7 +17,6 @@ import servlets.BillingConfig;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-import org.json.JSONObject;
 
 /** A class representing a billing account object. */
 public class Account {
