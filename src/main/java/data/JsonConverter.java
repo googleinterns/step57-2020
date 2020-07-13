@@ -21,23 +21,15 @@ import org.json.JSONObject;
 public class JsonConverter {
   private static final String FILE_PATH_BASE = "../../src/main/resources/";
   private static final String TEST_PATH_BASE = "src/test/resources/";
-  
-  public File createFile(String vendorID, boolean isTesting) {
-    String basePath = "";
-    // Base file path should change based on testing status.
-    if (!isTesting) {
-      basePath = FILE_PATH_BASE;
-    } else {
-      basePath = TEST_PATH_BASE;
-    }
-    String fileName = basePath + vendorID;
 
+  public File createFile(String vendorID, boolean isTesting) {
+    String basePath = getFilePathBase(isTesting);
+    String fileName = basePath + vendorID;
     // Create a JSON object to write to the file.
     JSONObject parentObject = new JSONObject();
     JSONObject JSONCar = new JSONObject();
     JSONCar.put("Car", "Blue Tacoma");
     parentObject.put("Vehicle", JSONCar);
-
     // Write the JSON object to the file.
     File file = null;
     try {
@@ -45,34 +37,57 @@ public class JsonConverter {
       BufferedWriter out = new BufferedWriter(new FileWriter(file));
       out.write(parentObject.toString());
       out.close();
-    } catch(IOException e) {
+    } catch (IOException e) {
       return null;
-    } 
-
+    }
     return file;
   }
 
   public boolean updateFile(Vendor vendor, boolean isTesting) {
-    createFile(vendor.getVendorID(), isTesting);
-    return true;
+    String jsonConfig = vendor.buildJsonConfig();
+    // Create and write the contents to a File.
+    File billingFile = writeFile(vendor.getVendorID(), jsonConfig, isTesting);
+
+    return billingFile != null;
   }
 
-  /** Retrieve and return the contents of the desired configuration.
-   * @param vendorID raw vendor id
+  /**
+   * Write a new billig config file to the local filesystem.
+   *
+   * @param vendorID   a String representing a Vendor's ID.
+   * @param jsonConfig a String filled with billing config content.
+   * @return File representing a newly built config file.
+   */
+  public File writeFile(String vendorID, String jsonConfig, boolean isTesting) {
+    String basePath = getFilePathBase(isTesting);
+
+    File billingFile = null;
+    try {
+      billingFile = new File(basePath + vendorID);
+      BufferedWriter out = new BufferedWriter(new FileWriter(billingFile));
+      out.write(jsonConfig);
+      out.close();
+    } catch (IOException e) {
+      return null;
+    }
+    return billingFile;
+  }
+
+  /**
+   * Retrieve and return the contents of the desired configuration.
+   *
+   * @param vendorID  raw vendor id
    * @param isTesting Maven sources test files from a separate working directory than runtime files.
-   *                 Test cases should indicate isTesting = true so the filepath is correct.
+   *                  Test cases should indicate isTesting = true so the filepath is correct.
    */
   public String getConfig(String vendorID, boolean isTesting) {
-    String basePath = "";
-    if (!isTesting) {
-      basePath = FILE_PATH_BASE;
-    } else {
-      basePath = TEST_PATH_BASE;
-    }
+    String basePath = getFilePathBase(isTesting);
     String configContents = "";
 
     // Retrieve the file with the corresponding vendorID.
     File config = new File(basePath + vendorID);
+    System.out.println(config.getAbsolutePath());
+
     Scanner input;
     try {
       input = new Scanner(config);
@@ -85,5 +100,13 @@ public class JsonConverter {
     }
 
     return configContents;
+  }
+
+  private String getFilePathBase(boolean isTesting) {
+    if (isTesting) {
+      return TEST_PATH_BASE;
+    } else {
+      return FILE_PATH_BASE;
+    }
   }
 }

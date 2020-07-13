@@ -6,50 +6,50 @@
     <link rel="stylesheet" href="editfile.css">
   </head>
   <body>
-  <h1>Billing Configuration Sync Tool</h1></br>
-  <h2>Edit Configuration</h2>
-  <div id="links">
-    <a href="readfile.html">Read Configuration</a>
-    <a href="createfile.html">Create Configuration</a>
-    <a href="deletefile.html">Delete Configuration</a>
-  </div>
-  <div>
-    <form>
-      <p>Customer ID:</p>
-      <textarea></textarea><br>
-      <p>Account ID:</p>
-      <textarea></textarea><br>
-      <input type="submit">
-    </form>
-  </div><br>
-  <div id="editform">
-    <form action="/BillingConfig" method="POST">
-      <span>Legacy Customer ID:</span>
-      <input type="text" id="legacy-customer-id" name="legacy-customer-id"><br>
-      <span>Next Gen Customer ID:</span>
-      <input type="text" id="next-gen-customer-id" name="next-gen-customer-id"><br>
-      <p>ACCOUNT</p>
-      <span>Legacy Account ID:</span>
-      <input type="text" id="legacy-account-id" name="legacy-account-id"><br>
-      <span>Next Gen Customer ID:</span>
-      <input type="text" id="next-gen-account-id" name="next-gen-account-id"><br>
-      <p>SETTLEMENT ATTRIBUTES</p>
-      <span>Currency Code:</span>
-      <input type="text" id="currency-code" name="currency-code"><br>
-      <span>Direction:</span>
-      <input type="text" id="direction" name="direction"><br>
-      <span>Entity:</span>
-      <input type="text" id="entity" name="entity"><br>
-      <p>SETTLEMENT CONFIG</p>
-      <span>Matching Mode:</span>
-      <input type="text" id="matching-mode" name="matching-mode"><br>
-      <p>ACCOUNT</p>
-      <span>Product Account Key/Account ID:</span>
-      <input type="text" id="account-id" name="account-id"><br>
-      <span>Aggregation Mode:</span>
-      <input type="text" id="aggregation-mode" name="aggregation-mode"><br>
-      <input type="submit">
-    </form>
-  </div>
+    <h1>Billing Configuration Sync Tool</h1></br>
+    <h2>Edit Configuration</h2>
+    <div id="links">
+      <a href="readfile.html">Read Configuration</a>
+      <a href="createfile.html">Create Configuration</a>
+      <a href="deletefile.html">Delete Configuration</a>
+    </div>
+    <div>
+      <form id="config-search">
+        <p>Customer ID:</p>
+        <input type="text" id="customer-id"><br>
+        <p>Account ID:</p>
+        <input type="text" id="account-id"><br>
+        <button type="submit">Search</button>
+      </form>
+    </div><br>
+    <div id="editform">
+      <form action="/BillingConfig" method="POST">
+        <span>Legacy Customer ID:</span>
+        <input type="text" id="legacy-customer-id" name="legacy-customer-id"><br>
+        <span>Next Gen Customer ID:</span>
+        <input type="text" id="next-gen-customer-id" name="next-gen-customer-id"><br>
+        <p>ACCOUNT</p>
+        <span>Legacy Account ID:</span>
+        <input type="text" id="legacy-account-id" name="legacy-account-id"><br>
+        <span>Next Gen Customer ID:</span>
+        <input type="text" id="next-gen-account-id" name="next-gen-account-id"><br>
+        <p>SETTLEMENT ATTRIBUTES</p>
+        <span>Currency Code:</span>
+        <input type="text" id="currency-code" name="currency-code"><br>
+        <span>Direction:</span>
+        <input type="text" id="direction" name="direction"><br>
+        <span>Entity:</span>
+        <input type="text" id="entity" name="entity"><br>
+        <p>SETTLEMENT CONFIG</p>
+        <span>Matching Mode:</span>
+        <input type="text" id="matching-mode" name="matching-mode"><br>
+        <p>ACCOUNT</p>
+        <span>Product Account Key/Account ID:</span>
+        <input type="text" id="account-id" name="account-id"><br>
+        <span>Aggregation Mode:</span>
+        <input type="text" id="aggregation-mode" name="aggregation-mode"><br>
+        <input type="submit">
+      </form>
+    </div>
   </body>
 </html>
