@@ -37,10 +37,6 @@ import util.OAuthConstants;
 @WebServlet("/api/oauth/callback/sheets")
 public class OAuthCallbackServlet extends HttpServlet {
   private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
-  private final String GRANT_TYPE = "grant_type=authorization_code";
-  private final String TOKEN_URI = "https://oauth2.googleapis.com/token";
-  private final String AUTH_CODE = "code=";
-  private final String CLIENT_SECRET = "client_secret=";
   private final String SECRET_FILEPATH = "../../src/main/resources/secret.txt";
 
   @Override
@@ -61,15 +57,16 @@ public class OAuthCallbackServlet extends HttpServlet {
       return;
     }
 
-    String tokenRequestBody = String.format("%s&%s&%s&%s&%s", GRANT_TYPE, 
-      AUTH_CODE + authCode, getRedirectUri(), OAuthConstants.CLIENT_ID, 
-      getClientSecret());
+    String tokenRequestBody = String.format("%s&%s&%s&%s&%s", 
+      OAuthConstants.GRANT_TYPE, OAuthConstants.AUTH_CODE + authCode, 
+      getRedirectUri(), OAuthConstants.CLIENT_ID, getClientSecret());
 
     // Request the access tokens.
     HttpClient httpClient = HttpClient.newHttpClient();
-    HttpRequest tokenRequest = HttpRequest.newBuilder(URI.create(TOKEN_URI))
-      .header("Content-Type", "application/x-www-form-urlencoded")
-      .POST(BodyPublishers.ofString(tokenRequestBody)).build();
+    HttpRequest tokenRequest = HttpRequest.newBuilder(URI.create(
+      OAuthConstants.TOKEN_URI)).header("Content-Type", 
+      "application/x-www-form-urlencoded").POST(BodyPublishers.ofString(
+      tokenRequestBody)).build();
 
     HttpResponse tokenResponse = httpClient.sendAsync(tokenRequest, 
       BodyHandlers.ofString()).join();
@@ -98,7 +95,7 @@ public class OAuthCallbackServlet extends HttpServlet {
   }
 
   private String getClientSecret() {
-    String clientSecret = CLIENT_SECRET;
+    String clientSecret = OAuthConstants.CLIENT_SECRET;
     File secret = new File(SECRET_FILEPATH);
  
     Scanner input;

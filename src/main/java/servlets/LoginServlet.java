@@ -31,9 +31,6 @@ public class LoginServlet extends HttpServlet {
   private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
   private static final String CONTENT_TYPE_TEXT_HTML = "text/html;";
   private static final String REDIRECT_LINK = "/Login";
-  private final String SCOPE = "scope=https://www.googleapis.com/auth/spreadsheets";
-  private final String OAUTH_LOGIN_URI = "https://accounts.google.com/o/oauth2/v2/auth";
-  private final String RESPONSE_TYPE = "response_type=code";
 
   // Returns a URL to either login and get OAuth tokens or to logout.
   @Override
@@ -50,8 +47,9 @@ public class LoginServlet extends HttpServlet {
 
   /** Build the OAuth consent page redirect URL. */
   private String getOAuthRedirectURL() {
-    return String.format("%s?%s&%s&%s&%s", OAUTH_LOGIN_URI, 
-      OAuthConstants.CLIENT_ID, RESPONSE_TYPE, getRedirectUri(), SCOPE); 
+    return String.format("%s?%s&%s&%s&%s", OAuthConstants.OAUTH_LOGIN_URI, 
+      OAuthConstants.CLIENT_ID, OAuthConstants.RESPONSE_TYPE, getRedirectUri(), 
+      OAuthConstants.SCOPE); 
   }
 
   // Build a valid redirect URI to the OAuthCallbackServlet.
