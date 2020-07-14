@@ -43,6 +43,7 @@ public class OAuthCallbackServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String error = request.getParameter("error");
     String authCode = request.getParameter("code");
+    String state = request.getParameter("state");
 
     // Print any error the OAuth provider gave us.
     if (error != null && !error.isEmpty()) {
@@ -54,6 +55,13 @@ public class OAuthCallbackServlet extends HttpServlet {
     // Check that the OAuth provider gave us the authorization code.
     if (authCode == null || authCode.isEmpty()) {
       response.setStatus(400);
+      return;
+    }
+        
+    String sessionOauthState = (String) request.getSession().getAttribute(OAuthConstants.SHEETS_SESSION_KEY);
+
+    if (!state.equals(sessionOauthState)) {
+      response.setStatus(401);
       return;
     }
 
@@ -79,6 +87,10 @@ public class OAuthCallbackServlet extends HttpServlet {
 
     response.setContentType("text/html");
     response.getWriter().printf("<h1>the access token for the Sheets API is %s</h1>", accessToken);
+
+    // Store access token in a session.
+    HttpSession session = request.getSession();
+    session.setAttribute(OAuthConstants.SHEETS_SESSION_TOKEN_KEY, accessToken.toString());
   }
 
   // Build a valid redirect URI to the OAuthCallbackServlet.

@@ -21,9 +21,12 @@ public final class OAuthConstants {
   public static final String SCOPE = "scope=https://www.googleapis.com/auth/spreadsheets";
   public static final String OAUTH_LOGIN_URI = "https://accounts.google.com/o/oauth2/v2/auth";
   public static final String TOKEN_URI = "https://oauth2.googleapis.com/token";
+  public static final String SHEETS_SESSION_KEY = "oauth-service-sheets";
+  public static final String SHEETS_SESSION_TOKEN_KEY = "oauth-access-token-sheets";
   public static final String GRANT_TYPE = "grant_type=authorization_code";
   public static final String REDIRECT_URI = "redirect_uri=";
   public static final String RESPONSE_TYPE = "response_type=code";
   public static final String CLIENT_SECRET = "client_secret=";
   public static final String AUTH_CODE = "code=";
+  public static final String STATE = "state=";  
 }
