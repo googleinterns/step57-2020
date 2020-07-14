@@ -33,10 +33,10 @@ public class VendorServlet extends HttpServlet {
     ArrayList<String> vendorIDs = fileParser.getVendorIDs();
 
     Gson gson = new Gson();
+    String json = gson.toJson(vendorIDs);
 
-    String dummyResponse = "[\"CADE01\",\"VINCENT01\",\"CHARLIE01\",\"JAKE01\",\"IAN01\"]";
     response.setContentType("text/html;");
-    response.getWriter().println(dummyResponse);
+    response.getWriter().println(json);
   }
 
   @Override
