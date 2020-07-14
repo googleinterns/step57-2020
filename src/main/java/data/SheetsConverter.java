@@ -33,9 +33,9 @@ public class SheetsConverter {
   private final String ACCOUNT_TITLE = "Account Sheet";
   private final String VENDOR_TITLE = "Vendor Sheet";
 
-  public boolean updateSheets(ArrayList<Vendor> vendorList) 
+  public boolean updateSheets(ArrayList<Vendor> vendorList, String accessToken) 
     throws GeneralSecurityException, IOException {
-    //writeToSheet(); add accessToken param
+    writeToSheet(accessToken); 
     return true;
   }
 

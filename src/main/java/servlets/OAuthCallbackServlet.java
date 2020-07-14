@@ -72,9 +72,6 @@ public class OAuthCallbackServlet extends HttpServlet {
       return;
     }
 
-    System.out.println(state);
-
-
     // Build the access token request.
     HttpClient httpClient = HttpClient.newHttpClient();
     HttpRequest tokenRequest = buildTokenRequest(authCode); 

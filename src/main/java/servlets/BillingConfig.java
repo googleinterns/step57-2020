@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 package servlets;
 
 import data.JsonConverter;
@@ -64,7 +63,7 @@ public class BillingConfig extends HttpServlet {
 
     /** 
      * TODO: @cade, eventually you will want to pass this access token into the 
-     * updateSheets() method in the SheetsConverter class
+     * updateSheets() method in the SheetsConverter class.
      */
     HttpSession session = request.getSession();
     String accessToken = session.getAttribute("accessToken").toString();
@@ -73,10 +72,8 @@ public class BillingConfig extends HttpServlet {
     try {
       sheet.writeToSheet(accessToken);
     } catch (GeneralSecurityException e) {
-      // TODO: @cade Figure out how you want to handle this error;
+      // TODO: @cade Figure out how you want to handle this error.
     }
-
-
 
     response.setContentType(CONTENT_TYPE_TEXT_HTML);
     response.getWriter().println(configText);
