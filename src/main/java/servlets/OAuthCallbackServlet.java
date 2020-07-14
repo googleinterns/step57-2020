@@ -38,11 +38,16 @@ import util.OAuthConstants;
 public class OAuthCallbackServlet extends HttpServlet {
   private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
   private final String SECRET_FILEPATH = "../../src/main/resources/secret.txt";
+  private final String CODE_PARAM = "code";
+  private final String ERROR_PARAM = "error";
+  private final String ACCESS_TOKEN_PARAM = "access_token";
+  private final String HEADER_TYPE = "Content-Type";
+  private final String HEADER_FORM = "application/x-www-form-urlencoded";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String error = request.getParameter("error");
-    String authCode = request.getParameter("code");
+    String error = request.getParameter(ERROR_PARAM);
+    String authCode = request.getParameter(CODE_PARAM);
 
     // Print any error the OAuth provider gave us.
     if (error != null && !error.isEmpty()) {
@@ -64,9 +69,8 @@ public class OAuthCallbackServlet extends HttpServlet {
     // Request the access tokens.
     HttpClient httpClient = HttpClient.newHttpClient();
     HttpRequest tokenRequest = HttpRequest.newBuilder(URI.create(
-      OAuthConstants.TOKEN_URI)).header("Content-Type", 
-      "application/x-www-form-urlencoded").POST(BodyPublishers.ofString(
-      tokenRequestBody)).build();
+      OAuthConstants.TOKEN_URI)).header(HEADER_TYPE, HEADER_FORM).POST(
+      BodyPublishers.ofString(tokenRequestBody)).build();
 
     HttpResponse tokenResponse = httpClient.sendAsync(tokenRequest, 
       BodyHandlers.ofString()).join();
@@ -75,7 +79,7 @@ public class OAuthCallbackServlet extends HttpServlet {
     // Parses to find access token.
     JsonObject tokenResponseObj = JsonParser.parseString(tokenResponseBody)
       .getAsJsonObject();
-    JsonElement accessToken = tokenResponseObj.get("access_token");
+    JsonElement accessToken = tokenResponseObj.get(ACCESS_TOKEN_PARAM);
 
     response.setContentType("text/html");
     response.getWriter().printf("<h1>the access token for the Sheets API is %s</h1>", accessToken);
