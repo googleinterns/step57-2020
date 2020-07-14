@@ -18,6 +18,7 @@ import data.FileParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,15 +28,18 @@ import com.google.gson.Gson;
 @WebServlet("/VendorServlet")
 public class VendorServlet extends HttpServlet {
   @Override
+  /**
+   * Prints a hashmap to the response object
+   * STRING (Vendor ID) : ARRAY OF STRINGS (Account IDs)
+   * e.g., {"vend_1":["account1","account2","account3","account4"],
+   *            "vend_2":["account5","account6","account7"}
+   */
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // GET method --> returns a JSON array of existing Vendor IDs
     FileParser fileParser = new FileParser();
-    ArrayList<String> vendorIDs = fileParser.getVendorIDs();
+    HashMap<String, ArrayList<String>> configMap = fileParser.getConfigMap();
 
     Gson gson = new Gson();
-    String json = gson.toJson(vendorIDs);
-
-    System.out.println(fileParser.getConfigMap(vendorIDs));
+    String json = gson.toJson(configMap);
 
     response.setContentType("text/html;");
     response.getWriter().println(json);
