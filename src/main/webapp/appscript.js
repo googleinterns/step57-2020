@@ -13,16 +13,16 @@
 // limitations under the License.
 
 /**
-  * Function that fetches vendor IDs from VendorServlet and adds them to the
+  * Fetches vendor IDs from VendorServlet and adds them to the
   * Customer ID dropdown.
   */
 async function populateCustomerList() {
   const response = await fetch('/VendorServlet');
 
-  // response is a json array that is parsed into json.
+  // Response is a json array that is parsed into json.
   var customer_json = await response.json();
 
-  // Loops over this array to make the options for the Customer ID dropdown,
+  // Loops over this array to make the options for the Customer ID dropdown.
   var html = '';
   for (var i = 0; i < customer_json.length; i++) {
     html += '<option value="' + customer_json[i] + '">'
