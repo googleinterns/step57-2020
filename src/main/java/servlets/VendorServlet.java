@@ -35,6 +35,8 @@ public class VendorServlet extends HttpServlet {
     Gson gson = new Gson();
     String json = gson.toJson(vendorIDs);
 
+    System.out.println(fileParser.getConfigMap(vendorIDs));
+
     response.setContentType("text/html;");
     response.getWriter().println(json);
   }

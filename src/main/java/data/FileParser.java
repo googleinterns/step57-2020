@@ -16,6 +16,15 @@ public class FileParser {
     this.basePath = filepath;
   }
 
+  public HashMap<String, ArrayList<String>> getConfigMap(ArrayList<String> vendorIDs) {
+    HashMap<String, ArrayList<String>> map = new HashMap<>();
+    for (String vendor : vendorIDs) {
+      ArrayList<String> accounts = getAccountIDs(vendor);
+      map.put(vendor, accounts);
+    }
+    return map;
+  }
+
   /** Return list of vendor IDs that exist in the filesystem */
   public ArrayList<String> getVendorIDs() {
     File root = new File(basePath);
