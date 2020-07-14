@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import util.ResponseBuilder;
+import data.ResponseBuilder;
 import util.UserAuthUtil;
 import util.OAuthConstants;
 
