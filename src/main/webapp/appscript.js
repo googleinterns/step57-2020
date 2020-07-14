@@ -12,50 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-console.log('Hello World');
-
-// Fetch methods to search endpoint
+/**
+  * Function that fetches vendor IDs from VendorServlet and adds them to the
+  * Customer ID dropdown.
+  */
 async function populateCustomerList() {
-  console.log('Hello function');
   const response = await fetch('/VendorServlet');
 
+  // response is a json array that is parsed into json.
   var customer_json = await response.json();
 
-  let customer_string = customer_json.toString();
-
-  console.log(customer_string);
-
-  for ( var i = 0; i < customer_json.length; i++) {
-    console.log(customer_json[i]);
+  // Loops over this array to make the options for the Customer ID dropdown,
+  var html = '';
+  for (var i = 0; i < customer_json.length; i++) {
+    html += '<option value="' + customer_json[i] + '">'
+    + customer_json[i] + '</option>';
   }
 
-  // var html = '';
-  // for (var i = 0; i < customer_json.length; i++) {
-  //   html += '<option value="' + customer_json[i] + '">'
-  //   + customer_json[i] + '</option>';
-  // }
-
-  // document.getElementById('customer-ids').innerHTML = html;
+  // Adds the options to the page, allowing them to be viewed. 
+  document.getElementById('customer-ids').innerHTML = html;
 }
 
-// // Fetch method for putting the specified config to the page
-// async function getVendorJson() {
-
-//   // BillingConfig returns the WHOLE configuration 
-
-//   // This fetch gives a JSON as a string, rather than an array.
-//   const response = await fetch('/BillingConfig');
-
-//   let config_string = await response.text();
-
-//   let textbox = document.getElementById('textbox');
-
-// }
-
-
-// Editfile calls BillingConfig
-
-// Method to populate edit form 
-
+// TODO: Fetch method for putting the specified config to the page.
+// TODO: Method to populate edit form.
 // TODO: Method for enums: Check which of the tags has data under it {isLoggedIn:{loginURL},isLoggedOut:{logooutURL}}}
 
