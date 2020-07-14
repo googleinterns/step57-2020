@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import util.ResponseBuilder;
 import util.UserAuthUtil;
 import util.OAuthConstants;
 
@@ -36,11 +37,8 @@ public class LoginServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType(CONTENT_TYPE_TEXT_HTML);
-    PrintWriter out = response.getWriter();
-    if (UserAuthUtil.isUserLoggedIn()) {
-      out.println(UserAuthUtil.getLogoutURL(REDIRECT_LINK));
-    } else {
-      // Send user to OAuth consent page.
+    response.getWriter().println(ResponseBuilder.toJson(UserAuthUtil.isUserLoggedIn(), REDIRECT_LINK));
+    if (!UserAuthUtil.isUserLoggedIn()) {
       response.sendRedirect(getOAuthRedirectURL());
     }
   }
