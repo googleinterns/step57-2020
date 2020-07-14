@@ -1,14 +1,9 @@
-package util;
-
-import data.Vendor;
+package data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
- * Utility class to retrieve lists of vendors and accounts
- */
-public class FileUtil {
+public class FileParser {
   /** Return list of vendor IDs that exist in the filesystem */
   public static ArrayList<String> getVendorIDs() {
     return new ArrayList<>(Arrays.asList("ALPHA", "BRAVO", "CHARLIE", "DELTA"));
@@ -18,4 +13,5 @@ public class FileUtil {
   public static ArrayList<String> getAccountIDs(String vendorID) {
     return new ArrayList<>(Arrays.asList("ECHO", "FOXTROT", "GOLF", "HOTEL"));
   }
+}
 }
