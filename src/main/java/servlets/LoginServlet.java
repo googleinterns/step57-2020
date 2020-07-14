@@ -35,8 +35,6 @@ public class LoginServlet extends HttpServlet {
   // Returns a URL to either login and get OAuth tokens or to logout.
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    System.out.println(getOAuthRedirectURL());
-
     response.setContentType(CONTENT_TYPE_TEXT_HTML);
     PrintWriter out = response.getWriter();
     if (UserAuthUtil.isUserLoggedIn()) {

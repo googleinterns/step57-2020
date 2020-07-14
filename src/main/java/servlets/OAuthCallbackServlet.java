@@ -62,24 +62,17 @@ public class OAuthCallbackServlet extends HttpServlet {
       return;
     }
 
-    String tokenRequestBody = String.format("%s&%s&%s&%s&%s", 
-      OAuthConstants.GRANT_TYPE, OAuthConstants.AUTH_CODE + authCode, 
-      getRedirectUri(), OAuthConstants.CLIENT_ID, getClientSecret());
+    // Build the access tokens.
+    HttpClient httpClient = HttpClient.newHttpClient();
+    HttpRequest tokenRequest = buildTokenRequest(authCode); 
 
     // Request the access tokens.
-    HttpClient httpClient = HttpClient.newHttpClient();
-    HttpRequest tokenRequest = HttpRequest.newBuilder(URI.create(
-      OAuthConstants.TOKEN_URI)).header(HEADER_TYPE, HEADER_FORM).POST(
-      BodyPublishers.ofString(tokenRequestBody)).build();
-
     HttpResponse tokenResponse = httpClient.sendAsync(tokenRequest, 
       BodyHandlers.ofString()).join();
     String tokenResponseBody = tokenResponse.body().toString();
 
-    // Parses to find access token.
-    JsonObject tokenResponseObj = JsonParser.parseString(tokenResponseBody)
-      .getAsJsonObject();
-    JsonElement accessToken = tokenResponseObj.get(ACCESS_TOKEN_PARAM);
+    // Parse to find access token.
+    JsonElement accessToken = parseAccessToken(tokenResponseBody); 
 
     response.setContentType("text/html");
     response.getWriter().printf("<h1>the access token for the Sheets API is %s</h1>", accessToken);
@@ -113,5 +106,22 @@ public class OAuthCallbackServlet extends HttpServlet {
       clientSecret += input.nextLine();
     }
     return clientSecret;
+  }
+
+  private HttpRequest buildTokenRequest(String authCode) {
+    String tokenRequestBody = String.format("%s&%s&%s&%s&%s", 
+      OAuthConstants.GRANT_TYPE, OAuthConstants.AUTH_CODE + authCode, 
+      getRedirectUri(), OAuthConstants.CLIENT_ID, getClientSecret());
+
+    return HttpRequest.newBuilder(URI.create(OAuthConstants.TOKEN_URI))
+      .header(HEADER_TYPE, HEADER_FORM).POST(BodyPublishers.ofString(
+      tokenRequestBody)).build();
+  }
+
+  private JsonElement parseAccessToken(String tokenResponseBody) {
+    JsonObject tokenResponseObj = JsonParser.parseString(tokenResponseBody)
+      .getAsJsonObject();
+
+    return tokenResponseObj.get(ACCESS_TOKEN_PARAM);
   }
 }
