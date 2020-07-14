@@ -10,8 +10,7 @@ public class UserAuthUtil {
    * @return user login status.
    */
   public static boolean isUserLoggedIn() {
-    UserService userServ = UserServiceFactory.getUserService();
-    return userServ.isUserLoggedIn();
+    return UserServiceFactory.getUserService().isUserLoggedIn();
   }
 
   /**
@@ -19,8 +18,7 @@ public class UserAuthUtil {
    * @return URL for user to click to login.
    */
   public static String getLoginURL(String redirect) {
-    UserService userServ = UserServiceFactory.getUserService();
-    return userServ.createLoginURL(redirect);
+    return UserServiceFactory.getUserService().createLoginURL(redirect);
   }
 
   /**
@@ -31,9 +29,6 @@ public class UserAuthUtil {
     return UserServiceFactory.getUserService().createLogoutURL(redirect);
   }
 
-  /**
-   * Helper method to return a User object.
-   */
   public static User getUser() {
     return UserServiceFactory.getUserService().getCurrentUser();
   }
