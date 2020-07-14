@@ -12,43 +12,50 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+console.log('Hello World');
+
 // Fetch methods to search endpoint
+async function populateCustomerList() {
+  console.log('Hello function');
+  const response = await fetch('/VendorServlet');
 
-// Fetch method
-async function getVendorJson() {
+  var customer_json = await response.json();
 
-  // BillingConfig returns the WHOLE configuration 
+  let customer_string = customer_json.toString();
 
-  // This fetch gives a JSON as a string, rather than an array.
-  const response = await fetch('/BillingConfig');
+  console.log(customer_string);
 
+  for ( var i = 0; i < customer_json.length; i++) {
+    console.log(customer_json[i]);
+  }
 
-  var textbox = document.getElementById('textbox');
-  var json_string = response_text;
+  // var html = '';
+  // for (var i = 0; i < customer_json.length; i++) {
+  //   html += '<option value="' + customer_json[i] + '">'
+  //   + customer_json[i] + '</option>';
+  // }
 
-  textbox.innerHTML = JSON.stringify(json_string);
-
+  // document.getElementById('customer-ids').innerHTML = html;
 }
 
+// // Fetch method for putting the specified config to the page
+// async function getVendorJson() {
 
-function getVendors() {
-  // VendorServlet returns array of vendor IDs
-  // This should be onLoad()
-  // No account search... yet
-  fetch('/VendorServlet').then(response => response.json())
-  .then((VendorConfigs) => {
+//   // BillingConfig returns the WHOLE configuration 
 
-    // Make a for loop here
-    for (var i = 0; i < response.length; i++) {
-      var option = '<option value=' + response[i] + '>' + response[i] + '</option>';
+//   // This fetch gives a JSON as a string, rather than an array.
+//   const response = await fetch('/BillingConfig');
 
-    }
+//   let config_string = await response.text();
 
-  })  
-}
+//   let textbox = document.getElementById('textbox');
+
+// }
 
 
 // Editfile calls BillingConfig
 
 // Method to populate edit form 
+
+// TODO: Method for enums: Check which of the tags has data under it {isLoggedIn:{loginURL},isLoggedOut:{logooutURL}}}
 

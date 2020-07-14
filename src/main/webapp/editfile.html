@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Edit File Configuration</title>
     <link rel="stylesheet" href="editfile.css">
+    <script src="appscript.js"></script>
   </head>
   <body>
     <h1>Billing Configuration Sync Tool</h1></br>
@@ -13,14 +14,11 @@
       <a href="createfile.html">Create Configuration</a>
       <a href="deletefile.html">Delete Configuration</a>
     </div>
-    <div>
+    <div onload="javascript:populateCustomerList()">
       <form id="config-search">
         <p>Customer ID:</p>
         <input list="customer-ids">
         <datalist id="customer-ids">
-          <option value="Customer 1">
-          <option value="Customer 2">
-          <option value="Customer 3">
         </datalist>
         <p>Account ID:</p>
         <input list="account-ids">
