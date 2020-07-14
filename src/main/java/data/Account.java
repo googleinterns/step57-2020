@@ -13,6 +13,9 @@
 // limitations under the License.
 package data;
 
+import servlets.BillingConfig;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /** A class representing a billing account object. */
@@ -27,9 +30,9 @@ public class Account {
   private String matchingMode;
   private String aggregationMode;
 
-  public Account(String accountID, String vendorID, String entity, 
-    String currency, String direction, String legacyAccountID, 
-    int nextGenAccountID, String matchingMode, String aggregationMode) {
+  public Account(String accountID, String vendorID, String entity, String currency,
+                 String direction, String legacyAccountID, int nextGenAccountID,
+                 String matchingMode, String aggregationMode) {
 
     this.accountID = accountID;
     this.vendorID = vendorID;
@@ -40,6 +43,19 @@ public class Account {
     this.nextGenAccountID = nextGenAccountID;
     this.matchingMode = matchingMode;
     this.aggregationMode = aggregationMode;
+  }
+
+  public Account(HttpServletRequest request) {
+    this.vendorID = request.getParameter(BillingConfig.VENDOR_ID);
+    this.accountID = request.getParameter(BillingConfig.ACCOUNT_ID);
+    this.legacyAccountID = request.getParameter(BillingConfig.LEGACY_ACCOUNT_ID);
+    this.nextGenAccountID = Integer.parseInt(
+            request.getParameter(BillingConfig.NEXT_GEN_ACCOUNT_ID));
+    this.currency = request.getParameter(BillingConfig.CURRENCY_CODE);
+    this.direction = request.getParameter(BillingConfig.DIRECTION);
+    this.entity = request.getParameter(BillingConfig.ENTITY);
+    this.matchingMode = request.getParameter(BillingConfig.MATCHING_MODE);
+    this.aggregationMode= request.getParameter(BillingConfig.AGGREGATION_MODE);
   }
 
   public String getAccountID() {

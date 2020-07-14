@@ -33,8 +33,11 @@ import data.Account;
 /** Test the functionality of the JsonConverter class. */
 @RunWith(JUnit4.class)
 public final class JsonConverterTest {
+  private static final String TEST_PATH_BASE = "src/test/resources/";
+
   private Vendor vendor;
   private Account account;
+  private JsonConverter converter;
   private final String VENDOR_ID = "vend_1";
   private final String LEGACY_VENDOR_ID = "legVend_27";
   private final int NEXT_GEN_VENDOR_ID = 17;
@@ -45,35 +48,34 @@ public final class JsonConverterTest {
   private final String LEGACY_ACCOUNT_ID = "legAcc_53";
   private final int NEXT_GEN_ACCOUNT_ID = 17;
   private final String MATCHING_MODE = "straight";
-  private final String AGGREGATION_MODE = "totalAgg"; 
-     
+  private final String AGGREGATION_MODE = "totalAgg";
+
   /** Create a Vendor and Account object. */
   @Before
   public void setUp() {
+    converter = new JsonConverter(TEST_PATH_BASE);
     vendor = new Vendor(VENDOR_ID, LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID);
-    account = new Account(ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION, 
-      LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE);
+    account = new Account(ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION,
+            LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE);
   }
 
   /** Test that updateFile() returns true. */
   @Test
   public void testUpdateFileMethod() throws IOException {
-    JsonConverter converter = new JsonConverter();
 
     boolean expectedResponse = true;
     boolean actualResponse = converter.updateFile(vendor);
 
-    assertTrue("updateFile() didn't return true when it should have.", 
-      expectedResponse == actualResponse);
+    assertTrue("updateFile() didn't return true when it should have.",
+            expectedResponse == actualResponse);
   }
 
-  /** 
-   * Test that getConfig() returns the expected file content. 
+  /**
+   * Test that getConfig() returns the expected file content.
    * The vendorID must match an existing filepath in the filesystem.
    */
   @Test
   public void testGetConfigMethod() {
-    JsonConverter converter = new JsonConverter();
     String vendorID = "vend_1";
     String expectedResponse = "{\"legacy_vendor_id\":legVend_27,\"next_gen_vendor_id\":17,\"accounts\":[]}";
 
@@ -82,36 +84,34 @@ public final class JsonConverterTest {
     assertEquals(expectedResponse, actualResponse);
   }
 
-  /** 
-   * Test that getConfig() returns null when faulty vendorID is passed in. 
+  /**
+   * Test that getConfig() returns null when faulty vendorID is passed in.
    * The vendorID must match an existing filepath in the filesystem.
    */
-  @Test 
+  @Test
   public void testGetConfigMethodWithFakeVendorID() {
-    JsonConverter converter = new JsonConverter();
     String vendorID = "fakeVendorID";
     String expectedResponse = null;
 
     String actualResponse = converter.getConfig(vendorID);
 
     assertTrue("getConfig() didn't return null when it should have.",
-      expectedResponse == actualResponse);
+            expectedResponse == actualResponse);
   }
 
   /** Test that writeFile() returns a File with the expected content. */
   @Test
   public void testWriteFile() throws FileNotFoundException {
-    JsonConverter converter = new JsonConverter();
     vendor.addAccount(account);
 
     String expectedResponse = String.format("{\"legacy_vendor_id\":%s," +
-      "\"next_gen_vendor_id\":%d,\"accounts\":[{\"legacy_account_id\":%s," +
-      "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
-      "\"currency_code\":%s,\"direction\":%s,\"entity\":%s}," +
-      "\"settlement_config\":{\"matching_mode\":%s},\"account_id\":%s," +
-      "\"aggregation_mode\":%s}}]}", LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID,
-      LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, CURRENCY, DIRECTION, ENTITY, 
-      MATCHING_MODE, ACCOUNT_ID,AGGREGATION_MODE);
+                    "\"next_gen_vendor_id\":%d,\"accounts\":[{\"legacy_account_id\":%s," +
+                    "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
+                    "\"currency_code\":%s,\"direction\":%s,\"entity\":%s}," +
+                    "\"settlement_config\":{\"matching_mode\":%s},\"account_id\":%s," +
+                    "\"aggregation_mode\":%s}}]}", LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID,
+            LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, CURRENCY, DIRECTION, ENTITY,
+            MATCHING_MODE, ACCOUNT_ID,AGGREGATION_MODE);
     String actualResponse = "";
 
     File file = converter.writeFile(vendor.getVendorID(), vendor.buildJsonConfig());
