@@ -20,6 +20,7 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.googleapis.extensions.appengine.auth.oauth2.AppIdentityCredential;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import javax.servlet.http.HttpSession;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -31,9 +32,11 @@ import com.google.api.services.sheets.v4.Sheets;
 /** A class to create a Sheets instance. */
 public class SheetsServiceUtil {
 
-  public static Sheets getSheetsService() throws IOException, GeneralSecurityException {
-    // TODO(cxfloeder): Create a spreadsheet by using the OAuth tokens.
-
-    return null;
+  // Create a spreadsheet by using the OAuth access token.
+  public static Sheets getSheetsService(String accessToken) throws IOException, GeneralSecurityException {
+    GoogleCredential credential = new GoogleCredential().setAccessToken(accessToken);
+    
+    return new Sheets.Builder(new UrlFetchTransport(), new JacksonFactory(), credential)
+      .build();
   }
 }

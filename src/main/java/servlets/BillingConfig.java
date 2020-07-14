@@ -16,15 +16,19 @@ package servlets;
 
 import data.JsonConverter;
 import data.Vendor;
+import data.SheetsConverter;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Enumeration;
 import java.util.Map;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 
 @WebServlet("/BillingConfig")
 public class BillingConfig extends HttpServlet {
@@ -44,7 +48,7 @@ public class BillingConfig extends HttpServlet {
   public static final String AGGREGATION_MODE = "aggregation-mode";
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
     // GET method --> returns entire billing config as JSON
     // return null if vendor ID doesn't exist
     String vendorID = request.getParameter(VENDOR_ID);
@@ -57,6 +61,22 @@ public class BillingConfig extends HttpServlet {
     } else {
       configText = "Error finding " + vendorID + "'s configuration";
     }
+
+    /** 
+     * TODO: @cade, eventually you will want to pass this access token into the 
+     * updateSheets() method in the SheetsConverter class
+     */
+    HttpSession session = request.getSession();
+    String accessToken = session.getAttribute("accessToken").toString();
+
+    SheetsConverter sheet = new SheetsConverter(); 
+    try {
+      sheet.writeToSheet(accessToken);
+    } catch (GeneralSecurityException e) {
+      // TODO: @cade Figure out how you want to handle this error;
+    }
+
+
 
     response.setContentType(CONTENT_TYPE_TEXT_HTML);
     response.getWriter().println(configText);

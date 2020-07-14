@@ -38,7 +38,6 @@ public class LoginServlet extends HttpServlet {
     // Create a state token to prevent request forgery.
     String state = new BigInteger(130, new SecureRandom()).toString(32);
     HttpSession session = request.getSession(true);
-
     session.setAttribute(OAuthConstants.SHEETS_SESSION_KEY, state);
 
     response.setContentType(CONTENT_TYPE_TEXT_HTML);
@@ -55,11 +54,11 @@ public class LoginServlet extends HttpServlet {
   /** 
    * Build the OAuth consent page redirect URL. 
    * 
-   * ex URL: https://accounts.google.com/o/oauth2/v2/auth?client_id=150737768611-
-   * svndjtlklolq53g4ass4r3sqal2i31p5.apps.googleusercontent.com&response_type=
-   * code&redirect_uri=https://8080-479d0277-462e-4e1c-8481-71f13e508859.us-
-   * central1.cloudshell.dev/api/oauth/callback/sheets&scope=https://www.
-   * googleapis.com/auth/spreadsheets
+   * ex URL: https://accounts.google.com/o/oauth2/v2/auth?client_id=150737768611
+   * -svndjtlklolq53g4ass4r3sqal2i31p5.apps.googleusercontent.com&scope=https://
+   * www.googleapis.com/auth/spreadsheets&response_type=code&redirect_uri=https:
+   * //8080-479d0277-462e-4e1c-8481-71f13e508859.us-central1.cloudshell.dev/api/
+   * oauth/callback/sheets&state=907bnrlkufr2cf43ukdq6s97j4
    */
   private String getOAuthRedirectURL(String state) {
     return String.format("%s?%s&%s&%s&%s&%s", OAuthConstants.OAUTH_LOGIN_URI, 

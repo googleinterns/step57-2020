@@ -35,13 +35,13 @@ public class SheetsConverter {
 
   public boolean updateSheets(ArrayList<Vendor> vendorList) 
     throws GeneralSecurityException, IOException {
-    writeToSheet();
+    //writeToSheet(); add accessToken param
     return true;
   }
 
   // Enter unimportant data to a spreadsheet.
-  public static void writeToSheet() throws GeneralSecurityException, IOException {
-    sheetsService = SheetsServiceUtil.getSheetsService();
+  public static void writeToSheet(String accessToken) throws GeneralSecurityException, IOException {
+    sheetsService = SheetsServiceUtil.getSheetsService(accessToken);
 
     ValueRange body = new ValueRange().setValues(Arrays.asList(
       Arrays.asList("Expenses January"), 

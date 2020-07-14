@@ -33,6 +33,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
 import util.OAuthConstants;
 
+
 /** A servlet to request access and refresh access tokens for the Sheets API.*/
 @WebServlet("/api/oauth/callback/sheets")
 public class OAuthCallbackServlet extends HttpServlet {
@@ -71,6 +72,9 @@ public class OAuthCallbackServlet extends HttpServlet {
       return;
     }
 
+    System.out.println(state);
+
+
     // Build the access token request.
     HttpClient httpClient = HttpClient.newHttpClient();
     HttpRequest tokenRequest = buildTokenRequest(authCode); 
@@ -88,7 +92,7 @@ public class OAuthCallbackServlet extends HttpServlet {
 
     // Store access token in a session.
     HttpSession session = request.getSession();
-    session.setAttribute(OAuthConstants.SHEETS_SESSION_TOKEN_KEY, accessToken.toString());
+    session.setAttribute("accessToken", accessToken.toString());
   }
 
   // Build a valid redirect URI to the OAuthCallbackServlet.
