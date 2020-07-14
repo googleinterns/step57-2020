@@ -1,7 +1,7 @@
 package data;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.File;
+import java.util.*;
 
 public class FileParser {
   private static final String DEFAULT_FILE_PATH = "../../src/main/resources";
@@ -17,12 +17,13 @@ public class FileParser {
   }
 
   /** Return list of vendor IDs that exist in the filesystem */
-  public static ArrayList<String> getVendorIDs() {
-    return new ArrayList<>(Arrays.asList("ALPHA", "BRAVO", "CHARLIE", "DELTA"));
+  public ArrayList<String> getVendorIDs() {
+    File root = new File(basePath);
+    return new ArrayList<>(Arrays.asList(Objects.requireNonNull(root.list())));
   }
 
   /** Return list of account IDs corresponding to a given vendor */
-  public static ArrayList<String> getAccountIDs(String vendorID) {
+  public ArrayList<String> getAccountIDs(String vendorID) {
     return new ArrayList<>(Arrays.asList("ECHO", "FOXTROT", "GOLF", "HOTEL"));
   }
 }

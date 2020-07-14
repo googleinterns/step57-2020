@@ -14,17 +14,26 @@
 
 package servlets;
 
+import data.FileParser;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
 
 @WebServlet("/VendorServlet")
 public class VendorServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // GET method --> returns a JSON array of existing Vendor IDs
+    FileParser fileParser = new FileParser();
+    ArrayList<String> vendorIDs = fileParser.getVendorIDs();
+
+    Gson gson = new Gson();
+
     String dummyResponse = "[\"CADE01\",\"VINCENT01\",\"CHARLIE01\",\"JAKE01\",\"IAN01\"]";
     response.setContentType("text/html;");
     response.getWriter().println(dummyResponse);
