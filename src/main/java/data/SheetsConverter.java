@@ -33,15 +33,15 @@ public class SheetsConverter {
   private final String ACCOUNT_TITLE = "Account Sheet";
   private final String VENDOR_TITLE = "Vendor Sheet";
 
-  public boolean updateSheets(ArrayList<Vendor> vendorList) 
+  public boolean updateSheets(ArrayList<Vendor> vendorList, String accessToken) 
     throws GeneralSecurityException, IOException {
-    writeToSheet();
+    writeToSheet(accessToken); 
     return true;
   }
 
   // Enter unimportant data to a spreadsheet.
-  public static void writeToSheet() throws GeneralSecurityException, IOException {
-    sheetsService = SheetsServiceUtil.getSheetsService();
+  public static void writeToSheet(String accessToken) throws GeneralSecurityException, IOException {
+    sheetsService = SheetsServiceUtil.getSheetsService(accessToken);
 
     ValueRange body = new ValueRange().setValues(Arrays.asList(
       Arrays.asList("Expenses January"), 
