@@ -36,13 +36,9 @@ public class VendorServlet extends HttpServlet {
    */
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     FileParser fileParser = new FileParser();
-    HashMap<String, ArrayList<String>> configMap = fileParser.getConfigMap();
-
-    Gson gson = new Gson();
-    String json = gson.toJson(configMap);
-
+    String configMap = fileParser.getConfigMap();
     response.setContentType("text/html;");
-    response.getWriter().println(json);
+    response.getWriter().println(configMap);
   }
 
   @Override
