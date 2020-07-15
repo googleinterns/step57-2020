@@ -15,14 +15,11 @@ package servlets;
 
 import java.net.URI;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Logger;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import data.ResponseBuilder;
 import util.UserAuthUtil;
 import util.OAuthConstants;
