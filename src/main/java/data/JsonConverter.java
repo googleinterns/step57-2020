@@ -16,6 +16,8 @@ package data;
 
 import java.io.*;
 import java.util.*;
+
+import com.google.gson.Gson;
 import org.json.JSONObject;
 
 /** A class that creates a config file from a Vendor object. */
@@ -101,5 +103,33 @@ public class JsonConverter {
     }
 
     return configContents;
+  }
+
+  /**
+   * Map each vendor ID to an array of account IDs.
+   * @return JSON dictionary
+   */
+  public String getConfigMap() {
+    ArrayList<String> vendorIDs = getVendorIDs();
+    HashMap<String, ArrayList<String>> map = new HashMap<>();
+
+    for (String vendor : vendorIDs) {
+      ArrayList<String> accounts = getAccountIDs(vendor);
+      map.put(vendor, accounts);
+    }
+
+    Gson gson = new Gson();
+    return gson.toJson(map);
+  }
+
+  /** Return list of vendor IDs that exist in the filesystem.*/
+  private ArrayList<String> getVendorIDs() {
+    File root = new File(basePath);
+    return new ArrayList<>(Arrays.asList(Objects.requireNonNull(root.list())));
+  }
+
+  /** TODO Return list of account IDs corresponding to a given vendor. */
+  private ArrayList<String> getAccountIDs(String vendorID) {
+    return new ArrayList<>(Arrays.asList("ECHO", "FOXTROT", "GOLF", "HOTEL"));
   }
 }
