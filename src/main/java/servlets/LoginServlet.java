@@ -15,6 +15,12 @@ package servlets;
 
 import java.net.URI;
 import java.io.IOException;
+import java.util.logging.Logger;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import data.ResponseBuilder;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -41,13 +47,9 @@ public class LoginServlet extends HttpServlet {
     session.setAttribute(OAuthConstants.SHEETS_SESSION_KEY, state);
 
     response.setContentType(CONTENT_TYPE_TEXT_HTML);
-    PrintWriter out = response.getWriter();
-
-    if (UserAuthUtil.isUserLoggedIn()) {
-      out.println(UserAuthUtil.getLogoutURL(REDIRECT_LINK));
-    } else {
-      // Send user to OAuth consent page.
-      response.sendRedirect(getOAuthRedirectURL(state));
+    response.getWriter().println(ResponseBuilder.toJson(UserAuthUtil.isUserLoggedIn(), REDIRECT_LINK));
+    if (!UserAuthUtil.isUserLoggedIn()) {
+      response.sendRedirect(getOAuthRedirectURL());
     }
   }
 
