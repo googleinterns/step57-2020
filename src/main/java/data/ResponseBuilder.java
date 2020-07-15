@@ -8,8 +8,8 @@ public class ResponseBuilder {
    * @param isLoggedIn user login status
    * @param redirectURL URL to redirect after login/logout
    * @return JSON string with login/logout URL
-   *         e.g., logged in: { "isLoggedIn":{"/_ah/logout?continue=%2FLogin"}, "isLoggedOut":{""}}
-   *         logged out: { "isLoggedIn":{""}, "isLoggedOut":{"/_ah/login?continue=%2FLogin"}}
+   *         e.g., logged in: { "isLoggedIn":{"loginURL" : "/_ah/logout?continue=%2FLogin"}, "isLoggedOut":{""}}
+   *         logged out: { "isLoggedIn":{""}, "isLoggedOut":{"logoutURL" : "/_ah/login?continue=%2FLogin"}}
    */
   public static String toJson(boolean isLoggedIn, String redirectURL) {
     return "{ \"isLoggedIn\":{\"" + buildLogout(isLoggedIn, redirectURL) + "\"}, " +
@@ -17,10 +17,10 @@ public class ResponseBuilder {
   }
 
   private static String buildLogin(boolean isLoggedIn, String redirectURL) {
-    return isLoggedIn ? "" : UserAuthUtil.getLoginURL(redirectURL);
+    return isLoggedIn ? "" : "\"loginURL\" :" + UserAuthUtil.getLoginURL(redirectURL);
   }
 
   private static String buildLogout(boolean isLoggedIn, String redirectURL) {
-    return isLoggedIn ? UserAuthUtil.getLogoutURL(redirectURL) : "";
+    return isLoggedIn ? "\"logoutURL\" :" + UserAuthUtil.getLogoutURL(redirectURL) : "";
   }
 }
