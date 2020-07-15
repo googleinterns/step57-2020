@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
     response.setContentType(CONTENT_TYPE_TEXT_HTML);
     response.getWriter().println(ResponseBuilder.toJson(UserAuthUtil.isUserLoggedIn(), REDIRECT_LINK));
     if (!UserAuthUtil.isUserLoggedIn()) {
-      response.sendRedirect(getOAuthRedirectURL());
+      response.sendRedirect(getOAuthRedirectURL(state));
     }
   }
 
