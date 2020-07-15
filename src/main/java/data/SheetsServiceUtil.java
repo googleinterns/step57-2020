@@ -32,7 +32,7 @@ import com.google.api.services.sheets.v4.Sheets;
 /** A class to create a Sheets instance. */
 public class SheetsServiceUtil {
 
-  // Create a spreadsheet by using the OAuth access token.
+  // Create a conection to the Sheets service by using the OAuth access token.
   public static Sheets getSheetsService(String accessToken) throws IOException, GeneralSecurityException {
     GoogleCredential credential = new GoogleCredential().setAccessToken(accessToken);
     
