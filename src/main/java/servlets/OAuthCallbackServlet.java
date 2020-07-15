@@ -14,8 +14,9 @@
 package servlets;
 
 import com.google.gson.JsonParser;
-import java.io.IOException;
-import java.io.FileInputStream;
+import java.io.*;
+import java.util.*;
+import java.util.logging.Logger;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -30,25 +31,26 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
+import util.OAuthConstants;
 
-/** A servlet to request access and refresh tokens. */
+
+/** A servlet to request access and refresh access tokens for the Sheets API.*/
 @WebServlet("/api/oauth/callback/sheets")
 public class OAuthCallbackServlet extends HttpServlet {
-  // Token request parameters.
-  private final String CLIENT_ID = "client_id=150737768611-svndjtlklolq53g4ass4r3sqal2i31p5.apps.googleusercontent.com";
-  private final String GRANT_TYPE = "grant_type=authorization_code";
-  private final String CODE = "https://accounts.google.com/o/oauth2/v2/auth";
-  private final String TOKEN_URI = "https://oauth2.googleapis.com/token";
-
-  // Figure out a way to secure method to retrieve the client secret.
-  private final String CLIENT_SECRET = "";
-  private final String REDIRECT_URI = "redirect_uri= SOME CALLBACK URI";
-
+  private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
+  private final String SECRET_FILEPATH = "../../src/main/resources/secret.txt";
+  private final String CODE_PARAM = "code";
+  private final String ERROR_PARAM = "error";
+  private final String STATE_PARAM = "state";
+  private final String ACCESS_TOKEN_PARAM = "access_token";
+  private final String HEADER_TYPE = "Content-Type";
+  private final String HEADER_FORM = "application/x-www-form-urlencoded";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String error = request.getParameter("error");
-    String code = request.getParameter("code");
+    String error = request.getParameter(ERROR_PARAM);
+    String authCode = request.getParameter(CODE_PARAM);
+    String state = request.getParameter(STATE_PARAM);
 
     // Print any error the OAuth provider gave us.
     if (error != null && !error.isEmpty()) {
@@ -57,29 +59,84 @@ public class OAuthCallbackServlet extends HttpServlet {
       return;
     }
 
-    // OAuth provider should have given us a code, otherwise something is wrong here
-    if (code == null || code.isEmpty()) {
+    // Check that the OAuth provider gave us the authorization code.
+    if (authCode == null || authCode.isEmpty()) {
       response.setStatus(400);
       return;
     }
+        
+    String sessionOauthState = (String) request.getSession().getAttribute(OAuthConstants.SHEETS_SESSION_KEY);
 
-    String tokenRequestBody = String.format("%s?%s&%s&%s&%s", GRANT_TYPE, CODE,
-      REDIRECT_URI, CLIENT_ID, CLIENT_SECRET);
+    // Check for an unauthorized client 401 status. 
+    if (!state.equals(sessionOauthState)) {
+      response.setStatus(401);
+      return;
+    }
 
-    // Request the tokens.
+    // Build the access token request.
     HttpClient httpClient = HttpClient.newHttpClient();
-    HttpRequest tokenRequest = HttpRequest.newBuilder(URI.create(TOKEN_URI))
-      .header("Content-Type", "application/x-www-form-urlencoded")
-      .POST(BodyPublishers.ofString(tokenRequestBody)).build();
+    HttpRequest tokenRequest = buildTokenRequest(authCode); 
 
-    HttpResponse tokenResponse = httpClient.sendAsync(tokenRequest, BodyHandlers.ofString()).join();
+    // Request the access tokens.
+    HttpResponse tokenResponse = httpClient.sendAsync(tokenRequest, 
+      BodyHandlers.ofString()).join();
     String tokenResponseBody = tokenResponse.body().toString();
 
-    // Parses to find access token.
-    JsonObject tokenResponseObj = JsonParser.parseString(tokenResponseBody).getAsJsonObject();
-    JsonElement accessToken = tokenResponseObj.get("access_token");
+    // Parse to find access token.
+    JsonElement accessToken = parseAccessToken(tokenResponseBody); 
 
     response.setContentType("text/html");
     response.getWriter().printf("<h1>the access token for the Sheets API is %s</h1>", accessToken);
+
+    // Store access token in a session.
+    HttpSession session = request.getSession();
+    session.setAttribute("accessToken", accessToken.toString());
+  }
+
+  // Build a valid redirect URI to the OAuthCallbackServlet.
+  private String getRedirectUri() {
+    try {
+      URI domainUri = URI.create(System.getenv().get(
+        OAuthConstants.ENVIRONMENT_VARIABLE));
+      return OAuthConstants.REDIRECT_URI + domainUri.resolve(
+        OAuthConstants.OAUTH_CALLBACK_SERVLET).toString();
+    } catch (NullPointerException e) {
+      LOGGER.severe("The DOMAIN environment variable is not set.");
+      throw e;
+    }
+  }
+
+  private String getClientSecret() {
+    String clientSecret = OAuthConstants.CLIENT_SECRET;
+    File secret = new File(SECRET_FILEPATH);
+ 
+    Scanner input;
+    try {
+      input = new Scanner(secret);
+    } catch(FileNotFoundException e) {
+      return null;
+    }
+ 
+    while(input.hasNextLine()) {
+      clientSecret += input.nextLine();
+    }
+    return clientSecret;
+  }
+
+  private HttpRequest buildTokenRequest(String authCode) {
+    String tokenRequestBody = String.format("%s&%s&%s&%s&%s", 
+      OAuthConstants.GRANT_TYPE, OAuthConstants.AUTH_CODE + authCode, 
+      getRedirectUri(), OAuthConstants.CLIENT_ID, getClientSecret());
+
+    return HttpRequest.newBuilder(URI.create(OAuthConstants.TOKEN_URI))
+      .header(HEADER_TYPE, HEADER_FORM).POST(BodyPublishers.ofString(
+      tokenRequestBody)).build();
+  }
+
+  private JsonElement parseAccessToken(String tokenResponseBody) {
+    JsonObject tokenResponseObj = JsonParser.parseString(tokenResponseBody)
+      .getAsJsonObject();
+
+    return tokenResponseObj.get(ACCESS_TOKEN_PARAM);
   }
 }
