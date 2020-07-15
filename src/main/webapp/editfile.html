@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>Edit File Configuration</title>
     <link rel="stylesheet" href="editfile.css">
+    <script src="appscript.js"></script>
   </head>
-  <body>
+  <body onload="javascript:populateCustomerList()">
     <h1>Billing Configuration Sync Tool</h1></br>
     <h2>Edit Configuration</h2>
     <div id="links">
@@ -18,9 +19,6 @@
         <p>Customer ID:</p>
         <input list="customer-ids">
         <datalist id="customer-ids">
-          <option value="Customer 1">
-          <option value="Customer 2">
-          <option value="Customer 3">
         </datalist>
         <p>Account ID:</p>
         <input list="account-ids">
