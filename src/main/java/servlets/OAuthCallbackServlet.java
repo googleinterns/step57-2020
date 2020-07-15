@@ -67,7 +67,7 @@ public class OAuthCallbackServlet extends HttpServlet {
         
     String sessionOauthState = (String) request.getSession().getAttribute(OAuthConstants.SHEETS_SESSION_KEY);
 
-    // Check for an unauthorized client error. 
+    // Check for an unauthorized client 401 status. 
     if (!state.equals(sessionOauthState)) {
       response.setStatus(401);
       return;
