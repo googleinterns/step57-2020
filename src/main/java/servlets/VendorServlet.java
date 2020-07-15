@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
+import data.JsonConverter;
 
 @WebServlet("/VendorServlet")
 public class VendorServlet extends HttpServlet {
@@ -35,8 +36,8 @@ public class VendorServlet extends HttpServlet {
    *            "vend_2":["account5","account6","account7"}
    */
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    FileParser fileParser = new FileParser();
-    String configMap = fileParser.getConfigMap();
+    JsonConverter converter = new JsonConverter();
+    String configMap = converter.getConfigMap();
     response.setContentType("text/html;");
     response.getWriter().println(configMap);
   }
