@@ -4,9 +4,11 @@ body {
 }
 
 h1 {
-text-decoration: underline;
+  text-decoration: underline;
+  width: 500px;
 }
 
 h2 {
   text-decoration: underline;
+  width: 500px;
 }
