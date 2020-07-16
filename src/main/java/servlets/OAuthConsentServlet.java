@@ -41,6 +41,8 @@ public class OAuthConsentServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Create a state token to prevent request forgery.
     String state = new BigInteger(130, new SecureRandom()).toString(32);
+
+    // Get the current session or create a new one.
     HttpSession session = request.getSession(true);
     session.setAttribute(OAuthConstants.SHEETS_SESSION_KEY, state);
 

@@ -26,6 +26,7 @@ public class InvalidateSessionServlet extends HttpServlet {
   // Invalidate the HttpSession that holds the access token.
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Only retrieves the session if one exists.
     HttpSession session = request.getSession(false);
     session.invalidate();
   }
