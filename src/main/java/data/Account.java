@@ -130,6 +130,23 @@ public class Account {
     this.aggregationMode = aggregationMode;
   }
 
+  /** Builds one row filled with an Account's data for the Sheet. */
+  public List getAccountSheetsRow() {
+    String[] accountData = { 
+      getAccountID(), 
+      getVendorID(), 
+      getEntity(), 
+      getCurrency(), 
+      getDirection(),
+      getLegacyAccountID(),
+      "" + getNextGenAccountID(),
+      getMatchingMode(),
+      getAggregationMode()
+    };
+
+    return Arrays.asList(accountData);
+  }
+
   /** Return a JSON String representation of the fields. */
   public String toJson() {
     return String.format("{\"legacy_account_id\":%s," +
@@ -139,6 +156,5 @@ public class Account {
       "\"aggregation_mode\":%s}}", getLegacyAccountID(), getNextGenAccountID(), 
       getCurrency(), getDirection(), getEntity(), getMatchingMode(), 
       getAccountID(), getAggregationMode());
-
   }
 }
