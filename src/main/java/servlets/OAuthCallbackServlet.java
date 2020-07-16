@@ -54,15 +54,12 @@ public class OAuthCallbackServlet extends HttpServlet {
     String authCode = request.getParameter(CODE_PARAM);
     String state = request.getParameter(STATE_PARAM);
 
-    System.out.println("GOT HERE");
-
     // Print any error the OAuth provider gave us.
     if (error != null && !error.isEmpty()) {
       response.getWriter().print(error);
       response.setStatus(401);
       return;
     }
-
 
     // Check that the OAuth provider gave us the authorization code.
     if (authCode == null || authCode.isEmpty()) {
