@@ -33,8 +33,6 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 
-
-/** Test the functionality of the SheetsConverter class. */
 @RunWith(JUnit4.class)
 public final class UserAuthUtilTest {
 

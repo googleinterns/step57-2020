@@ -13,22 +13,6 @@ public class UserAuthUtil {
     return UserServiceFactory.getUserService().isUserLoggedIn();
   }
 
-  /**
-   * @param redirect URL for webpage to return to after login.
-   * @return URL for user to click to login.
-   */
-  public static String getLoginURL(String redirect) {
-    return UserServiceFactory.getUserService().createLoginURL(redirect);
-  }
-
-  /**
-   * @param redirect URL for webpage to return to after logout.
-   * @return URL for user to click to logout.
-   */
-  public static String getLogoutURL(String redirect) {
-    return UserServiceFactory.getUserService().createLogoutURL(redirect);
-  }
-
   public static User getUser() {
     return UserServiceFactory.getUserService().getCurrentUser();
   }

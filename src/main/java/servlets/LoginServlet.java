@@ -46,8 +46,10 @@ public class LoginServlet extends HttpServlet {
     HttpSession session = request.getSession(true);
     session.setAttribute(OAuthConstants.SHEETS_SESSION_KEY, state);
 
+    ResponseBuilder builder = new ResponseBuilder();
+
     response.setContentType(CONTENT_TYPE_TEXT_HTML);
-    response.getWriter().println(ResponseBuilder.toJson(UserAuthUtil.isUserLoggedIn(), REDIRECT_LINK));
+    response.getWriter().println(builder.toJson(UserAuthUtil.isUserLoggedIn(), REDIRECT_LINK));
     if (!UserAuthUtil.isUserLoggedIn()) {
       response.sendRedirect(getOAuthRedirectURL(state));
     }
