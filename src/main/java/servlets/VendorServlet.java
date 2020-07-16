@@ -19,15 +19,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import data.JsonConverter;
 
 @WebServlet("/VendorServlet")
 public class VendorServlet extends HttpServlet {
   @Override
+  /**
+   * Prints a hashmap to the response object
+   * STRING (Vendor ID) : ARRAY OF STRINGS (Account IDs)
+   * e.g., {"vend_1":["account1","account2","account3","account4"],
+   *            "vend_2":["account5","account6","account7"}
+   */
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // GET method --> returns a JSON array of existing Vendor IDs
-    String dummyResponse = "[\"CADE01\",\"VINCENT01\",\"CHARLIE01\",\"JAKE01\",\"IAN01\"]";
+    JsonConverter converter = new JsonConverter();
+    String configMap = converter.getConfigMap();
     response.setContentType("text/html;");
-    response.getWriter().println(dummyResponse);
+    response.getWriter().println(configMap);
   }
 
   @Override
