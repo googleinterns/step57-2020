@@ -66,7 +66,8 @@ public class BillingConfig extends HttpServlet {
      * TODO: @cade, eventually you will want to pass this access token into the 
      * updateSheets() method in the SheetsConverter class.
      */
-    HttpSession session = request.getSession();
+    // Only retrieves the session if one exists.
+    HttpSession session = request.getSession(false);
     String accessToken = session.getAttribute("accessToken").toString();
 
     SheetsConverter sheet = new SheetsConverter(); 
