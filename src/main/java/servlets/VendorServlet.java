@@ -28,7 +28,7 @@ public class VendorServlet extends HttpServlet {
    * Prints a hashmap to the response object
    * STRING (Vendor ID) : ARRAY OF STRINGS (Account IDs)
    * e.g., {"vend_1":["account1","account2","account3","account4"],
-   *            "vend_2":["account5","account6","account7"}
+   *            "vend_2":["account5","account6","account7"]}
    */
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     JsonConverter converter = new JsonConverter();

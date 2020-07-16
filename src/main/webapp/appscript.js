@@ -17,12 +17,15 @@
   * Customer ID dropdown.
   */
 async function populateCustomerList() {
+  // TODO: Implement functionality for hashmap parsing instead of simple array.
   const response = await fetch('/VendorServlet');
 
   // VendorServlet returns a hashmap/JSON dictionary. 
 
   // Response is a json array that is parsed into json.
   var customerJson = await response.json();
+
+  console.log(customerJson);
 
   // Loops over this array to make the options for the Customer ID dropdown.
   var html = '';
@@ -40,11 +43,12 @@ async function populateCustomerList() {
  * the readfile page.
  */
 async function addToPage() {
+  // TODO: Fix fetch query to get the json. 
   var vendorID = document.getElementById('customer-ids');
-  var accountID = document.getElementById('account-ids');
 
-  const response = await fetch("/BillingConfig?" + "vendor-id=" 
-    + vendorID + "&account-id=" + accountID);
+  const response = await fetch('/BillingConfig');
+  // + "vendor-id=" 
+  //   + vendorID
 
   // Response is a JSON as a string.
   let config_json = await response.json();
@@ -59,3 +63,13 @@ async function addToPage() {
 // TODO: Method to populate edit form.
 // TODO: Method for enums: Check which of the tags has data under it {isLoggedIn:{loginURL},isLoggedOut:{logooutURL}}}
 
+// function doGetRequest(var endpointUrl, var params) {
+// if (params != '{}') {
+// var requestString = endpointUrl + "?";
+// for (const [key, value] of Object.entries(params)) {
+// requestString += key + "=" + value +"&";
+// }
+// fetch(requestString);
+// }
+// }
+// 
