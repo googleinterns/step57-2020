@@ -30,29 +30,67 @@ import java.util.List;
 public class SheetsConverter {
   private static Sheets sheetsService;
   private static final String SPREADSHEET_ID = "1QnVlh-pZHycxzgQuk0MN2nWOY6AGu9j4wGZaGzi_W9A";
-  private final String ACCOUNT_TITLE = "Account Sheet";
-  private final String VENDOR_TITLE = "Vendor Sheet";
+  private final String ACCOUNT_RANGE = "'sheet2'!A1";
+  private final String VENDOR_RANGE = "'sheet1'!A1";
+  private final String INPUT_OPTION = "RAW";
 
   public boolean updateSheets(ArrayList<Vendor> vendorList, String accessToken) 
     throws GeneralSecurityException, IOException {
-    writeToSheet(accessToken); 
+    writeToSheet(vendorList, accessToken); 
     return true;
   }
 
-  // Enter unimportant data to a spreadsheet.
-  public static void writeToSheet(String accessToken) throws GeneralSecurityException, IOException {
+  public void writeToSheet(ArrayList<Vendor> vendorList, String accessToken) throws GeneralSecurityException, IOException {
     sheetsService = SheetsServiceUtil.getSheetsService(accessToken);
+    ArrayList<ArrayList<Account>> allAccounts = getAllAccounts(vendorList); 
 
-    ValueRange body = new ValueRange().setValues(Arrays.asList(
-      Arrays.asList("Expenses January"), 
-      Arrays.asList("books", "30"), 
-      Arrays.asList("pens", "10"),
-      Arrays.asList("Expenses February"), 
-      Arrays.asList("clothes", "20"),
-      Arrays.asList("shoes", "5")));
-    UpdateValuesResponse result = sheetsService.spreadsheets().values()
-      .update(SPREADSHEET_ID, "A1", body)
-      .setValueInputOption("RAW")
-      .execute();
+    // Retrieve the latest spreadsheet data.
+    ValueRange accountBody = new ValueRange().setValues(
+      buildAccountSheetBody(allAccounts));
+    ValueRange vendorBody = new ValueRange().setValues(
+      buildVendorSheetBody(vendorList));
+
+    // Update the Account and Vendor spreadsheets using the update data.
+    UpdateValuesResponse updateAccountSheet = sheetsService.spreadsheets()
+      .values().update(SPREADSHEET_ID, ACCOUNT_RANGE, accountBody)
+      .setValueInputOption(INPUT_OPTION).execute();
+    UpdateValuesResponse updateVendorSheet = sheetsService.spreadsheets()
+      .values().update(SPREADSHEET_ID, VENDOR_RANGE, vendorBody)
+      .setValueInputOption(INPUT_OPTION).execute();
+  }
+
+  /** Gets every Account that is associated with any Vendor from the List. */
+  public ArrayList<ArrayList<Account>> getAllAccounts(ArrayList<Vendor> vendors) {
+    ArrayList<ArrayList<Account>> allAccounts =  new ArrayList<ArrayList<Account>>();
+
+    for(int i = 0; i < vendors.size(); i++) {
+      allAccounts.add(vendors.get(i).getAccounts());
+    }
+
+    return allAccounts; 
+  }
+
+  public List buildAccountSheetBody(ArrayList<ArrayList<Account>> accounts) {
+    // Sort the accounts by x. List<List<object>>
+    List<List<String>> accountSheetData = new ArrayList<List<String>>();
+
+    for(int i = 0; i < accounts.size(); i++) {
+      for(int j = 0; j < accounts.get(i).size(); j++) {
+        accountSheetData.add(accounts.get(i).get(j).getAccountSheetsRow());
+      }
+    }
+    
+    return accountSheetData;
+  }
+
+  public List buildVendorSheetBody(ArrayList<Vendor> vendors) {
+    // Sort the vendors by x. List<List<object>>
+    List<List<String>> vendorSheetData = new ArrayList<List<String>>();
+
+    for(int i = 0; i < vendors.size(); i++) {
+      vendorSheetData.add(vendors.get(i).getVendorSheetsRow());
+    }
+
+    return vendorSheetData;
   }
 }
