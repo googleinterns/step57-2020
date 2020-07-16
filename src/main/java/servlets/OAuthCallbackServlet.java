@@ -45,6 +45,8 @@ public class OAuthCallbackServlet extends HttpServlet {
   private final String ACCESS_TOKEN_PARAM = "access_token";
   private final String HEADER_TYPE = "Content-Type";
   private final String HEADER_FORM = "application/x-www-form-urlencoded";
+  private final String READFILE_PAGE = "/readfile.html";
+
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -52,12 +54,15 @@ public class OAuthCallbackServlet extends HttpServlet {
     String authCode = request.getParameter(CODE_PARAM);
     String state = request.getParameter(STATE_PARAM);
 
+    System.out.println("GOT HERE");
+
     // Print any error the OAuth provider gave us.
     if (error != null && !error.isEmpty()) {
       response.getWriter().print(error);
       response.setStatus(401);
       return;
     }
+
 
     // Check that the OAuth provider gave us the authorization code.
     if (authCode == null || authCode.isEmpty()) {
@@ -85,12 +90,11 @@ public class OAuthCallbackServlet extends HttpServlet {
     // Parse to find access token.
     JsonElement accessToken = parseAccessToken(tokenResponseBody); 
 
-    response.setContentType("text/html");
-    response.getWriter().printf("<h1>the access token for the Sheets API is %s</h1>", accessToken);
-
     // Store access token in a session.
     HttpSession session = request.getSession();
     session.setAttribute("accessToken", accessToken.toString());
+
+    response.sendRedirect(READFILE_PAGE);
   }
 
   // Build a valid redirect URI to the OAuthCallbackServlet.
