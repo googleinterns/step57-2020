@@ -20,7 +20,7 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import util.UserAuthUtil;
 
-@WebServlet("/Invalidate")
+@WebServlet("/InvalidateSession")
 public class InvalidateSessionServlet extends HttpServlet {
 
   // Invalidate the HttpSession that holds the access token.
