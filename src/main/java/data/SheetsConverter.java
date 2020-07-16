@@ -71,7 +71,7 @@ public class SheetsConverter {
   }
 
   public List buildAccountSheetBody(ArrayList<ArrayList<Account>> accounts) {
-    // Sort the accounts by x. List<List<object>>
+    // TODO: @cfloeder Sort the accounts by some criteria x. 
     List<List<String>> accountSheetData = new ArrayList<List<String>>();
 
     for(int i = 0; i < accounts.size(); i++) {
@@ -84,7 +84,7 @@ public class SheetsConverter {
   }
 
   public List buildVendorSheetBody(ArrayList<Vendor> vendors) {
-    // Sort the vendors by x. List<List<object>>
+    // TODO: @cfloeder Sort the vendors by some criteria x. 
     List<List<String>> vendorSheetData = new ArrayList<List<String>>();
 
     for(int i = 0; i < vendors.size(); i++) {

@@ -76,7 +76,7 @@ public class BillingConfig extends HttpServlet {
 
     SheetsConverter sheet = new SheetsConverter(); 
     try {
-      // Need to add the vendorList in the param.
+      // Use hard-coded values to test writeToSheets method.
       ArrayList<Vendor> vendors = new ArrayList<Vendor>();
       vendor = new Vendor("vend_1", "legVend_27", 17);
       account = new Account("acc_12", "vend_1", "shopper", "USD", "disbursement",
