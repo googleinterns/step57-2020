@@ -14,10 +14,12 @@
 
 import java.util.*;
 import org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import java.security.GeneralSecurityException;
 import java.io.IOException;
 import com.google.api.services.sheets.v4.Sheets;
@@ -26,14 +28,97 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 
 import data.SheetsConverter;
 import data.SheetsServiceUtil;
+import data.Vendor;
+import data.Account;
 
 /** Test the functionality of the SheetsConverter class. */
 @RunWith(JUnit4.class)
 public final class SheetsConverterTest {
- private static final String SPREADSHEET_ID = "1QnVlh-pZHycxzgQuk0MN2nWOY6AGu9j4wGZaGzi_W9A";
-  
+  private static final String SPREADSHEET_ID = "1QnVlh-pZHycxzgQuk0MN2nWOY6AGu9j4wGZaGzi_W9A";
+  private static final String TEST_PATH_BASE = "src/test/resources/";
+  private Vendor vendor;
+  private Account account;
+  private SheetsConverter converter;
+  private final String VENDOR_ID = "vend_1";
+  private final String LEGACY_VENDOR_ID = "legVend_27";
+  private final int NEXT_GEN_VENDOR_ID = 17;
+  private final String ACCOUNT_ID = "acc_12";
+  private final String ENTITY = "shopper";
+  private final String CURRENCY = "USD";
+  private final String DIRECTION = "disbursement";
+  private final String LEGACY_ACCOUNT_ID = "legAcc_53";
+  private final int NEXT_GEN_ACCOUNT_ID = 17;
+  private final String MATCHING_MODE = "straight";
+  private final String AGGREGATION_MODE = "totalAgg";
+
+  /** Create a Vendor and Account object. */
+  @Before
+  public void setUp() {
+    converter = new SheetsConverter();
+    vendor = new Vendor(VENDOR_ID, LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID);
+    account = new Account(ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION,
+            LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE);
+  }
+
   @Test
   public void testUpdateSheetMethod() throws GeneralSecurityException, IOException{
-   // Cannot currently test this method until OAuth is set up.
+    vendor.addAccount(account);
+    ArrayList<Vendor> vendors = new ArrayList<Vendor>();
+    vendors.add(vendor);
+
+    // TODO @charlie: figure out how to test this.
+
+  }
+
+  /** Check that the getAllAccounts method returns all vendors' accounts*/
+  @Test
+  public void testgetallAccounts() throws GeneralSecurityException, IOException{
+    vendor.addAccount(account);
+    ArrayList<Vendor> vendors = new ArrayList<Vendor>();
+    vendors.add(vendor);
+
+    ArrayList<ArrayList<Account>> expectedResponse = new 
+      ArrayList<ArrayList<Account>>();
+    expectedResponse.add(vendor.getAccounts());
+
+    ArrayList<ArrayList<Account>> actualResponse = converter.
+      getAllAccounts(vendors);
+    
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  /** Check that buildAccountSheetBody returns a List with expected data. */
+  @Test
+  public void testBuildAccountSheetBody() throws GeneralSecurityException, IOException{
+    vendor.addAccount(account);
+    ArrayList<Vendor> vendors = new ArrayList<Vendor>();
+    vendors.add(vendor);
+
+    String[] expectedArray = {
+      ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION, LEGACY_ACCOUNT_ID,
+      "" + NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE
+    };
+    List expectedResponse = Arrays.asList(Arrays.asList(expectedArray));
+
+    List actualResponse = converter.buildAccountSheetBody(
+      converter.getAllAccounts(vendors));
+      
+    assertEquals(expectedResponse, actualResponse);
+  }
+  
+  /** Check that buildVendorSheetBody returns a List with expected data. */
+  @Test
+  public void testBuildVendorSheetBody() throws GeneralSecurityException, IOException{
+    ArrayList<Vendor> vendors = new ArrayList<Vendor>();
+    vendors.add(vendor);
+
+    String[] expectedArray = {
+      VENDOR_ID, LEGACY_VENDOR_ID, "" + NEXT_GEN_VENDOR_ID
+    };
+    List expectedResponse = Arrays.asList(Arrays.asList(expectedArray));
+
+    List actualResponse = converter.buildVendorSheetBody(vendors);
+      
+    assertEquals(expectedResponse, actualResponse);
   }
 }
