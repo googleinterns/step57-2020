@@ -132,11 +132,11 @@ public class Account {
 
   /** Return a JSON String representation of the fields. */
   public String toJson() {
-    return String.format("{\"legacy_account_id\":%s," +
+    return String.format("{\"legacy_account_id\":\"%s\"," +
       "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
-      "\"currency_code\":%s,\"direction\":%s,\"entity\":%s}," +
-      "\"settlement_config\":{\"matching_mode\":%s},\"account_id\":%s," +
-      "\"aggregation_mode\":%s}}", getLegacyAccountID(), getNextGenAccountID(), 
+      "\"currency_code\":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"}," +
+      "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
+      "\"aggregation_mode\":\"%s\"}", getLegacyAccountID(), getNextGenAccountID(),
       getCurrency(), getDirection(), getEntity(), getMatchingMode(), 
       getAccountID(), getAggregationMode());
 
