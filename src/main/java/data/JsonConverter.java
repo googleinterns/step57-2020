@@ -132,10 +132,21 @@ public class JsonConverter {
   private ArrayList<String> getAccountIDs(String vendorID) throws IOException {
     try {
       String config = getConfig(vendorID);
-      Vendor current = new Vendor(getConfig(vendorID));
+      Vendor vendor = new Vendor(getConfig(vendorID));
+      ArrayList<Account> accounts = vendor.getAccounts();
+      ArrayList<String> accountIds = new ArrayList<>();
+
+      if (accounts.isEmpty()) {
+        accountIds.add("No accounts found!");
+        return accountIds;
+      }
+
+      for (Account account : accounts) {
+        accountIds.add(account.getAccountID());
+      }
+      return accountIds;
     } catch (IOException e) {
       return null;
     }
-    return new ArrayList<>(Arrays.asList("ECHO", "FOXTROT", "GOLF", "HOTEL"));
   }
 }

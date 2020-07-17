@@ -13,8 +13,6 @@
 // limitations under the License.
 package data;
 
-import com.fasterxml.jackson.core.json.JsonReadContext;
-import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import servlets.BillingConfig;
 import javax.servlet.http.HttpServletRequest;
@@ -62,7 +60,6 @@ public class Vendor {
     JsonReader reader = new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8));
     try {
       reader.beginObject();
-      System.out.println(reader.toString());
       reader.nextName();
       legacyVendorID = reader.nextString();
       reader.nextName();
@@ -77,7 +74,6 @@ public class Vendor {
     } finally {
       reader.close();
     }
-    System.out.println(this.toJson());
   }
 
   private Account readJsonAccount(JsonReader reader) throws IOException {
@@ -101,10 +97,10 @@ public class Vendor {
     String matchingMode = reader.nextString();
     reader.endObject();
     reader.nextName();
-    String vendorID = reader.nextString();
+    String accountID = reader.nextString();
     reader.nextName();
     String aggregationMode = reader.nextString();
-    String accountID = "thisIsn'tInTheObject";
+    String vendorID = "thisIsn'tInTheObject";
     Account newAcc = new Account(accountID, vendorID,  entity,  currency, direction,
             legacyAccountID,  nextGenAccountID, matchingMode,  aggregationMode);
     reader.endObject();;

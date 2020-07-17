@@ -1,0 +1,34 @@
+{
+  "legacy_customer_id": "STRING",
+  "next_gen_customer_id": 53598,
+  "accounts": [
+    {
+      "legacy_account_id": "STRING",
+      "next_gen_customer_id": 5309,
+      "settlement_attributes": {
+        "currency_code": "STRING",
+        "direction": "STRING",
+        "entity": "STRING"
+      },
+      "settlement_config": {
+        "matching_mode": "STRING"
+      },
+      "product_account_key": "account1",
+      "aggregation_mode": "STRING"
+    },
+    {
+      "legacy_account_id": "STRING",
+      "next_gen_customer_id": 5235,
+      "settlement_attributes": {
+        "currency_code": "STRING",
+        "direction": "STRING",
+        "entity": "STRING"
+      },
+      "settlement_config": {
+        "matching_mode": "STRING"
+      },
+      "product_account_key": "account2",
+      "aggregation_mode": "STRING"
+    }
+  ]
+}
