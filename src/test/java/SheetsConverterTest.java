@@ -70,9 +70,9 @@ public final class SheetsConverterTest {
 
   }
 
-  /** Check that the getAllAccounts method returns all vendors' accounts*/
+  /** Check that the getAllAccounts method returns all vendors' accounts. */
   @Test
-  public void testgetallAccounts() throws GeneralSecurityException, IOException{
+  public void testGetAllAccounts() throws GeneralSecurityException, IOException{
     vendor.addAccount(account);
     ArrayList<Vendor> vendors = new ArrayList<Vendor>();
     vendors.add(vendor);

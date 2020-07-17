@@ -131,7 +131,7 @@ public class Account {
   }
 
   /** Builds one row filled with an Account's data for the Sheet. */
-  public List getAccountSheetsRow() {
+  public List<String> getAccountSheetsRow() {
     String[] accountData = { 
       getAccountID(), 
       getVendorID(), 
@@ -139,7 +139,7 @@ public class Account {
       getCurrency(), 
       getDirection(),
       getLegacyAccountID(),
-      "" + getNextGenAccountID(),
+      Integer.toString(getNextGenAccountID()),
       getMatchingMode(),
       getAggregationMode()
     };

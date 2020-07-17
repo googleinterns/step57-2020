@@ -80,11 +80,11 @@ public class Vendor {
   }
 
   /** Builds one row filled with an Vendor's data for the Sheet. */
-  public List getVendorSheetsRow() {
+  public List<String> getVendorSheetsRow() {
     String[] vendorData = { 
       getVendorID(), 
       getLegacyVendorID(), 
-      "" + getNextGenVendorID()
+      Integer.toString(getNextGenVendorID())
     };
 
     return Arrays.asList(vendorData);
