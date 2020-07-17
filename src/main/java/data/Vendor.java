@@ -150,9 +150,12 @@ public class Vendor {
       "\"next_gen_vendor_id\":%d,\"accounts\":[", getLegacyVendorID(), 
       getNextGenVendorID());
 
-    Iterator<Account> it = accounts.iterator();
-    while (it.hasNext() && !accounts.isEmpty()) {
-      config += it.next() + ",";
+    for (Account account : accounts) {
+      config += account.toJson() + ",";
+    }
+    // Remove trailing comma from list of accounts for valid JSON
+    if (config.endsWith(",")) {
+      config = config.substring(0, config.length() - 1);
     }
     config += "]}";
     return config;

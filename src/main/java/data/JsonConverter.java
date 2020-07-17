@@ -132,8 +132,6 @@ public class JsonConverter {
   private ArrayList<String> getAccountIDs(String vendorID) throws IOException {
     try {
       String config = getConfig(vendorID);
-      System.out.println("===============VENDOR ID:" + vendorID + "++++++++++");
-      System.out.println(config);
       Vendor current = new Vendor(getConfig(vendorID));
     } catch (IOException e) {
       return null;
