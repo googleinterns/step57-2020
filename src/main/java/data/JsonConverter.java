@@ -55,7 +55,7 @@ public class JsonConverter {
   }
 
   public boolean updateFile(Vendor vendor) {
-    String jsonConfig = vendor.buildJsonConfig();
+    String jsonConfig = vendor.toJson();
     // Create and write the contents to a File.
     File billingFile = writeFile(vendor.getVendorID(), jsonConfig);
 

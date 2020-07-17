@@ -77,7 +77,7 @@ public final class JsonConverterTest {
   @Test
   public void testGetConfigMethod() {
     String vendorID = "vend_1";
-    String expectedResponse = "{\"legacy_vendor_id\":legVend_27,\"next_gen_vendor_id\":17,\"accounts\":[]}";
+    String expectedResponse = "{\"legacy_vendor_id\":\"legVend_27\",\"next_gen_vendor_id\":17,\"accounts\":[]}";
 
     String actualResponse = converter.getConfig(vendorID);
 
@@ -104,17 +104,17 @@ public final class JsonConverterTest {
   public void testWriteFile() throws FileNotFoundException {
     vendor.addAccount(account);
 
-    String expectedResponse = String.format("{\"legacy_vendor_id\":%s," +
-                    "\"next_gen_vendor_id\":%d,\"accounts\":[{\"legacy_account_id\":%s," +
+    String expectedResponse = String.format("{\"legacy_vendor_id\":\"%s\"," +
+                    "\"next_gen_vendor_id\":%d,\"accounts\":[{\"legacy_account_id\":\"%s\"," +
                     "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
-                    "\"currency_code\":%s,\"direction\":%s,\"entity\":%s}," +
-                    "\"settlement_config\":{\"matching_mode\":%s},\"account_id\":%s," +
-                    "\"aggregation_mode\":%s}}]}", LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID,
+                    "\"currency_code\":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"}," +
+                    "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
+                    "\"aggregation_mode\":\"%s\"}]}", LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID,
             LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, CURRENCY, DIRECTION, ENTITY,
             MATCHING_MODE, ACCOUNT_ID,AGGREGATION_MODE);
     String actualResponse = "";
 
-    File file = converter.writeFile(vendor.getVendorID(), vendor.buildJsonConfig());
+    File file = converter.writeFile(vendor.getVendorID(), vendor.toJson());
     Scanner input = null;
     input = new Scanner(file);
 
