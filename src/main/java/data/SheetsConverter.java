@@ -29,7 +29,8 @@ import java.util.List;
 /** A class that updates the Account and Vendor spreadsheets. */
 public class SheetsConverter {
   private static Sheets sheetsService;
-  private static final String SPREADSHEET_ID = "1QnVlh-pZHycxzgQuk0MN2nWOY6AGu9j4wGZaGzi_W9A";
+  private static final String SPREADSHEET_ID = 
+    "1QnVlh-pZHycxzgQuk0MN2nWOY6AGu9j4wGZaGzi_W9A";
   private final String ACCOUNT_RANGE = "'sheet2'!A1";
   private final String VENDOR_RANGE = "'sheet1'!A1";
   private final String INPUT_OPTION = "RAW";
@@ -40,11 +41,14 @@ public class SheetsConverter {
     return true;
   }
 
-  public void writeToSheet(ArrayList<Vendor> vendorList, String accessToken) throws GeneralSecurityException, IOException {
+  public void writeToSheet(ArrayList<Vendor> vendorList, String accessToken) 
+    throws GeneralSecurityException, IOException {
+
     sheetsService = SheetsServiceUtil.getSheetsService(accessToken);
     ArrayList<ArrayList<Account>> allAccounts = getAllAccounts(vendorList); 
 
-    // Retrieve the latest spreadsheet data.
+    // Retrieve the latest spreadsheet data as a List<List<Object>> 
+    // as required by the Sheets API.
     ValueRange accountBody = new ValueRange().setValues(
       buildAccountSheetBody(allAccounts));
     ValueRange vendorBody = new ValueRange().setValues(
