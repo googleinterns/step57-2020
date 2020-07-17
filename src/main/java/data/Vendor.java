@@ -54,7 +54,7 @@ public class Vendor {
   }
 
   /** Construct a Vendor object from JSON string */
-  public Vendor(String json) throws IOException {
+  public Vendor(String json, String vendorID) throws IOException {
     accountList = new ArrayList<>();
     InputStream in = new ByteArrayInputStream(json.getBytes());
     JsonReader reader = new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8));
@@ -68,43 +68,12 @@ public class Vendor {
       reader.beginArray();
       while (reader.hasNext()) {
         assert accountList != null;
-        accountList.add(readJsonAccount(reader));
+        accountList.add(new Account(reader));
       }
       reader.endArray();
     } finally {
       reader.close();
     }
-  }
-
-  private Account readJsonAccount(JsonReader reader) throws IOException {
-    reader.beginObject();
-    reader.nextName();
-    String legacyAccountID = reader.nextString();
-    reader.nextName();
-    int nextGenAccountID = reader.nextInt();
-    reader.nextName();
-    reader.beginObject();
-    reader.nextName();
-    String currency = reader.nextString();
-    reader.nextName();
-    String direction = reader.nextString();
-    reader.nextName();
-    String entity = reader.nextString();
-    reader.endObject();
-    reader.nextName();
-    reader.beginObject();
-    reader.nextName();
-    String matchingMode = reader.nextString();
-    reader.endObject();
-    reader.nextName();
-    String accountID = reader.nextString();
-    reader.nextName();
-    String aggregationMode = reader.nextString();
-    String vendorID = "thisIsn'tInTheObject";
-    Account newAcc = new Account(accountID, vendorID,  entity,  currency, direction,
-            legacyAccountID,  nextGenAccountID, matchingMode,  aggregationMode);
-    reader.endObject();;
-    return newAcc;
   }
 
   public String getVendorID() {

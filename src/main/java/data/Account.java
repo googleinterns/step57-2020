@@ -13,9 +13,11 @@
 // limitations under the License.
 package data;
 
+import com.google.gson.stream.JsonReader;
 import servlets.BillingConfig;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.*;
 
 /** A class representing a billing account object. */
@@ -56,6 +58,33 @@ public class Account {
     this.entity = request.getParameter(BillingConfig.ENTITY);
     this.matchingMode = request.getParameter(BillingConfig.MATCHING_MODE);
     this.aggregationMode= request.getParameter(BillingConfig.AGGREGATION_MODE);
+  }
+
+  public Account(JsonReader reader) throws IOException {
+    reader.beginObject();
+    reader.nextName();
+    this.legacyAccountID = reader.nextString();
+    reader.nextName();
+    this.nextGenAccountID = reader.nextInt();
+    reader.nextName();
+    reader.beginObject();
+    reader.nextName();
+    this.currency = reader.nextString();
+    reader.nextName();
+    this.direction = reader.nextString();
+    reader.nextName();
+    this.entity = reader.nextString();
+    reader.endObject();
+    reader.nextName();
+    reader.beginObject();
+    reader.nextName();
+    this.matchingMode = reader.nextString();
+    reader.endObject();
+    reader.nextName();
+    this.accountID = reader.nextString();
+    reader.nextName();
+    this.aggregationMode = reader.nextString();
+    reader.endObject();;
   }
 
   public String getAccountID() {

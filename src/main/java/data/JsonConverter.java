@@ -98,10 +98,9 @@ public class JsonConverter {
       return null;
     }
 
-    while(input.hasNextLine()) {
+    while (input.hasNextLine()) {
       configContents += input.nextLine();
     }
-
     return configContents;
   }
 
@@ -128,22 +127,23 @@ public class JsonConverter {
     return new ArrayList<>(Arrays.asList(Objects.requireNonNull(root.list())));
   }
 
-  /** TODO Return list of account IDs corresponding to a given vendor. */
   private ArrayList<String> getAccountIDs(String vendorID) throws IOException {
     try {
       String config = getConfig(vendorID);
-      Vendor vendor = new Vendor(getConfig(vendorID));
+      Vendor vendor = new Vendor(getConfig(vendorID), vendorID);
       ArrayList<Account> accounts = vendor.getAccounts();
       ArrayList<String> accountIds = new ArrayList<>();
 
       if (accounts.isEmpty()) {
         accountIds.add("No accounts found!");
+        // TODO: We need a better system for error handling here
         return accountIds;
       }
 
       for (Account account : accounts) {
         accountIds.add(account.getAccountID());
       }
+
       return accountIds;
     } catch (IOException e) {
       return null;
