@@ -43,25 +43,48 @@ async function populateCustomerList() {
  * the readfile page.
  */
 async function addToPage() {
-  // TODO: Fix fetch query to get the json. 
-  var vendorID = document.getElementById('customer-ids');
-
-  const response = await fetch('/BillingConfig');
-  // + "vendor-id=" 
-  //   + vendorID
-
-  // Response is a JSON as a string.
-  let config_json = await response.json();
-
-  var html = document.getElementById('json-box');
-
-  // Stringify converts the json into a string.
-  html.innerHTML = JSON.stringify(config_json, undefined, 4);
-
-  // TODO: Add various ways to display the json.
+  fetch('/BillingConfig').then(response => 
+  response.json()).then(data => console.log(data));
 }
+//   // TODO: Fix fetch query to get the json. 
+//   console.log('Hello World...')
+//   var vendorID = document.getElementById('customer-ids');
+
+//   const response = await fetch('/BillingConfig');
+//   // + "vendor-id=" 
+//   //   + vendorID
+
+//   // Response is a JSON as a string.
+//   let config_json = await response.json();
+
+//   console.log(config_json.toString());
+
+//   var html = document.getElementById('json-box');
+
+//   // Stringify converts the json into a string.
+//   // html.innerHTML = JSON.stringify(config_json, undefined, 4);
+//   html.innerHTML = config_json.toString();
+
+//   // TODO: Add various ways to display the json.
+// }
 // TODO: Method to populate edit form.
+async function populateEditForm() {
+
+}
 // TODO: Method for enums: Check which of the tags has data under it {isLoggedIn:{loginURL},isLoggedOut:{logooutURL}}}
+async function checkLoginStatus() {
+  
+}
+
+// TODO: Delete config function. /BillingConfig --> doDelete
+async function delteConfiguration() {
+
+}
+
+// TODO: Create config and redirect/populate edit form. 
+async function createConfiguration() {
+
+}
 
 // function doGetRequest(var endpointUrl, var params) {
 // if (params != '{}') {
