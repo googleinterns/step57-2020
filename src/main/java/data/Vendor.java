@@ -13,8 +13,16 @@
 // limitations under the License.
 package data;
 
+import com.fasterxml.jackson.core.json.JsonReadContext;
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import servlets.BillingConfig;
 import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /** A class representing a billing vendor object. */
@@ -45,6 +53,62 @@ public class Vendor {
     Account newAccount = new Account(request);
     accountList = new ArrayList<>();
     accountList.add(newAccount);
+  }
+
+  /** Construct a Vendor object from JSON string */
+  public Vendor(String json) throws IOException {
+    accountList = new ArrayList<>();
+    InputStream in = new ByteArrayInputStream(json.getBytes());
+    JsonReader reader = new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+    try {
+      reader.beginObject();
+      System.out.println(reader.toString());
+      reader.nextName();
+      legacyVendorID = reader.nextString();
+      reader.nextName();
+      nextGenVendorID = reader.nextInt();
+      reader.nextName();
+      reader.beginArray();
+      while (reader.hasNext()) {
+        assert accountList != null;
+        accountList.add(readJsonAccount(reader));
+      }
+      reader.endArray();
+    } finally {
+      reader.close();
+    }
+    System.out.println(this.toJson());
+  }
+
+  private Account readJsonAccount(JsonReader reader) throws IOException {
+    reader.beginObject();
+    reader.nextName();
+    String legacyAccountID = reader.nextString();
+    reader.nextName();
+    int nextGenAccountID = reader.nextInt();
+    reader.nextName();
+    reader.beginObject();
+    reader.nextName();
+    String currency = reader.nextString();
+    reader.nextName();
+    String direction = reader.nextString();
+    reader.nextName();
+    String entity = reader.nextString();
+    reader.endObject();
+    reader.nextName();
+    reader.beginObject();
+    reader.nextName();
+    String matchingMode = reader.nextString();
+    reader.endObject();
+    reader.nextName();
+    String vendorID = reader.nextString();
+    reader.nextName();
+    String aggregationMode = reader.nextString();
+    String accountID = "thisIsn'tInTheObject";
+    Account newAcc = new Account(accountID, vendorID,  entity,  currency, direction,
+            legacyAccountID,  nextGenAccountID, matchingMode,  aggregationMode);
+    reader.endObject();;
+    return newAcc;
   }
 
   public String getVendorID() {
@@ -86,8 +150,9 @@ public class Vendor {
       "\"next_gen_vendor_id\":%d,\"accounts\":[", getLegacyVendorID(), 
       getNextGenVendorID());
 
-    for (Account account : accounts) {
-      config += account.toJson();
+    Iterator<Account> it = accounts.iterator();
+    while (it.hasNext() && !accounts.isEmpty()) {
+      config += it.next() + ",";
     }
     config += "]}";
     return config;
