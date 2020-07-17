@@ -1,10 +1,10 @@
 {
   "legacy_customer_id": "STRING",
-  "next_gen_customer_id": "INT",
+  "next_gen_customer_id": 53598,
   "accounts": [
     {
       "legacy_account_id": "STRING",
-      "next_gen_customer_id": "INT",
+      "next_gen_customer_id": 5309,
       "settlement_attributes": {
         "currency_code": "STRING",
         "direction": "STRING",
@@ -18,7 +18,7 @@
     },
     {
       "legacy_account_id": "STRING",
-      "next_gen_customer_id": "INT",
+      "next_gen_customer_id": 5235,
       "settlement_attributes": {
         "currency_code": "STRING",
         "direction": "STRING",
