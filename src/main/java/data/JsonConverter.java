@@ -109,7 +109,7 @@ public class JsonConverter {
    * Map each vendor ID to an array of account IDs.
    * @return JSON dictionary
    */
-  public String getConfigMap() {
+  public String getConfigMap() throws IOException {
     ArrayList<String> vendorIDs = getVendorIDs();
     HashMap<String, ArrayList<String>> map = new HashMap<>();
 
@@ -129,7 +129,15 @@ public class JsonConverter {
   }
 
   /** TODO Return list of account IDs corresponding to a given vendor. */
-  private ArrayList<String> getAccountIDs(String vendorID) {
+  private ArrayList<String> getAccountIDs(String vendorID) throws IOException {
+    try {
+      String config = getConfig(vendorID);
+      System.out.println("===============VENDOR ID:" + vendorID + "++++++++++");
+      System.out.println(config);
+      Vendor current = new Vendor(getConfig(vendorID));
+    } catch (IOException e) {
+      return null;
+    }
     return new ArrayList<>(Arrays.asList("ECHO", "FOXTROT", "GOLF", "HOTEL"));
   }
 }
