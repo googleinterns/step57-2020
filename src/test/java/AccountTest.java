@@ -84,9 +84,9 @@ public final class AccountTest {
       ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION, LEGACY_ACCOUNT_ID,
       "" + NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE
     };
-    List expectedResponse = Arrays.asList(expectedArray);
+    List<String> expectedResponse = Arrays.asList(expectedArray);
 
-    List actualResponse = account.getAccountSheetsRow();
+    List<String> actualResponse = account.getAccountSheetsRow();
 
     assertEquals(expectedResponse, actualResponse);
   }

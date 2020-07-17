@@ -103,9 +103,9 @@ public final class VendorTest {
     String[] expectedArray = {
       VENDOR_ID, LEGACY_VENDOR_ID, "" + NEXT_GEN_VENDOR_ID
     };
-    List expectedResponse = Arrays.asList(expectedArray);
+    List<String> expectedResponse = Arrays.asList(expectedArray);
 
-    List actualResponse = vendor.getVendorSheetsRow();
+    List<String> actualResponse = vendor.getVendorSheetsRow();
 
     assertEquals(expectedResponse, actualResponse);
   }

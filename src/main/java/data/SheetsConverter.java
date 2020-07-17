@@ -74,25 +74,27 @@ public class SheetsConverter {
     return allAccounts; 
   }
 
-  public List buildAccountSheetBody(ArrayList<ArrayList<Account>> accounts) {
+  public List<List<Object>> buildAccountSheetBody(ArrayList<ArrayList<Account>> accounts) {
     // TODO: @cfloeder Sort the accounts by some criteria x. 
-    List<List<String>> accountSheetData = new ArrayList<List<String>>();
+    List<List<Object>> accountSheetData = new ArrayList<List<Object>>();
 
     for(int i = 0; i < accounts.size(); i++) {
       for(int j = 0; j < accounts.get(i).size(); j++) {
-        accountSheetData.add(accounts.get(i).get(j).getAccountSheetsRow());
+        accountSheetData.add(new ArrayList<Object>(accounts.get(i).get(j).
+          getAccountSheetsRow()));
       }
     }
     
     return accountSheetData;
   }
 
-  public List buildVendorSheetBody(ArrayList<Vendor> vendors) {
+  public List<List<Object>> buildVendorSheetBody(ArrayList<Vendor> vendors) {
     // TODO: @cfloeder Sort the vendors by some criteria x. 
-    List<List<String>> vendorSheetData = new ArrayList<List<String>>();
+    List<List<Object>> vendorSheetData = new ArrayList<List<Object>>();
 
     for(int i = 0; i < vendors.size(); i++) {
-      vendorSheetData.add(vendors.get(i).getVendorSheetsRow());
+      vendorSheetData.add(new ArrayList<Object>(vendors.get(i).
+        getVendorSheetsRow()));
     }
 
     return vendorSheetData;
