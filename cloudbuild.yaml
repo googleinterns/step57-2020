@@ -2,7 +2,9 @@
  - name: maven:3-jdk-11
    entrypoint: mvn
    args: ['test']
+   dir: 'src'
  - name: maven:3-jdk-11
    entrypoint: mvn
    args: ['package', 'appengine:deploy']
+   dir: 'src'
 
