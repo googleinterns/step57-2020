@@ -23,16 +23,16 @@ import java.util.*;
 
 /** A class representing a billing account object. */
 public class Account {
-  private static final String LEGACY_ACCOUNT_ID_KEY = "legacy_account_id";
-  private static final String NEXT_GEN_CUSTOMER_ID_KEY = "next_gen_customer_id";
-  private static final String SETTLEMENT_ATTRIBUTES_OBJ_KEY = "settlement_attributes";
-  private static final String CURRENCY_CODE_KEY = "currency_code";
-  private static final String DIRECTION_KEY = "direction";
-  private static final String ENTITY_KEY = "entity";
-  private static final String SETTLEMENT_CONFIG_OBJ_KEY = "settlement_config";
-  private static final String MATCHING_MODE_KEY = "matching_mode";
-  private static final String PRODUCT_ACCOUNT_KEY_KEY = "product_account_key";
-  private static final String AGGREGATION_MODE_KEY = "aggregation_mode";
+  public static final String LEGACY_ACCOUNT_ID_KEY = "legacy_account_id";
+  public static final String NEXT_GEN_CUSTOMER_ID_KEY = "next_gen_customer_id";
+  public static final String SETTLEMENT_ATTRIBUTES_OBJ_KEY = "settlement_attributes";
+  public static final String CURRENCY_CODE_KEY = "currency_code";
+  public static final String DIRECTION_KEY = "direction";
+  public static final String ENTITY_KEY = "entity";
+  public static final String SETTLEMENT_CONFIG_OBJ_KEY = "settlement_config";
+  public static final String MATCHING_MODE_KEY = "matching_mode";
+  public static final String ACCOUNT_ID_KEY = "account_id";
+  public static final String AGGREGATION_MODE_KEY = "aggregation_mode";
 
   private String accountID;
   private String vendorID;
@@ -69,7 +69,7 @@ public class Account {
     this.direction = request.getParameter(BillingConfig.DIRECTION);
     this.entity = request.getParameter(BillingConfig.ENTITY);
     this.matchingMode = request.getParameter(BillingConfig.MATCHING_MODE);
-    this.aggregationMode= request.getParameter(BillingConfig.AGGREGATION_MODE);
+    this.aggregationMode = request.getParameter(BillingConfig.AGGREGATION_MODE);
   }
 
   /** Construct an Account object from JSON representation */
@@ -85,7 +85,7 @@ public class Account {
     JSONObject settlementConfigObj = account.getJSONObject(SETTLEMENT_CONFIG_OBJ_KEY);
     this.matchingMode = settlementConfigObj.getString(MATCHING_MODE_KEY);
 
-    this.accountID = account.getString(PRODUCT_ACCOUNT_KEY_KEY);
+    this.accountID = account.getString(ACCOUNT_ID_KEY);
     this.aggregationMode = account.getString(AGGREGATION_MODE_KEY);
   }
 
