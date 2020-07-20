@@ -15,6 +15,7 @@ package servlets;
 
 import data.JsonConverter;
 import data.Vendor;
+import data.Account;
 import data.SheetsConverter;
 
 import java.io.File;
@@ -48,6 +49,9 @@ public class BillingConfig extends HttpServlet {
   public static final String MATCHING_MODE = "matching-mode";
   public static final String AGGREGATION_MODE = "aggregation-mode";
 
+  private Vendor vendor;
+  private Account account;
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
     // GET method --> returns entire billing config as JSON
@@ -67,8 +71,8 @@ public class BillingConfig extends HttpServlet {
     System.out.println(configText);
 
     /** 
-     * TODO: @cade, eventually you will want to pass this access token into the 
-     * updateSheets() method in the SheetsConverter class.
+     * TODO: @cade, eventually you will want to pass this access token and 
+     * Vendor List into the updateSheets() method in the SheetsConverter class.
      */
     // Only retrieves the session if one exists.
     HttpSession session = request.getSession(false);
@@ -76,7 +80,15 @@ public class BillingConfig extends HttpServlet {
 
     SheetsConverter sheet = new SheetsConverter(); 
     try {
-      sheet.writeToSheet(accessToken);
+      // Use hard-coded values to test writeToSheets method.
+      ArrayList<Vendor> vendors = new ArrayList<Vendor>();
+      vendor = new Vendor("vend_1", "legVend_27", 17);
+      account = new Account("acc_12", "vend_1", "shopper", "USD", "disbursement",
+            "legAcc_53", 17, "straight", "totalAgg");
+      vendor.addAccount(account);
+      vendors.add(vendor);
+
+      sheet.writeToSheet(vendors, accessToken);
     } catch (GeneralSecurityException e) {
       // TODO: @cade Figure out how you want to handle this error.
     }
