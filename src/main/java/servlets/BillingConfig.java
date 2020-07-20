@@ -33,7 +33,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 @WebServlet("/BillingConfig")
 public class BillingConfig extends HttpServlet {
   // May need to be "application/json;
-  private static final String CONTENT_TYPE_TEXT_HTML = "text/html;";
+  private static final String CONTENT_TYPE_TEXT_HTML = "application/json;";
   private static final String REDIRECT_READFILE = "/index.html";
 
   public static final String VENDOR_ID = "vendor-id";
@@ -53,7 +53,6 @@ public class BillingConfig extends HttpServlet {
     // GET method --> returns entire billing config as JSON
     // return null if vendor ID doesn't exist
     String vendorID = request.getParameter(VENDOR_ID);
-    vendorID = "sample";
     String accountID = request.getParameter(ACCOUNT_ID);
     JsonConverter json = new JsonConverter();
     String configText = "";
@@ -82,7 +81,7 @@ public class BillingConfig extends HttpServlet {
 
     response.setContentType(CONTENT_TYPE_TEXT_HTML);
     response.getWriter().println(configText);
-    // response.sendRedirect(REDIRECT_READFILE);
+    response.sendRedirect(REDIRECT_READFILE);
   }
 
   @Override

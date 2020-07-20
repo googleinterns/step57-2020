@@ -43,30 +43,18 @@ async function populateCustomerList() {
  * the readfile page.
  */
 async function addToPage() {
-  fetch('/BillingConfig').then(response => 
-  response.json()).then(data => console.log(data));
+  
+  fetch('/BillingConfig')
+    .then(response => response.text())
+    .then(data => console.log(data));
+    
+  // Wondering why this is simply returning HTML for some reason... even if I change the content type.
+  // Servlet is returning index.html for some reason?\
+  // I'm not sure, cause I haven't found muchg
+  
+  // document.getElementById('json-text').innerText = JSON.stringify(data)
 }
-//   // TODO: Fix fetch query to get the json. 
-//   console.log('Hello World...')
-//   var vendorID = document.getElementById('customer-ids');
 
-//   const response = await fetch('/BillingConfig');
-//   // + "vendor-id=" 
-//   //   + vendorID
-
-//   // Response is a JSON as a string.
-//   let config_json = await response.json();
-
-//   console.log(config_json.toString());
-
-//   var html = document.getElementById('json-box');
-
-//   // Stringify converts the json into a string.
-//   // html.innerHTML = JSON.stringify(config_json, undefined, 4);
-//   html.innerHTML = config_json.toString();
-
-//   // TODO: Add various ways to display the json.
-// }
 // TODO: Method to populate edit form.
 async function populateEditForm() {
 
