@@ -53,6 +53,8 @@ public class BillingConfig extends HttpServlet {
     // GET method --> returns entire billing config as JSON
     // return null if vendor ID doesn't exist
     String vendorID = request.getParameter(VENDOR_ID);
+    vendorID = "sample";
+    // TODO: @cade Add query string functionality to find vendor configs. 
     String accountID = request.getParameter(ACCOUNT_ID);
     JsonConverter json = new JsonConverter();
     String configText = "";
@@ -64,24 +66,23 @@ public class BillingConfig extends HttpServlet {
     }
     System.out.println(configText);
 
-    // /** 
-    //  * TODO: @cade, eventually you will want to pass this access token into the 
-    //  * updateSheets() method in the SheetsConverter class.
-    //  */
-    // // Only retrieves the session if one exists.
-    // HttpSession session = request.getSession(false);
-    // String accessToken = session.getAttribute("accessToken").toString();
+    /** 
+     * TODO: @cade, eventually you will want to pass this access token into the 
+     * updateSheets() method in the SheetsConverter class.
+     */
+    // Only retrieves the session if one exists.
+    HttpSession session = request.getSession(false);
+    String accessToken = session.getAttribute("accessToken").toString();
 
-    // SheetsConverter sheet = new SheetsConverter(); 
-    // try {
-    //   sheet.writeToSheet(accessToken);
-    // } catch (GeneralSecurityException e) {
-    //   // TODO: @cade Figure out how you want to handle this error.
-    // }
+    SheetsConverter sheet = new SheetsConverter(); 
+    try {
+      sheet.writeToSheet(accessToken);
+    } catch (GeneralSecurityException e) {
+      // TODO: @cade Figure out how you want to handle this error.
+    }
 
     response.setContentType(CONTENT_TYPE_TEXT_HTML);
     response.getWriter().println(configText);
-    response.sendRedirect(REDIRECT_READFILE);
   }
 
   @Override

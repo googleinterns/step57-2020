@@ -43,16 +43,15 @@ async function populateCustomerList() {
  * the readfile page.
  */
 async function addToPage() {
+  // TODO: Add query string support to sent to servlet.
+  var vendorID = document.getElementById('customer-ids');
   
+  // Fetch the json configuration and format it to print on the page. 
   fetch('/BillingConfig')
-    .then(response => response.text())
-    .then(data => console.log(data));
+    .then(response => response.json())
+    .then(data => document.getElementById('json-text').innerText = 
+    JSON.stringify(data, undefined, 4));
     
-  // Wondering why this is simply returning HTML for some reason... even if I change the content type.
-  // Servlet is returning index.html for some reason?\
-  // I'm not sure, cause I haven't found muchg
-  
-  // document.getElementById('json-text').innerText = JSON.stringify(data)
 }
 
 // TODO: Method to populate edit form.
