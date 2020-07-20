@@ -53,8 +53,7 @@ public final class AccountTest {
     assertEquals(account.getCurrency(), CURRENCY);
     assertEquals(account.getDirection(), DIRECTION);
     assertEquals(account.getLegacyAccountID(), LEGACY_ACCOUNT_ID);
-    assertTrue("Account Constructor incorrectly set nextGenAccountID field.",
-            account.getNextGenAccountID() == NEXT_GEN_ACCOUNT_ID);
+    assertEquals("Account Constructor incorrectly set nextGenAccountID field.", account.getNextGenAccountID(), NEXT_GEN_ACCOUNT_ID);
     assertEquals(account.getMatchingMode(), MATCHING_MODE);
     assertEquals(account.getAggregationMode(), AGGREGATION_MODE);
   }
@@ -87,7 +86,7 @@ public final class AccountTest {
 
     Account account = new Account(new JSONObject(expectedJsonString));
     String actualJson = account.toJson();
-    assertEquals(expectedJsonString, actualJson);
+    assertEquals("Failed to construct Account object from JSON", expectedJsonString, actualJson);
   }
 
 }

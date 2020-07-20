@@ -76,8 +76,8 @@ public final class JsonConverterTest {
    */
   @Test
   public void testGetConfigMethod() {
-    String vendorID = "vend_1";
-    String expectedResponse = "{\"legacy_vendor_id\":\"legVend_27\",\"next_gen_vendor_id\":17,\"accounts\":[]}";
+    String vendorID = "vend_0";
+    String expectedResponse = "{\"legacy_customer_id\":\"legVend_27\",\"next_gen_customer_id\":17,\"accounts\":[]}";
 
     String actualResponse = converter.getConfig(vendorID);
 
@@ -104,8 +104,8 @@ public final class JsonConverterTest {
   public void testWriteFile() throws FileNotFoundException {
     vendor.addAccount(account);
 
-    String expectedResponse = String.format("{\"legacy_vendor_id\":\"%s\"," +
-                    "\"next_gen_vendor_id\":%d,\"accounts\":[{\"legacy_account_id\":\"%s\"," +
+    String expectedResponse = String.format("{\"legacy_customer_id\":\"%s\"," +
+                    "\"next_gen_customer_id\":%d,\"accounts\":[{\"legacy_account_id\":\"%s\"," +
                     "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
                     "\"currency_code\":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"}," +
                     "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
@@ -124,5 +124,12 @@ public final class JsonConverterTest {
     }
 
     assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void testGetConfigMap() throws IOException {
+    String expectedResponse = "{vend_1:[]}";
+    String actualResponse = converter.getConfigMap();
+
   }
 }

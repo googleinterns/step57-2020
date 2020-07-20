@@ -122,6 +122,11 @@ public class JsonConverter {
     return gson.toJson(map);
   }
 
+  /**
+   * Converts a JSON array of Account objects to an ArrayList of Accounts
+   * @param accountArray JSON representation of array of account objects
+   * @return list of accounts
+   */
   public static ArrayList<Account> buildAccountsFromJsonArray(JSONArray accountArray) {
     ArrayList<Account> accounts = new ArrayList<>();
     for (int i = 0; i < accountArray.length(); i++) {

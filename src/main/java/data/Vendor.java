@@ -105,8 +105,8 @@ public class Vendor {
   /** Return a JSON String representing a billing config's content. */
   public String toJson() {
     ArrayList<Account> accounts = getAccounts();
-    String config = String.format("{\"legacy_vendor_id\":\"%s\"," +
-      "\"next_gen_vendor_id\":%d,\"accounts\":[", getLegacyVendorID(), 
+    String config = String.format("{\"legacy_customer_id\":\"%s\"," +
+      "\"next_gen_customer_id\":%d,\"accounts\":[", getLegacyVendorID(),
       getNextGenVendorID());
 
     for (Account account : accounts) {

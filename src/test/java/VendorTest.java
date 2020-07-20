@@ -84,8 +84,8 @@ public final class VendorTest {
   @Test
   public void testBuildJsonConfig() {
     vendor.addAccount(account);
-    String expectedResponse = String.format("{\"legacy_vendor_id\":\"%s\"," +
-      "\"next_gen_vendor_id\":%d,\"accounts\":[{\"legacy_account_id\":\"%s\"," +
+    String expectedResponse = String.format("{\"legacy_customer_id\":\"%s\"," +
+      "\"next_gen_customer_id\":%d,\"accounts\":[{\"legacy_account_id\":\"%s\"," +
       "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
       "\"currency_code\":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"}," +
       "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
