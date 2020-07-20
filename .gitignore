@@ -24,7 +24,14 @@ hs_err_pid*
 
 target/
 
+
 # hide client information
 src/main/resources/
 
+
 .idea
+
+
+//updated for capstone folder
+capstone/src/main/resources
+capstone/target
