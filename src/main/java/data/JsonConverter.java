@@ -144,7 +144,7 @@ public class JsonConverter {
   private ArrayList<String> getAccountIDs(String vendorID) throws IOException {
     try {
       String config = getConfig(vendorID);
-      Vendor vendor = new Vendor(getConfig(vendorID), vendorID);
+      Vendor vendor = new Vendor(config, vendorID);
       ArrayList<Account> accounts = vendor.getAccounts();
       ArrayList<String> accountIds = new ArrayList<>();
 

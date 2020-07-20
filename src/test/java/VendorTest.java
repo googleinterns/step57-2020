@@ -94,6 +94,6 @@ public final class VendorTest {
       MATCHING_MODE, ACCOUNT_ID,AGGREGATION_MODE);
     String actualResponse = vendor.toJson();
 
-    assertEquals(expectedResponse.trim(), actualResponse.trim());
+    assertEquals(expectedResponse, actualResponse);
   }
 }

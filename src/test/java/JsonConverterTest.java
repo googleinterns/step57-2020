@@ -38,7 +38,7 @@ public final class JsonConverterTest {
   private Vendor vendor;
   private Account account;
   private JsonConverter converter;
-  private final String VENDOR_ID = "vend_1";
+  private final String VENDOR_ID = "vend_0";
   private final String LEGACY_VENDOR_ID = "legVend_27";
   private final int NEXT_GEN_VENDOR_ID = 17;
   private final String ACCOUNT_ID = "acc_12";
@@ -76,10 +76,8 @@ public final class JsonConverterTest {
    */
   @Test
   public void testGetConfigMethod() {
-    String vendorID = "vend_0";
     String expectedResponse = "{\"legacy_customer_id\":\"legVend_27\",\"next_gen_customer_id\":17,\"accounts\":[]}";
-
-    String actualResponse = converter.getConfig(vendorID);
+    String actualResponse = converter.getConfig(VENDOR_ID);
 
     assertEquals(removeWhitespace(expectedResponse), removeWhitespace(actualResponse));
   }
@@ -111,7 +109,7 @@ public final class JsonConverterTest {
                     "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
                     "\"aggregation_mode\":\"%s\"}]}", LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID,
             LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, CURRENCY, DIRECTION, ENTITY,
-            MATCHING_MODE, ACCOUNT_ID,AGGREGATION_MODE);
+            MATCHING_MODE, ACCOUNT_ID, AGGREGATION_MODE);
     String actualResponse = "";
 
     File file = converter.writeFile(vendor.getVendorID(), vendor.toJson());
@@ -128,9 +126,13 @@ public final class JsonConverterTest {
 
   @Test
   public void testGetConfigMap() throws IOException {
-    String expectedResponse = "{vend_1:[]}";
+    // This test depends entirely on the test resources folder having 4 files (vend_0 - vend_3)
+    // vend_1 through vend_3 should be as written in the resources directory, and vend_0 is created
+    // by an earlier method
+    String expectedResponse = "{\"vend_2\":[\"account1\",\"account2\"],\"vend_3\":[\"account1\"," +
+            "\"account2\",\"account3\"],\"vend_0\":[],\"vend_1\":[\"account1\"]}";
     String actualResponse = converter.getConfigMap();
-    System.out.println(actualResponse);
+    assertEquals(expectedResponse, actualResponse);
   }
 
   private String removeWhitespace(String in) {
