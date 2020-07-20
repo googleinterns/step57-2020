@@ -14,12 +14,12 @@
 package data;
 
 import com.google.api.services.sheets.v4.Sheets;
-import com.google.api.services.sheets.v4.model.Request;
-import com.google.api.services.sheets.v4.model.Spreadsheet;
-import com.google.api.services.sheets.v4.model.SpreadsheetProperties;
-import com.google.api.services.sheets.v4.model.UpdateSpreadsheetPropertiesRequest;
-import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
-import com.google.api.services.sheets.v4.model.ValueRange;
+import com.google.api.services.sheets.v4.model.*;
+// import com.google.api.services.sheets.v4.model.Spreadsheet;
+// import com.google.api.services.sheets.v4.model.SpreadsheetProperties;
+// import com.google.api.services.sheets.v4.model.UpdateSpreadsheetPropertiesRequest;
+// import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
+// import com.google.api.services.sheets.v4.model.ValueRange;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -33,18 +33,20 @@ public class SheetsConverter {
     "1QnVlh-pZHycxzgQuk0MN2nWOY6AGu9j4wGZaGzi_W9A";
   private final String ACCOUNT_RANGE = "'sheet2'!A1";
   private final String VENDOR_RANGE = "'sheet1'!A1";
+  private final String TAB_1 = "Sheet1";
+  private final String TAB_2 = "Sheet2";
   private final String INPUT_OPTION = "RAW";
 
   public boolean updateSheets(ArrayList<Vendor> vendorList, String accessToken) 
     throws GeneralSecurityException, IOException {
-    writeToSheet(vendorList, accessToken); 
+    sheetsService = SheetsServiceUtil.getSheetsService(accessToken);
+    clearSheets(sheetsService);
+    writeToSheet(vendorList, sheetsService); 
     return true;
   }
 
-  public void writeToSheet(ArrayList<Vendor> vendorList, String accessToken) 
+  public void writeToSheet(ArrayList<Vendor> vendorList, Sheets sheetsService) 
     throws GeneralSecurityException, IOException {
-
-    sheetsService = SheetsServiceUtil.getSheetsService(accessToken);
     ArrayList<ArrayList<Account>> allAccounts = getAllAccounts(vendorList); 
 
     // Retrieve the latest spreadsheet data as a List<List<Object>> 
@@ -62,6 +64,16 @@ public class SheetsConverter {
       .values().update(SPREADSHEET_ID, VENDOR_RANGE, vendorBody)
       .setValueInputOption(INPUT_OPTION).execute();
   }
+
+  /** Clear all data from the Account and Vendor spreadsheets. */
+  public void clearSheets(Sheets sheetsService) throws IOException {
+    ClearValuesRequest requestBody = new ClearValuesRequest();
+
+    ClearValuesResponse clearAccount =  sheetsService.spreadsheets().values()
+      .clear(SPREADSHEET_ID, TAB_1, requestBody).execute();
+    ClearValuesResponse clearVendor = sheetsService.spreadsheets().values()
+      .clear(SPREADSHEET_ID, TAB_2, requestBody).execute();
+  } 
 
   /** Gets every Account that is associated with any Vendor from the List. */
   public ArrayList<ArrayList<Account>> getAllAccounts(ArrayList<Vendor> vendors) {
