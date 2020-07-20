@@ -72,7 +72,7 @@ public final class AccountTest {
 
     assertEquals(expectedResponse, actualResponse);
   }
-
+  
   /** Test JSON constructor sets every field accurately */
   @Test
   public void testConstructorFromJson() {
@@ -89,4 +89,17 @@ public final class AccountTest {
     assertEquals("Failed to construct Account object from JSON", expectedJsonString, actualJson);
   }
 
+  /** Test that getAccountSheetsRow returns a List representing its data. */
+  @Test
+  public void testGetAccountSheetsRowMethod() {
+    String[] expectedArray = {
+      ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION, LEGACY_ACCOUNT_ID,
+      "" + NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE
+    };
+    List<String> expectedResponse = Arrays.asList(expectedArray);
+
+    List<String> actualResponse = account.getAccountSheetsRow();
+
+    assertEquals(expectedResponse, actualResponse);
+  }
 }

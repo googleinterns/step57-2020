@@ -96,4 +96,17 @@ public final class VendorTest {
 
     assertEquals(expectedResponse, actualResponse);
   }
+
+ /** Test that getVendorSheetsRow returns a List representing its data. */
+  @Test
+  public void testGetAccountSheetsRowMethod() {
+    String[] expectedArray = {
+      VENDOR_ID, LEGACY_VENDOR_ID, "" + NEXT_GEN_VENDOR_ID
+    };
+    List<String> expectedResponse = Arrays.asList(expectedArray);
+
+    List<String> actualResponse = vendor.getVendorSheetsRow();
+
+    assertEquals(expectedResponse, actualResponse);
+  }
 }
