@@ -14,6 +14,7 @@
 package data;
 
 import com.google.gson.stream.JsonReader;
+import org.json.JSONObject;
 import servlets.BillingConfig;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,17 @@ import java.util.*;
 
 /** A class representing a billing account object. */
 public class Account {
+  private static final String LEGACY_ACCOUNT_ID_KEY = "legacy_account_id";
+  private static final String NEXT_GEN_CUSTOMER_ID_KEY = "next_gen_customer_id";
+  private static final String SETTLEMENT_ATTRIBUTES_OBJ_KEY = "settlement_attributes";
+  private static final String CURRENCY_CODE_KEY = "currency_code";
+  private static final String DIRECTION_KEY = "direction";
+  private static final String ENTITY_KEY = "entity";
+  private static final String SETTLEMENT_CONFIG_OBJ_KEY = "settlement_config";
+  private static final String MATCHING_MODE_KEY = "matching_mode";
+  private static final String PRODUCT_ACCOUNT_KEY_KEY = "product_account_key";
+  private static final String AGGREGATION_MODE_KEY = "aggregation_mode";
+
   private String accountID;
   private String vendorID;
   private String entity;
@@ -60,31 +72,21 @@ public class Account {
     this.aggregationMode= request.getParameter(BillingConfig.AGGREGATION_MODE);
   }
 
-  public Account(JsonReader reader) throws IOException {
-    reader.beginObject();
-    reader.nextName();
-    this.legacyAccountID = reader.nextString();
-    reader.nextName();
-    this.nextGenAccountID = reader.nextInt();
-    reader.nextName();
-    reader.beginObject();
-    reader.nextName();
-    this.currency = reader.nextString();
-    reader.nextName();
-    this.direction = reader.nextString();
-    reader.nextName();
-    this.entity = reader.nextString();
-    reader.endObject();
-    reader.nextName();
-    reader.beginObject();
-    reader.nextName();
-    this.matchingMode = reader.nextString();
-    reader.endObject();
-    reader.nextName();
-    this.accountID = reader.nextString();
-    reader.nextName();
-    this.aggregationMode = reader.nextString();
-    reader.endObject();;
+  /** Construct an Account object from JSON representation */
+  public Account(JSONObject account) {
+    this.legacyAccountID = account.getString(LEGACY_ACCOUNT_ID_KEY);
+    this.nextGenAccountID = account.getInt(NEXT_GEN_CUSTOMER_ID_KEY);
+
+    JSONObject settlementAttributesObj = account.getJSONObject(SETTLEMENT_ATTRIBUTES_OBJ_KEY);
+    this.currency = settlementAttributesObj.getString(CURRENCY_CODE_KEY);
+    this.direction = settlementAttributesObj.getString(DIRECTION_KEY);
+    this.entity = settlementAttributesObj.getString(ENTITY_KEY);
+
+    JSONObject settlementConfigObj = account.getJSONObject(SETTLEMENT_CONFIG_OBJ_KEY);
+    this.matchingMode = settlementConfigObj.getString(MATCHING_MODE_KEY);
+
+    this.accountID = account.getString(PRODUCT_ACCOUNT_KEY_KEY);
+    this.aggregationMode = account.getString(AGGREGATION_MODE_KEY);
   }
 
   public String getAccountID() {

@@ -18,6 +18,7 @@ import java.io.*;
 import java.util.*;
 
 import com.google.gson.Gson;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /** A class that creates a config file from a Vendor object. */
@@ -119,6 +120,14 @@ public class JsonConverter {
 
     Gson gson = new Gson();
     return gson.toJson(map);
+  }
+
+  public static ArrayList<Account> buildAccountsFromJsonArray(JSONArray accountArray) {
+    ArrayList<Account> accounts = new ArrayList<>();
+    for (int i = 0; i < accountArray.length(); i++) {
+      accounts.add(new Account(accountArray.getJSONObject(i)));
+    }
+    return accounts;
   }
 
   /** Return list of vendor IDs that exist in the filesystem.*/
