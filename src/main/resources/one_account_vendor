@@ -12,7 +12,7 @@
 		"settlement_config": {
 			"matching_mode": "STRING"
 		},
-		"product_account_key": "onlyAccountID",
+		"account_id": "onlyAccountID",
 		"aggregation_mode": "STRING"
 	}]
 }

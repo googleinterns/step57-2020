@@ -13,7 +13,7 @@
       "settlement_config": {
         "matching_mode": "STRING"
       },
-      "product_account_key": "account1",
+      "account_id": "account1",
       "aggregation_mode": "STRING"
     },
     {
@@ -27,7 +27,7 @@
       "settlement_config": {
         "matching_mode": "STRING"
       },
-      "product_account_key": "account2",
+      "account_id": "account2",
       "aggregation_mode": "STRING"
     },
     {
@@ -41,7 +41,7 @@
           "settlement_config": {
             "matching_mode": "STRING"
           },
-          "product_account_key": "account3",
+          "account_id": "account3",
           "aggregation_mode": "STRING"
         }
   ]
