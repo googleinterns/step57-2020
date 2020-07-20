@@ -79,6 +79,17 @@ public class Vendor {
     return accountList;
   }
 
+  /** Builds one row filled with an Vendor's data for the Sheet. */
+  public List<String> getVendorSheetsRow() {
+    String[] vendorData = { 
+      getVendorID(), 
+      getLegacyVendorID(), 
+      Integer.toString(getNextGenVendorID())
+    };
+
+    return Arrays.asList(vendorData);
+  }
+
   /** Return a JSON String representing a billing config's content. */
   public String buildJsonConfig() {
     ArrayList<Account> accounts = getAccounts();
