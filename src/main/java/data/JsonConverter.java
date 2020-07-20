@@ -149,7 +149,6 @@ public class JsonConverter {
       ArrayList<String> accountIds = new ArrayList<>();
 
       if (accounts.isEmpty()) {
-        accountIds.add("No accounts found!");
         // TODO: We need a better system for error handling here
         return accountIds;
       }

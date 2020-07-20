@@ -81,7 +81,7 @@ public final class JsonConverterTest {
 
     String actualResponse = converter.getConfig(vendorID);
 
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals(removeWhitespace(expectedResponse), removeWhitespace(actualResponse));
   }
 
   /**
@@ -130,6 +130,11 @@ public final class JsonConverterTest {
   public void testGetConfigMap() throws IOException {
     String expectedResponse = "{vend_1:[]}";
     String actualResponse = converter.getConfigMap();
+    System.out.println(actualResponse);
+  }
 
+  private String removeWhitespace(String in) {
+    // Uses regex '\\s+' to remove all internal whitespace
+    return (in.replaceAll("\\s+", "").trim());
   }
 }
