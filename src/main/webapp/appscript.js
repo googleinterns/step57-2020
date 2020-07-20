@@ -20,8 +20,6 @@ async function populateCustomerList() {
   // TODO: Implement functionality for hashmap parsing instead of simple array.
   const response = await fetch('/VendorServlet');
 
-  // VendorServlet returns a hashmap/JSON dictionary. 
-
   // Response is a json array that is parsed into json.
   var customerJson = await response.json();
 
@@ -42,7 +40,7 @@ async function populateCustomerList() {
  * Fetch a json configuration as a string and formats it to be shown on
  * the readfile page.
  */
-async function addToPage() {
+async function addConfigToPage() {
   // TODO: Add query string support to sent to servlet.
   var vendorID = document.getElementById('customer-ids');
   
@@ -64,7 +62,7 @@ async function checkLoginStatus() {
 }
 
 // TODO: Delete config function. /BillingConfig --> doDelete
-async function delteConfiguration() {
+async function deleteConfiguration() {
 
 }
 
@@ -72,14 +70,3 @@ async function delteConfiguration() {
 async function createConfiguration() {
 
 }
-
-// function doGetRequest(var endpointUrl, var params) {
-// if (params != '{}') {
-// var requestString = endpointUrl + "?";
-// for (const [key, value] of Object.entries(params)) {
-// requestString += key + "=" + value +"&";
-// }
-// fetch(requestString);
-// }
-// }
-// 

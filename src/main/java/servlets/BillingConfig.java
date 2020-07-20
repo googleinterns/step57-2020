@@ -34,7 +34,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 @WebServlet("/BillingConfig")
 public class BillingConfig extends HttpServlet {
   // May need to be "application/json;
-  private static final String CONTENT_TYPE_TEXT_HTML = "application/json;";
+  private static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
   private static final String REDIRECT_READFILE = "/index.html";
 
   public static final String VENDOR_ID = "vendor-id";
@@ -57,8 +57,8 @@ public class BillingConfig extends HttpServlet {
     // GET method --> returns entire billing config as JSON
     // return null if vendor ID doesn't exist
     String vendorID = request.getParameter(VENDOR_ID);
-    vendorID = "sample";
     // TODO: @cade Add query string functionality to find vendor configs. 
+    vendorID = "sample";
     String accountID = request.getParameter(ACCOUNT_ID);
     JsonConverter json = new JsonConverter();
     String configText = "";
@@ -68,7 +68,6 @@ public class BillingConfig extends HttpServlet {
     } else {
       configText = "Error finding " + vendorID + "'s configuration";
     }
-    System.out.println(configText);
 
     /** 
      * TODO: @cade, eventually you will want to pass this access token and 
@@ -93,7 +92,7 @@ public class BillingConfig extends HttpServlet {
       // TODO: @cade Figure out how you want to handle this error.
     }
 
-    response.setContentType(CONTENT_TYPE_TEXT_HTML);
+    response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
     response.getWriter().println(configText);
   }
 
@@ -105,7 +104,7 @@ public class BillingConfig extends HttpServlet {
     String tempVendorID = "ALPHA";
     Vendor newVendor = new Vendor(request, tempVendorID, 1);
     JsonConverter jsonConverter = new JsonConverter();
-    response.setContentType(CONTENT_TYPE_TEXT_HTML);
+    response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
     response.sendRedirect("/index.html");
   }
 }

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="readfile.css">
     <script src="appscript.js"></script>
   </head>
-  <body>
+  <body onload="javascript:populateCustomerList()">
     <h1>Billing Configuration Sync Tool</h1><br>
     <h2>Read Configuration</h2> 
     <div id="links">
@@ -15,7 +15,7 @@
       <a href="deletefile.html">Delete Configuration</a>
     </div>
     <div>
-    <form id="config-search" action="javascript:addToPage()">
+    <form id="config-search" action="javascript:addConfigToPage()">
       <p>Customer ID:</p>
       <input list="customer-ids">
       <datalist id="customer-ids">
