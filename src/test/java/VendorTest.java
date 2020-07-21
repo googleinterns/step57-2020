@@ -15,9 +15,8 @@
 package javatests;
 
 import java.util.*;
-import org.junit.After;
+
 import org.junit.Before;
-import org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -92,7 +91,7 @@ public final class VendorTest {
       "\"aggregation_mode\":\"%s\"}]}", LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID,
       LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, CURRENCY, DIRECTION, ENTITY, 
       MATCHING_MODE, ACCOUNT_ID,AGGREGATION_MODE);
-    String actualResponse = vendor.toJson();
+    String actualResponse = vendor.buildJsonConfig();
 
     assertEquals(expectedResponse, actualResponse);
   }

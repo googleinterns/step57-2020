@@ -13,16 +13,11 @@
 // limitations under the License.
 package data;
 
-import com.google.gson.stream.JsonReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import servlets.BillingConfig;
 import javax.servlet.http.HttpServletRequest;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /** A class representing a billing vendor object. */
@@ -58,7 +53,7 @@ public class Vendor {
     accountList.add(newAccount);
   }
 
-  /** Construct a Vendor object from JSON string */
+  /** Construct a Vendor object from JSON string. */
   public Vendor(String json, String vendorID) throws IOException {
     JSONObject vendorJson = new JSONObject(json);
     this.vendorID = vendorID;
@@ -114,18 +109,17 @@ public class Vendor {
   }
 
   /** Return a JSON String representing a billing config's content. */
-  public String toJson() {
+  public String buildJsonConfig() {
     ArrayList<Account> accounts = getAccounts();
     String config = String.format("{\"legacy_customer_id\":\"%s\"," +
       "\"next_gen_customer_id\":%d,\"accounts\":[", getLegacyVendorID(),
       getNextGenVendorID());
 
-    for (Account account : accounts) {
-      config += account.toJson() + ",";
-    }
-    // Remove trailing comma from list of accounts for valid JSON
-    if (config.endsWith(",")) {
-      config = config.substring(0, config.length() - 1);
+    if (!accounts.isEmpty()) {
+      for (int i = 0; i < accounts.size() - 1; i++) {
+        config += accounts.get(i).buildJsonConfig() + ",";
+      }
+      config += accounts.get(accounts.size() - 1).buildJsonConfig();
     }
     config += "]}";
     return config;

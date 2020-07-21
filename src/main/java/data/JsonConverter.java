@@ -56,7 +56,7 @@ public class JsonConverter {
   }
 
   public boolean updateFile(Vendor vendor) {
-    String jsonConfig = vendor.toJson();
+    String jsonConfig = vendor.buildJsonConfig();
     // Create and write the contents to a File.
     File billingFile = writeFile(vendor.getVendorID(), jsonConfig);
 
@@ -128,7 +128,7 @@ public class JsonConverter {
    * @return list of accounts
    */
   public static ArrayList<Account> buildAccountsFromJsonArray(JSONArray accountArray) {
-    ArrayList<Account> accounts = new ArrayList<>();
+    ArrayList<Account> accounts = new ArrayList<Account>();
     for (int i = 0; i < accountArray.length(); i++) {
       accounts.add(new Account(accountArray.getJSONObject(i)));
     }
@@ -138,25 +138,23 @@ public class JsonConverter {
   /** Return list of vendor IDs that exist in the filesystem.*/
   private ArrayList<String> getVendorIDs() {
     File root = new File(basePath);
-    return new ArrayList<>(Arrays.asList(Objects.requireNonNull(root.list())));
+    return new ArrayList<String>(Arrays.asList(Objects.requireNonNull(root.list())));
   }
 
+  /**
+   * Returns an ArrayList of account ID strings.
+   * If none exist for the vendor, an empty ArrayList is returned
+   */
   private ArrayList<String> getAccountIDs(String vendorID) throws IOException {
     try {
       String config = getConfig(vendorID);
       Vendor vendor = new Vendor(config, vendorID);
       ArrayList<Account> accounts = vendor.getAccounts();
-      ArrayList<String> accountIds = new ArrayList<>();
-
-      if (accounts.isEmpty()) {
-        // TODO: We need a better system for error handling here
-        return accountIds;
-      }
+      ArrayList<String> accountIds = new ArrayList<String>();
 
       for (Account account : accounts) {
         accountIds.add(account.getAccountID());
       }
-
       return accountIds;
     } catch (IOException e) {
       return null;

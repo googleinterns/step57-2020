@@ -71,7 +71,7 @@ public final class AccountTest {
                     "\"aggregation_mode\":\"%s\"}", LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID,
             CURRENCY, DIRECTION, ENTITY, MATCHING_MODE, ACCOUNT_ID, AGGREGATION_MODE);
 
-    String actualResponse = account.toJson();
+    String actualResponse = account.buildJsonConfig();
 
     assertEquals(expectedResponse, actualResponse);
   }
@@ -88,7 +88,7 @@ public final class AccountTest {
             ACCOUNT_ID, AGGREGATION_MODE);
 
     Account account = new Account(new JSONObject(expectedJsonString));
-    String actualJson = account.toJson();
+    String actualJson = account.buildJsonConfig();
     assertEquals("Failed to construct Account object from JSON", expectedJsonString, actualJson);
   }
 

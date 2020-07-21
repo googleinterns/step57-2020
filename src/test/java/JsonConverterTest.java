@@ -17,14 +17,11 @@ import java.util.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import data.JsonConverter;
 import data.Vendor;
@@ -112,10 +109,9 @@ public final class JsonConverterTest {
             MATCHING_MODE, ACCOUNT_ID, AGGREGATION_MODE);
     String actualResponse = "";
 
-    File file = converter.writeFile(vendor.getVendorID(), vendor.toJson());
+    File file = converter.writeFile(vendor.getVendorID(), vendor.buildJsonConfig());
     Scanner input = null;
     input = new Scanner(file);
-
 
     while(input.hasNextLine()) {
       actualResponse += input.nextLine();
@@ -124,11 +120,13 @@ public final class JsonConverterTest {
     assertEquals(expectedResponse, actualResponse);
   }
 
+  /**
+   * This test depends on the test resources folder having 4 files (vend_0 - vend_3).
+   * vend_1 through vend_3 should be as written in the resources directory, and vend_0 is created
+   * by an earlier method.
+   */
   @Test
   public void testGetConfigMap() throws IOException {
-    // This test depends entirely on the test resources folder having 4 files (vend_0 - vend_3)
-    // vend_1 through vend_3 should be as written in the resources directory, and vend_0 is created
-    // by an earlier method
     String expectedResponse = "{\"vend_2\":[\"account1\",\"account2\"],\"vend_3\":[\"account1\"," +
             "\"account2\",\"account3\"],\"vend_0\":[],\"vend_1\":[\"account1\"]}";
     String actualResponse = converter.getConfigMap();

@@ -13,10 +13,8 @@
 // limitations under the License.
 package data;
 
-import com.google.gson.stream.JsonReader;
 import org.json.JSONObject;
 import servlets.BillingConfig;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
@@ -72,7 +70,7 @@ public class Account {
     this.aggregationMode = request.getParameter(BillingConfig.AGGREGATION_MODE);
   }
 
-  /** Construct an Account object from JSON representation */
+  /** Construct an Account object from JSON representation. */
   public Account(JSONObject account) {
     this.legacyAccountID = account.getString(LEGACY_ACCOUNT_ID_KEY);
     this.nextGenAccountID = account.getInt(NEXT_GEN_CUSTOMER_ID_KEY);
@@ -179,7 +177,7 @@ public class Account {
   }
 
   /** Return a JSON String representation of the fields. */
-  public String toJson() {
+  public String buildJsonConfig() {
     return String.format("{\"legacy_account_id\":\"%s\"," +
       "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
       "\"currency_code\":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"}," +
