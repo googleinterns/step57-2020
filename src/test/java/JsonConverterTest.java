@@ -36,6 +36,7 @@ public final class JsonConverterTest {
   private Account account;
   private JsonConverter converter;
   private final String VENDOR_ID = "vend_0";
+  private final String VENDOR_ID_WITH_EXTENSION = "vend_0.json";
   private final String LEGACY_VENDOR_ID = "legVend_27";
   private final int NEXT_GEN_VENDOR_ID = 17;
   private final String ACCOUNT_ID = "acc_12";
@@ -74,7 +75,7 @@ public final class JsonConverterTest {
   @Test
   public void testGetConfigMethod() {
     String expectedResponse = "{\"legacy_customer_id\":\"legVend_27\",\"next_gen_customer_id\":17,\"accounts\":[]}";
-    String actualResponse = converter.getConfig(VENDOR_ID);
+    String actualResponse = converter.getConfig(VENDOR_ID_WITH_EXTENSION);
 
     assertEquals(removeWhitespace(expectedResponse), removeWhitespace(actualResponse));
   }

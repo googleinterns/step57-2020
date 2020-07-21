@@ -24,6 +24,7 @@ import org.json.JSONObject;
 /** A class that creates a config file from a Vendor object. */
 public class JsonConverter {
   private static final String DEFAULT_FILE_PATH = "../../src/main/resources/";
+  private static final String FILE_EXTENSION = ".json";
 
   private String basePath;
 
@@ -33,26 +34,6 @@ public class JsonConverter {
 
   public JsonConverter(String filePathName) {
     basePath = filePathName;
-  }
-
-  public File createFile(String vendorID) {
-    String fileName = basePath + vendorID;
-    // Create a JSON object to write to the file.
-    JSONObject parentObject = new JSONObject();
-    JSONObject JSONCar = new JSONObject();
-    JSONCar.put("Car", "Blue Tacoma");
-    parentObject.put("Vehicle", JSONCar);
-    // Write the JSON object to the file.
-    File file = null;
-    try {
-      file = new File(fileName);
-      BufferedWriter out = new BufferedWriter(new FileWriter(file));
-      out.write(parentObject.toString());
-      out.close();
-    } catch (IOException e) {
-      return null;
-    }
-    return file;
   }
 
   public boolean updateFile(Vendor vendor) {
@@ -73,7 +54,7 @@ public class JsonConverter {
   public File writeFile(String vendorID, String jsonConfig) {
     File billingFile = null;
     try {
-      billingFile = new File(basePath + vendorID);
+      billingFile = new File(basePath + vendorID + FILE_EXTENSION);
       BufferedWriter out = new BufferedWriter(new FileWriter(billingFile));
       out.write(jsonConfig);
       out.close();
@@ -115,7 +96,7 @@ public class JsonConverter {
 
     for (String vendor : vendorIDs) {
       ArrayList<String> accounts = getAccountIDs(vendor);
-      map.put(vendor, accounts);
+      map.put(removeJsonExtension(vendor), accounts);
     }
 
     Gson gson = new Gson();
@@ -159,5 +140,9 @@ public class JsonConverter {
     } catch (IOException e) {
       throw new IOException("Failed to parse JSON configuration");
     }
+  }
+
+  private String removeJsonExtension(String vendorID) {
+    return vendorID.replace(".json", "");
   }
 }
