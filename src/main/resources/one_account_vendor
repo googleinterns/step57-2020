@@ -1,9 +1,9 @@
 {
-	"legacy_customer_id": "legVend_27",
-	"next_gen_customer_id": 17,
+	"legacy_customer_id": "STRING",
+	"next_gen_customer_id": 53598,
 	"accounts": [{
 		"legacy_account_id": "STRING",
-		"next_gen_customer_id": 5235,
+		"next_gen_customer_id": 5309,
 		"settlement_attributes": {
 			"currency_code": "STRING",
 			"direction": "STRING",
@@ -12,7 +12,7 @@
 		"settlement_config": {
 			"matching_mode": "STRING"
 		},
-		"account_id": "account1",
+		"account_id": "onlyAccountID",
 		"aggregation_mode": "STRING"
 	}]
 }
