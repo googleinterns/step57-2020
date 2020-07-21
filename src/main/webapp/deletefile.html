@@ -26,20 +26,12 @@
       <a href="createfile.html">Create Configuration</a>
     </div><br>
     <div id="delete-search">
-      <form id="delete-form">
-        <span>Customer ID:</span>
-        <input list="customer-ids">
-        <datalist id="customer-ids">
-        </datalist><br>
-        <span>Account ID:</span>
-        <input list="account-ids">
-        <datalist id="account-ids">
-          <option value="Account 1">
-          <option value="Account 2">
-          <option value="Account 3">
-        </datalist><br>
-        <button type="button" class="btn-primary" data-toggle="modal"
-        data-target="#deleteModal">Submit</button>
+      <form onSubmit="javascript:deleteVendor(this)">
+      	<p>Enter the Vendor ID of the configuration you want to delete.</p>
+				<input type="text" name="vendorID" size="25" />
+        <input type="submit" value="Submit">
+        <!-- <button type="button" class="btn-primary" data-toggle="modal"
+        data-target="#deleteModal">Submit</button>  -->
       </form>
     </div>
     <!-- The class "modal fade" is the necessary syntax for the modal to work. -->
@@ -57,7 +49,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn-cancel" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn-delete">Delete</button>
+              <button type="submit" class="btn-delete">Yes</button>
             </div>
           </form>
         </div>
