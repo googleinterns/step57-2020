@@ -84,7 +84,7 @@ public class BillingConfig extends HttpServlet {
       vendor.addAccount(account);
       vendors.add(vendor);
 
-      sheet.writeToSheet(vendors, accessToken);
+      sheet.updateSheets(vendors, accessToken);
     } catch (GeneralSecurityException e) {
       // TODO: @cade Figure out how you want to handle this error.
     }

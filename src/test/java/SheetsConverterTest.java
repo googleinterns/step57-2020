@@ -60,16 +60,6 @@ public final class SheetsConverterTest {
             LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE);
   }
 
-  @Test
-  public void testUpdateSheetMethod() throws GeneralSecurityException, IOException{
-    vendor.addAccount(account);
-    ArrayList<Vendor> vendors = new ArrayList<Vendor>();
-    vendors.add(vendor);
-
-    // TODO @charlie: figure out how to test this.
-
-  }
-
   /** Check that the getAllAccounts method returns all vendors' accounts. */
   @Test
   public void testGetAllAccounts() throws GeneralSecurityException, IOException{
