@@ -62,7 +62,7 @@ public class OAuthConsentServlet extends HttpServlet {
   private String getOAuthRedirectURL(String state) {
     return String.format("%s?%s&%s&%s&%s&%s", OAuthConstants.OAUTH_LOGIN_URI, 
       OAuthConstants.CLIENT_ID, OAuthConstants.SCOPE, OAuthConstants.RESPONSE_TYPE, 
-      getRedirectUri(), OAuthConstants.STATE + state); 
+      OAuthConstants.DEPLOY_REDIRECT_URI, OAuthConstants.STATE + state); 
   }
 
   // Build a valid redirect URI to the OAuthCallbackServlet.

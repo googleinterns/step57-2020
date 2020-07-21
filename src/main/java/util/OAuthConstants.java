@@ -29,4 +29,5 @@ public final class OAuthConstants {
   public static final String CLIENT_SECRET = "client_secret=";
   public static final String AUTH_CODE = "code=";
   public static final String STATE = "state=";  
+  public static final String DEPLOY_REDIRECT_URI = "redirect_uri=https://step57-2020.uc.r.appspot.com/api/oauth/callback/sheets";
 }

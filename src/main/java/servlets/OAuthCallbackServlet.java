@@ -127,7 +127,7 @@ public class OAuthCallbackServlet extends HttpServlet {
   private HttpRequest buildTokenRequest(String authCode) {
     String tokenRequestBody = String.format("%s&%s&%s&%s&%s", 
       OAuthConstants.GRANT_TYPE, OAuthConstants.AUTH_CODE + authCode, 
-      getRedirectUri(), OAuthConstants.CLIENT_ID, getClientSecret());
+      OAuthConstants.DEPLOY_REDIRECT_URI, OAuthConstants.CLIENT_ID, getClientSecret());
 
     return HttpRequest.newBuilder(URI.create(OAuthConstants.TOKEN_URI))
       .header(HEADER_TYPE, HEADER_FORM).POST(BodyPublishers.ofString(
