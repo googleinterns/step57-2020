@@ -26,14 +26,14 @@ async function populateCustomerList() {
   console.log(customerJson);
 
   // Loops over this array to make the options for the Customer ID dropdown.
-  var html = '';
+  var vendorHtml = '';
   for (var i = 0; i < customerJson.length; i++) {
     html += '<option value="' + customerJson[i] + '">'
     + customerJson[i] + '</option>';
   }
 
   // Adds the options to the page, allowing them to be viewed. 
-  document.getElementById('customer-ids').innerHTML = html;
+  document.getElementById('customer-ids').innerHTML = vendorHtml;
 }
 
 /**
