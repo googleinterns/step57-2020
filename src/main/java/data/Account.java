@@ -23,7 +23,8 @@ import java.util.*;
 public class Account {
   public static final String LEGACY_ACCOUNT_ID_KEY = "legacy_account_id";
   public static final String NEXT_GEN_CUSTOMER_ID_KEY = "next_gen_customer_id";
-  public static final String SETTLEMENT_ATTRIBUTES_OBJ_KEY = "settlement_attributes";
+  public static final String SETTLEMENT_ATTRIBUTES_OBJ_KEY =
+          "settlement_attributes";
   public static final String CURRENCY_CODE_KEY = "currency_code";
   public static final String DIRECTION_KEY = "direction";
   public static final String ENTITY_KEY = "entity";
@@ -42,9 +43,10 @@ public class Account {
   private String matchingMode;
   private String aggregationMode;
 
-  public Account(String accountID, String vendorID, String entity, String currency,
-                 String direction, String legacyAccountID, int nextGenAccountID,
-                 String matchingMode, String aggregationMode) {
+  public Account(String accountID, String vendorID, String entity,
+                 String currency, String direction, String legacyAccountID,
+                 int nextGenAccountID, String matchingMode,
+                 String aggregationMode) {
 
     this.accountID = accountID;
     this.vendorID = vendorID;
@@ -75,12 +77,14 @@ public class Account {
     this.legacyAccountID = account.getString(LEGACY_ACCOUNT_ID_KEY);
     this.nextGenAccountID = account.getInt(NEXT_GEN_CUSTOMER_ID_KEY);
 
-    JSONObject settlementAttributesObj = account.getJSONObject(SETTLEMENT_ATTRIBUTES_OBJ_KEY);
+    JSONObject settlementAttributesObj = account.
+            getJSONObject(SETTLEMENT_ATTRIBUTES_OBJ_KEY);
     this.currency = settlementAttributesObj.getString(CURRENCY_CODE_KEY);
     this.direction = settlementAttributesObj.getString(DIRECTION_KEY);
     this.entity = settlementAttributesObj.getString(ENTITY_KEY);
 
-    JSONObject settlementConfigObj = account.getJSONObject(SETTLEMENT_CONFIG_OBJ_KEY);
+    JSONObject settlementConfigObj = account.
+            getJSONObject(SETTLEMENT_CONFIG_OBJ_KEY);
     this.matchingMode = settlementConfigObj.getString(MATCHING_MODE_KEY);
 
     this.accountID = account.getString(ACCOUNT_ID_KEY);
