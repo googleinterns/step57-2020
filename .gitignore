@@ -26,5 +26,6 @@ target/
 
 # hide client information
 src/main/resources/
+src/main/secrets/
 
 .idea
