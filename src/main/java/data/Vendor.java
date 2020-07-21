@@ -19,6 +19,7 @@ import servlets.BillingConfig;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /** A class representing a billing vendor object. */
 public class Vendor {
@@ -116,10 +117,7 @@ public class Vendor {
       getNextGenVendorID());
 
     if (!accounts.isEmpty()) {
-      for (int i = 0; i < accounts.size() - 1; i++) {
-        config += accounts.get(i).buildJsonConfig() + ",";
-      }
-      config += accounts.get(accounts.size() - 1).buildJsonConfig();
+      config += accounts.stream().map(Account::buildJsonConfig).collect(Collectors.joining(","));
     }
     config += "]}";
     return config;
