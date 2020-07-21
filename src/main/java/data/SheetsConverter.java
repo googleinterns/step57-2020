@@ -32,12 +32,11 @@ public class SheetsConverter {
   private final String TAB_2 = "Sheet2";
   private final String INPUT_OPTION = "RAW";
 
-  public boolean updateSheets(ArrayList<Vendor> vendorList, String accessToken) 
+  public void updateSheets(ArrayList<Vendor> vendorList, String accessToken) 
     throws GeneralSecurityException, IOException {
     sheetsService = SheetsServiceUtil.getSheetsService(accessToken);
     clearSheets(sheetsService);
     writeToSheet(vendorList, sheetsService); 
-    return true;
   }
 
   public void writeToSheet(ArrayList<Vendor> vendorList, Sheets sheetsService) 
