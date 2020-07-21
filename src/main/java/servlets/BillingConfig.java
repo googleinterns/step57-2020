@@ -33,7 +33,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 
 @WebServlet("/BillingConfig")
 public class BillingConfig extends HttpServlet {
-  // May need to be "application/json;
   private static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
   private static final String REDIRECT_READFILE = "/index.html";
 

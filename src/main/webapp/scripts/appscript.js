@@ -18,7 +18,7 @@
   */
 async function populateCustomerList() {
   // TODO: Implement functionality for hashmap parsing instead of simple array.
-  const response = await fetch('/VendorServlet');
+  var response = await fetch('/VendorServlet');
 
   // Response is a json array that is parsed into json.
   var customerJson = await response.json();
