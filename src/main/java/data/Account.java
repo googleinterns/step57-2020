@@ -13,13 +13,26 @@
 // limitations under the License.
 package data;
 
+import org.json.JSONObject;
 import servlets.BillingConfig;
-
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.*;
 
 /** A class representing a billing account object. */
 public class Account {
+  public static final String LEGACY_ACCOUNT_ID_KEY = "legacy_account_id";
+  public static final String NEXT_GEN_CUSTOMER_ID_KEY = "next_gen_customer_id";
+  public static final String SETTLEMENT_ATTRIBUTES_OBJ_KEY =
+          "settlement_attributes";
+  public static final String CURRENCY_CODE_KEY = "currency_code";
+  public static final String DIRECTION_KEY = "direction";
+  public static final String ENTITY_KEY = "entity";
+  public static final String SETTLEMENT_CONFIG_OBJ_KEY = "settlement_config";
+  public static final String MATCHING_MODE_KEY = "matching_mode";
+  public static final String ACCOUNT_ID_KEY = "account_id";
+  public static final String AGGREGATION_MODE_KEY = "aggregation_mode";
+
   private String accountID;
   private String vendorID;
   private String entity;
@@ -30,9 +43,10 @@ public class Account {
   private String matchingMode;
   private String aggregationMode;
 
-  public Account(String accountID, String vendorID, String entity, String currency,
-                 String direction, String legacyAccountID, int nextGenAccountID,
-                 String matchingMode, String aggregationMode) {
+  public Account(String accountID, String vendorID, String entity,
+                 String currency, String direction, String legacyAccountID,
+                 int nextGenAccountID, String matchingMode,
+                 String aggregationMode) {
 
     this.accountID = accountID;
     this.vendorID = vendorID;
@@ -55,7 +69,26 @@ public class Account {
     this.direction = request.getParameter(BillingConfig.DIRECTION);
     this.entity = request.getParameter(BillingConfig.ENTITY);
     this.matchingMode = request.getParameter(BillingConfig.MATCHING_MODE);
-    this.aggregationMode= request.getParameter(BillingConfig.AGGREGATION_MODE);
+    this.aggregationMode = request.getParameter(BillingConfig.AGGREGATION_MODE);
+  }
+
+  /** Construct an Account object from JSON representation. */
+  public Account(JSONObject account) {
+    this.legacyAccountID = account.getString(LEGACY_ACCOUNT_ID_KEY);
+    this.nextGenAccountID = account.getInt(NEXT_GEN_CUSTOMER_ID_KEY);
+
+    JSONObject settlementAttributesObj = account.
+            getJSONObject(SETTLEMENT_ATTRIBUTES_OBJ_KEY);
+    this.currency = settlementAttributesObj.getString(CURRENCY_CODE_KEY);
+    this.direction = settlementAttributesObj.getString(DIRECTION_KEY);
+    this.entity = settlementAttributesObj.getString(ENTITY_KEY);
+
+    JSONObject settlementConfigObj = account.
+            getJSONObject(SETTLEMENT_CONFIG_OBJ_KEY);
+    this.matchingMode = settlementConfigObj.getString(MATCHING_MODE_KEY);
+
+    this.accountID = account.getString(ACCOUNT_ID_KEY);
+    this.aggregationMode = account.getString(AGGREGATION_MODE_KEY);
   }
 
   public String getAccountID() {
@@ -148,12 +181,12 @@ public class Account {
   }
 
   /** Return a JSON String representation of the fields. */
-  public String toJson() {
-    return String.format("{\"legacy_account_id\":%s," +
+  public String buildJsonConfig() {
+    return String.format("{\"legacy_account_id\":\"%s\"," +
       "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
-      "\"currency_code\":%s,\"direction\":%s,\"entity\":%s}," +
-      "\"settlement_config\":{\"matching_mode\":%s},\"account_id\":%s," +
-      "\"aggregation_mode\":%s}}", getLegacyAccountID(), getNextGenAccountID(), 
+      "\"currency_code\":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"}," +
+      "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
+      "\"aggregation_mode\":\"%s\"}", getLegacyAccountID(), getNextGenAccountID(),
       getCurrency(), getDirection(), getEntity(), getMatchingMode(), 
       getAccountID(), getAggregationMode());
   }

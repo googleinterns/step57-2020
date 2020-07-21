@@ -14,18 +14,19 @@
 
 package javatests;
 
-import java.util.*;
-import org.junit.After;
+import data.Account;
+import org.json.JSONObject;
 import org.junit.Before;
-import org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.json.JSONObject;
-import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
-import data.Account;
-import data.Vendor;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(JUnit4.class)
 public final class AccountTest {
@@ -38,13 +39,13 @@ public final class AccountTest {
   private final String LEGACY_ACCOUNT_ID = "legAcc_53";
   private final int NEXT_GEN_ACCOUNT_ID = 17;
   private final String MATCHING_MODE = "straight";
-  private final String AGGREGATION_MODE = "totalAgg"; 
+  private final String AGGREGATION_MODE = "totalAgg";
 
   /** Create an Account object. */
   @Before
   public void setUp() {
-    account = new Account(ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION, 
-      LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE);
+    account = new Account(ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION,
+            LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE);
   }
 
   /** Test that the constructor set the Vendor fields with the correct data. */
@@ -53,28 +54,53 @@ public final class AccountTest {
     assertEquals(account.getAccountID(), ACCOUNT_ID);
     assertEquals(account.getVendorID(), VENDOR_ID);
     assertEquals(account.getEntity(), ENTITY);
-    assertEquals(account.getCurrency(), CURRENCY);   
-    assertEquals(account.getDirection(), DIRECTION);       
-    assertEquals(account.getLegacyAccountID(), LEGACY_ACCOUNT_ID);  
-    assertTrue("Account Constructor incorrectly set nextGenAccountID field.", 
-      account.getNextGenAccountID() == NEXT_GEN_ACCOUNT_ID);  
-    assertEquals(account.getMatchingMode(), MATCHING_MODE);  
-    assertEquals(account.getAggregationMode(), AGGREGATION_MODE);        
+    assertEquals(account.getCurrency(), CURRENCY);
+    assertEquals(account.getDirection(), DIRECTION);
+    assertEquals(account.getLegacyAccountID(), LEGACY_ACCOUNT_ID);
+    assertEquals("Account Constructor incorrectly set nextGenAccountID field.", account.getNextGenAccountID(), NEXT_GEN_ACCOUNT_ID);
+    assertEquals(account.getMatchingMode(), MATCHING_MODE);
+    assertEquals(account.getAggregationMode(), AGGREGATION_MODE);
   }
 
   /** Test that toJson returns a String representation of an Account object. */
   @Test
   public void testToJsonMethod() {
-    String expectedResponse = String.format("{\"legacy_account_id\":%s," +
-      "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
-      "\"currency_code\":%s,\"direction\":%s,\"entity\":%s}," +
-      "\"settlement_config\":{\"matching_mode\":%s},\"account_id\":%s," +
-      "\"aggregation_mode\":%s}}", LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID,
-      CURRENCY, DIRECTION, ENTITY, MATCHING_MODE, ACCOUNT_ID,AGGREGATION_MODE); 
+    String expectedResponse = String.format("{\"legacy_account_id\":\"%s\"," +
+                    "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
+                    "\"currency_code\":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"}," +
+                    "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
+                    "\"aggregation_mode\":\"%s\"}", LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID,
+            CURRENCY, DIRECTION, ENTITY, MATCHING_MODE, ACCOUNT_ID, AGGREGATION_MODE);
+    String actualResponse = account.buildJsonConfig();
 
-    String actualResponse = account.toJson();
+    // Construct JSON objects to ensure both strings are valid.
+    JSONObject expected = new JSONObject(expectedResponse);
+    JSONObject actual = new JSONObject(actualResponse);
 
-    assertEquals(expectedResponse, actualResponse);
+    assertTrue(expected.similar(actual));
+    assertEquals("toJson() doesn't match expected output.", expectedResponse, actualResponse);
+  }
+  
+  /** Test JSON constructor sets every field accurately */
+  @Test
+  public void testConstructorFromJson() {
+    String expectedResponse = String.format("{\"legacy_account_id\":\"%s\",\"" +
+            "next_gen_customer_id\":%d,\"settlement_attributes\":{\"currency_code\"" +
+            ":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"},\"settlement_config\"" +
+            ":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\",\"aggregation_mode\"" +
+            ":\"%s\"}",
+            LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, CURRENCY, DIRECTION, ENTITY, MATCHING_MODE,
+            ACCOUNT_ID, AGGREGATION_MODE);
+
+    Account account = new Account(new JSONObject(expectedResponse));
+    String actualResponse = account.buildJsonConfig();
+
+    // Construct JSON objects to ensure both strings are valid.
+    JSONObject expected = new JSONObject(expectedResponse);
+    JSONObject actual = new JSONObject(actualResponse);
+
+    assertTrue(expected.similar(actual));
+    assertEquals("Failed to construct Account object from JSON", expectedResponse, actualResponse);
   }
 
   /** Test that getAccountSheetsRow returns a List representing its data. */
