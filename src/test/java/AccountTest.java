@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -70,16 +71,20 @@ public final class AccountTest {
                     "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
                     "\"aggregation_mode\":\"%s\"}", LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID,
             CURRENCY, DIRECTION, ENTITY, MATCHING_MODE, ACCOUNT_ID, AGGREGATION_MODE);
-
     String actualResponse = account.buildJsonConfig();
 
-    assertEquals(expectedResponse, actualResponse);
+    // Construct JSON objects to ensure both strings are valid.
+    JSONObject expected = new JSONObject(expectedResponse);
+    JSONObject actual = new JSONObject(actualResponse);
+
+    assertTrue(expected.similar(actual));
+    assertEquals("toJson() doesn't match expected output.", expectedResponse, actualResponse);
   }
   
   /** Test JSON constructor sets every field accurately */
   @Test
   public void testConstructorFromJson() {
-    String expectedJsonString = String.format("{\"legacy_account_id\":\"%s\",\"" +
+    String expectedResponse = String.format("{\"legacy_account_id\":\"%s\",\"" +
             "next_gen_customer_id\":%d,\"settlement_attributes\":{\"currency_code\"" +
             ":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"},\"settlement_config\"" +
             ":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\",\"aggregation_mode\"" +
@@ -87,9 +92,15 @@ public final class AccountTest {
             LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, CURRENCY, DIRECTION, ENTITY, MATCHING_MODE,
             ACCOUNT_ID, AGGREGATION_MODE);
 
-    Account account = new Account(new JSONObject(expectedJsonString));
-    String actualJson = account.buildJsonConfig();
-    assertEquals("Failed to construct Account object from JSON", expectedJsonString, actualJson);
+    Account account = new Account(new JSONObject(expectedResponse));
+    String actualResponse = account.buildJsonConfig();
+
+    // Construct JSON objects to ensure both strings are valid.
+    JSONObject expected = new JSONObject(expectedResponse);
+    JSONObject actual = new JSONObject(actualResponse);
+
+    assertTrue(expected.similar(actual));
+    assertEquals("Failed to construct Account object from JSON", expectedResponse, actualResponse);
   }
 
   /** Test that getAccountSheetsRow returns a List representing its data. */
