@@ -157,7 +157,7 @@ public class JsonConverter {
       }
       return accountIds;
     } catch (IOException e) {
-      return null;
+      throw new IOException("Failed to parse JSON configuration");
     }
   }
 }
