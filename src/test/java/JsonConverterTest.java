@@ -135,6 +135,6 @@ public final class JsonConverterTest {
 
   private String removeWhitespace(String in) {
     // Uses regex '\\s+' to remove all internal whitespace
-    return (in.replaceAll("\\s+", "").trim());
+    return in.replaceAll("\\s+", "").trim();
   }
 }
