@@ -16,6 +16,7 @@ package data;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import org.json.JSONArray;
@@ -116,10 +117,15 @@ public class JsonConverter {
     return accounts;
   }
 
-  /** Return list of vendor IDs that exist in the filesystem.*/
+  /**
+   *  Return list of vendor IDs that exist in the filesystem.
+   *  Only files that end in .json will be returned in the output ArrayList.
+   */
   private ArrayList<String> getVendorIDs() {
     File root = new File(basePath);
-    return new ArrayList<String>(Arrays.asList(Objects.requireNonNull(root.list())));
+    String[] files = Objects.requireNonNull(root.list());
+    return Arrays.stream(files).filter(s -> s.endsWith(".json")).
+            collect(Collectors.toCollection(ArrayList::new));
   }
 
   /**
