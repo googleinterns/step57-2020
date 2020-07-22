@@ -15,11 +15,10 @@
       <a href="deletefile.html">Delete Configuration</a>
     </div>
     <div>
-      <form id="config-search">
+      <form id="config-search" action="javascript:addConfigToPage()">
         <p>Customer ID:</p>
-        <input list="customer-ids">
-        <datalist id="customer-ids">
-        </datalist>
+        <!-- todo: fix after testing -->
+        <input id="vendor-id" type="text" name="vendor-id">
         <p>Account ID:</p>
         <input list="account-ids">
         <datalist id="account-ids">
@@ -30,7 +29,10 @@
         <button type="submit">Search</button>
       </form>
     </div><br>
-    <div id="editform">
+    <div id="json-text">
+
+    </div>
+    <div id="edit-form">
       <form action="/BillingConfig" method="POST">
         <span>Legacy Customer ID:</span>
         <input type="text" id="legacy-customer-id" name="legacy-customer-id"><br>

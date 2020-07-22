@@ -22,16 +22,13 @@ async function populateCustomerList() {
 
   // Response is a json array that is parsed into json.
   var customerJson = await response.json();
-
-  console.log(customerJson);
-
   // Loops over this array to make the options for the Customer ID dropdown.
   var vendorHtml = '';
   for (var i = 0; i < customerJson.length; i++) {
     html += '<option value="' + customerJson[i] + '">'
     + customerJson[i] + '</option>';
   }
-  document.getElementById('customer-ids').innerHTML = vendorHtml;
+  document.getElementById('vendor-id').innerHTML = vendorHtml;
 }
 
 /**
@@ -40,16 +37,15 @@ async function populateCustomerList() {
  */
 async function addConfigToPage() {
   // TODO: Add query string support to sent to servlet.
-  var vendorID = document.getElementById('customer-ids');
-  var queryString = "?vendorID=" + document.getElementById('customer-ids');
-  console.log(queryString);
-  
+  const servletUrl = "/BillingConfig";
+  var queryString = "?vendorID=" + document.getElementById('vendor-id').value
+        + "&accountID=" + document.getElementById('account-id').value;
+
   // Fetch the json configuration and format it to print on the page. 
-  fetch('/BillingConfig')
+  fetch(servletUrl + queryString)
     .then(response => response.json())
     .then(data => document.getElementById('json-text').innerText = 
     JSON.stringify(data, undefined, 4));
-    
 }
 
 // TODO: Method to populate edit form.
