@@ -20,8 +20,9 @@ $('#deleteForm').on('submit', function(e){
 
 
 // Call the doDelete method in the VendorServlet to delete the given vendorID.
-function deleteVendor(form) {
+async function deleteVendor(form) {
   const vendorID = form.vendorID.value;
+  console.log(vendorID);
   const response = await fetch('/VendorServlet?vendorID=' + vendorID, 
     { method: "DELETE"});
   const deleteMessage = await response.json();
