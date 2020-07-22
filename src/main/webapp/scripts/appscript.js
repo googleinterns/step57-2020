@@ -20,20 +20,24 @@ async function populateCustomerList() {
   // TODO: Implement functionality for hashmap parsing instead of simple array.
   var response = await fetch('/VendorServlet');
 
-  // Response is a json array that is parsed into json.
-  var customerJson = await response.json();
-
-  console.log(customerJson);
+  var vendorJson = await response.json();
 
   // Loops over this array to make the options for the Customer ID dropdown.
   var vendorHtml = '';
-  for (var i = 0; i < customerJson.length; i++) {
-    html += '<option value="' + customerJson[i] + '">'
-    + customerJson[i] + '</option>';
+
+  for (var key in vendorJson) {
+    console.log(key);
+    vendorHtml += '<option value="' + key + '">'
+    + key + '</option>';
   }
 
   // Adds the options to the page, allowing them to be viewed. 
   document.getElementById('customer-ids').innerHTML = vendorHtml;
+}
+
+// TODO: Add dependent drop-down 
+function populateAccountList() {
+
 }
 
 /**
@@ -49,24 +53,4 @@ async function addConfigToPage() {
     .then(response => response.json())
     .then(data => document.getElementById('json-text').innerText = 
     JSON.stringify(data, undefined, 4));
-    
-}
-
-// TODO: Method to populate edit form.
-async function populateEditForm() {
-
-}
-// TODO: Method for enums: Check which of the tags has data under it {isLoggedIn:{loginURL},isLoggedOut:{logooutURL}}}
-async function checkLoginStatus() {
-  
-}
-
-// TODO: Delete config function. /BillingConfig --> doDelete
-async function deleteConfiguration() {
-
-}
-
-// TODO: Create config and redirect/populate edit form. 
-async function createConfiguration() {
-
 }
