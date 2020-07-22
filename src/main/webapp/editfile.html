@@ -17,16 +17,11 @@
     <div>
       <form id="config-search">
         <p>Customer ID:</p>
-        <input list="customer-ids">
-        <datalist id="customer-ids">
-        </datalist>
+        <select id="customer-ids" onchange="javascript:populateAccountList()">
+        </select>
         <p>Account ID:</p>
-        <input list="account-ids">
-        <datalist id="account-ids">
-          <option value="Account 1">
-          <option value="Account 2">
-          <option value="Account 3">
-        </datalist><br>
+        <select id="account-ids">
+        </select><br>
         <button type="submit">Search</button>
       </form>
     </div><br>

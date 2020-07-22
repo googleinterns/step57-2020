@@ -28,16 +28,11 @@
     <div id="delete-search">
       <form id="delete-form">
         <span>Customer ID:</span>
-        <input list="customer-ids">
-        <datalist id="customer-ids">
-        </datalist><br>
+        <select id="customer-ids" onchange="javascript:populateAccountList()">
+        </select><br>
         <span>Account ID:</span>
-        <input list="account-ids">
-        <datalist id="account-ids">
-          <option value="Account 1">
-          <option value="Account 2">
-          <option value="Account 3">
-        </datalist><br>
+        <select id="account-ids">
+        </select><br>
         <button type="button" class="btn-primary" data-toggle="modal"
         data-target="#deleteModal">Submit</button>
       </form>
