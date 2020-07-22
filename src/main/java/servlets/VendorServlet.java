@@ -34,7 +34,6 @@ public class VendorServlet extends HttpServlet {
     JsonConverter converter = new JsonConverter();
     String configMap = converter.getConfigMap();
     response.setContentType("text/html;");
-    System.out.println(configMap);
     response.getWriter().println(configMap);
   }
 

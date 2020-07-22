@@ -17,14 +17,13 @@
   * Customer ID dropdown.
   */
 async function populateCustomerList() {
-  // TODO: Implement functionality for hashmap parsing instead of simple array.
+  // Fetches json dictionary from VendorServlet.
   var response = await fetch('/VendorServlet');
 
   var vendorJson = await response.json();
 
   // Loops over this array to make the options for the Customer ID dropdown.
   var vendorHtml = '';
-
   for (var key in vendorJson) {
     console.log(key);
     vendorHtml += '<option value="' + key + '">'
@@ -35,10 +34,35 @@ async function populateCustomerList() {
   document.getElementById('customer-ids').innerHTML = vendorHtml;
 }
 
-// TODO: Add dependent drop-down 
-function populateAccountList() {
+/**
+ * Fetch account IDs from VendorServlet and add them to the Account ID
+ * dropdown.
+ */
+async function populateAccountList() {
+  // Fetches json dictionary from VendorServlet.
+  var response = await fetch('/VendorServlet');
 
-}
+  var vendorJson = await response.json();
+
+  // Takes the value of the Vendor ID <select> element.
+  var vendorValue = document.getElementById('customer-ids').value;
+
+  // Loops over the dictionary to find the corresponding value in the dictionary
+  // and adds them to the Account ID <select> element.
+  var accountHtml = '';
+  for (var key in vendorJson) {
+    if (key == vendorValue) {
+      var array = vendorJson[key];
+      for (i = 0; i < array.length; i++) {
+        accountHtml += '<option value="' + array[i] + '">'
+        + array[i] + '</option>';
+      };
+    };
+  };
+
+  // Adds the options to the page, allowing them to be viewed.
+  document.getElementById('account-ids').innerHTML = accountHtml;
+};
 
 /**
  * Fetch a json configuration as a string and formats it to be shown on
