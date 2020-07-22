@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <title>Read File Configuration</title>
-    <link rel="stylesheet" href="readfile.css">
-    <script src="appscript.js"></script>
+    <link rel="stylesheet" href="assets/readfile.css">
+    <script src="scripts/appscript.js"></script>
   </head>
   <body onload="javascript:populateCustomerList()">
     <h1>Billing Configuration Sync Tool</h1><br>
@@ -15,10 +15,11 @@
       <a href="deletefile.html">Delete Configuration</a>
     </div>
     <div>
-    <form id="config-search" action="/BillingConfig" method="get">
+    <form id="config-search" action="javascript:addConfigToPage()">
       <p>Customer ID:</p>
       <input list="customer-ids">
       <datalist id="customer-ids">
+        <option value="sample">
       </datalist>
       <p>Account ID:</p>
       <input list="account-ids">
@@ -26,46 +27,13 @@
         <option value="Account 1">
         <option value="Account 2">
         <option value="Account 3">
+        <option value="account-id">
       </datalist><br>
       <button type="submit">Search</button>
     </form>
     </div><br>
     <div id="textbox">
-      <p>{<br>
-        "legacy_customer_id": "STRING",<br>
-        "next_gen_customer_id": "INT",<br>
-        "accounts": [<br>
-          {<br>
-            "legacy_account_id": "STRING",<br>
-            "next_gen_customer_id": "INT",<br>
-            "settlement_attributes": {<br>
-              "currency_code": "STRING",<br>
-              "direction": "STRING",<br>
-              "entity": "STRING"<br>
-            },<br>
-            "settlement_config": {<br>
-              "matching_mode": "STRING"<br>  
-            },<br>
-            "product_account_key": "STRING",<br>
-            "aggregation_mode": "STRING"<br>
-          },<br>
-          {<br>
-            "legacy_account_id": "STRING",<br>
-            "next_gen_customer_id": "INT",<br>
-            "settlement_attributes": {<br>
-              "currency_code": "STRING",<br>
-              "direction": "STRING",<br>
-              "entity": "STRING"<br>
-            },<br>
-            "settlement_config": {<br>
-              "matching_mode": "STRING"<br>
-            },<br>
-            "account_id": "STRING",<br>
-            "aggregation_mode": "STRING"<br>
-          }<br>
-        ]<br>
-      }<br>
-      </p>
+      <pre id="json-text"></pre>
     </div><br>
     <div>
       <p>Select what format to view the file in:</p>

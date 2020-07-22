@@ -18,6 +18,7 @@ import java.io.*;
 import java.util.*;
 
 import com.google.gson.Gson;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /** A class that creates a config file from a Vendor object. */
@@ -98,10 +99,9 @@ public class JsonConverter {
       return null;
     }
 
-    while(input.hasNextLine()) {
+    while (input.hasNextLine()) {
       configContents += input.nextLine();
     }
-
     return configContents;
   }
 
@@ -120,7 +120,7 @@ public class JsonConverter {
    * Map each vendor ID to an array of account IDs.
    * @return JSON dictionary
    */
-  public String getConfigMap() {
+  public String getConfigMap() throws IOException {
     ArrayList<String> vendorIDs = getVendorIDs();
     HashMap<String, ArrayList<String>> map = new HashMap<>();
 
@@ -133,15 +133,43 @@ public class JsonConverter {
     return gson.toJson(map);
   }
 
+  /**
+   * Converts a JSON array of Account objects to an ArrayList of Accounts
+   * @param accountArray JSON representation of array of account objects
+   * @return list of accounts
+   */
+  public static ArrayList<Account> buildAccountsFromJsonArray(JSONArray accountArray) {
+    ArrayList<Account> accounts = new ArrayList<Account>();
+    for (int i = 0; i < accountArray.length(); i++) {
+      accounts.add(new Account(accountArray.getJSONObject(i)));
+    }
+    return accounts;
+  }
+
   /** Return list of vendor IDs that exist in the filesystem.*/
   private ArrayList<String> getVendorIDs() {
     File root = new File(basePath);
-    return new ArrayList<>(Arrays.asList(Objects.requireNonNull(root.list())));
+    return new ArrayList<String>(Arrays.asList(Objects.requireNonNull(root.list())));
   }
 
-  /** TODO Return list of account IDs corresponding to a given vendor. */
-  private ArrayList<String> getAccountIDs(String vendorID) {
-    return new ArrayList<>(Arrays.asList("ECHO", "FOXTROT", "GOLF", "HOTEL"));
+  /**
+   * Returns an ArrayList of account ID strings.
+   * If none exist for the vendor, an empty ArrayList is returned
+   */
+  private ArrayList<String> getAccountIDs(String vendorID) throws IOException {
+    try {
+      String config = getConfig(vendorID);
+      Vendor vendor = new Vendor(config, vendorID);
+      ArrayList<Account> accounts = vendor.getAccounts();
+      ArrayList<String> accountIds = new ArrayList<String>();
+
+      for (Account account : accounts) {
+        accountIds.add(account.getAccountID());
+      }
+      return accountIds;
+    } catch (IOException e) {
+      throw new IOException("Failed to parse JSON configuration");
+    }
   }
 
   /** Delete the file that is associated with the desired vendorID. */
