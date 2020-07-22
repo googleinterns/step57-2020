@@ -132,4 +132,10 @@ public class JsonConverter {
   private ArrayList<String> getAccountIDs(String vendorID) {
     return new ArrayList<>(Arrays.asList("ECHO", "FOXTROT", "GOLF", "HOTEL"));
   }
+
+  /** Delete the file that is associated with the desired vendorID. */
+  public void deleteFile(String vendorID) {
+    File fileToDelete = new File(basePath + vendorID); 
+    fileToDelete.delete();
+  }
 }
