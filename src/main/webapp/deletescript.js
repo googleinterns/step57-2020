@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO: Start fetch methods to communicate with backend
-
 // Initialize the modal.
 $('#deleteForm').on('submit', function(e){
   $('#deleteModal').modal('show');
@@ -21,18 +19,9 @@ $('#deleteForm').on('submit', function(e){
 });
 
 
-$(document).ready(function(){
-  $('#deleteForm').on('submit', function(e){
-    $('#deleteModal').modal('show');
-    e.preventDefault();
-  });
-  $('#deleteForm').on('submit', deleteVendor(form));
-});
-
-
 // Call the doDelete method in the VendorServlet to delete the given vendorID.
 function deleteVendor(form) {
   const vendorID = form.vendorID.value;
-  document.write(vendorID);
+  fetch('/VendorServlet?vendorID=' + vendorID, { method: "DELETE"});
 }
 

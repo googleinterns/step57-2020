@@ -11,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 package servlets;
 
 import java.io.IOException;
@@ -23,6 +22,10 @@ import data.JsonConverter;
 
 @WebServlet("/VendorServlet")
 public class VendorServlet extends HttpServlet {
+  private final String CONTENT_TYPE = "text/html;";
+  private final String DELETE_PAGE_REDIRECT = "/deletefile.html";
+  private final String VENDOR_ID_PARAM = "vendorID";
+
   @Override
   /**
    * Prints a hashmap to the response object
@@ -33,12 +36,13 @@ public class VendorServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     JsonConverter converter = new JsonConverter();
     String configMap = converter.getConfigMap();
-    response.setContentType("text/html;");
+    response.setContentType(CONTENT_TYPE);
     response.getWriter().println(configMap);
   }
 
-  @Override
+  /** Delete the desired Vendor from the fileset and spreadsheets if posible.*/
   public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // DELETE method --> deletes vendor configuration directory
+    String vendorID = request.getParameter(VENDOR_ID_PARAM);
+    response.sendRedirect(DELETE_PAGE_REDIRECT);
   }
 }
