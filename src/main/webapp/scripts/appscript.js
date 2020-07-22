@@ -17,18 +17,18 @@
   * Customer ID dropdown.
   */
 async function populateCustomerList() {
-  // TODO: Implement functionality for hashmap parsing instead of simple array.
-  var response = await fetch('/VendorServlet');
-
-  // Response is a json array that is parsed into json.
-  var customerJson = await response.json();
-  // Loops over this array to make the options for the Customer ID dropdown.
-  var vendorHtml = '';
-  for (var i = 0; i < customerJson.length; i++) {
-    html += '<option value="' + customerJson[i] + '">'
-    + customerJson[i] + '</option>';
-  }
-  document.getElementById('vendor-id').innerHTML = vendorHtml;
+  // // TODO: Implement functionality for hashmap parsing instead of simple array.
+  // var response = await fetch('/VendorServlet');
+  //
+  // // Response is a json array that is parsed into json.
+  // var customerJson = await response.json();
+  // // Loops over this array to make the options for the Customer ID dropdown.
+  // var vendorHtml = '';
+  // for (var i = 0; i < customerJson.length; i++) {
+  //   html += '<option value="' + customerJson[i] + '">'
+  //   + customerJson[i] + '</option>';
+  // }
+  // document.getElementById('vendor-id').innerHTML = vendorHtml;
 }
 
 /**
@@ -38,8 +38,8 @@ async function populateCustomerList() {
 async function addConfigToPage() {
   // TODO: Add query string support to sent to servlet.
   const servletUrl = "/BillingConfig";
-  var queryString = "?vendorID=" + document.getElementById('vendor-id').value
-        + "&accountID=" + document.getElementById('account-id').value;
+  var queryString = "?vendorID=" + document.getElementById('vendor-id').value;
+        // + "&accountID=" + document.getElementById('account-id').value;
 
   // Fetch the json configuration and format it to print on the page. 
   fetch(servletUrl + queryString)
