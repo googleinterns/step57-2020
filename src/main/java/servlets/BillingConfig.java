@@ -56,9 +56,8 @@ public class BillingConfig extends HttpServlet {
     // GET method --> returns entire billing config as JSON
     // return null if vendor ID doesn't exist
     String vendorID = request.getParameter(VENDOR_ID);
-    // TODO: @cade Add query string functionality to find vendor configs. 
-    vendorID = "sample";
     String accountID = request.getParameter(ACCOUNT_ID);
+    System.out.println(vendorID);
     JsonConverter json = new JsonConverter();
     String configText = "";
 

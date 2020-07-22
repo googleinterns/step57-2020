@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,8 +31,6 @@ async function populateCustomerList() {
     html += '<option value="' + customerJson[i] + '">'
     + customerJson[i] + '</option>';
   }
-
-  // Adds the options to the page, allowing them to be viewed. 
   document.getElementById('customer-ids').innerHTML = vendorHtml;
 }
 
@@ -43,6 +41,8 @@ async function populateCustomerList() {
 async function addConfigToPage() {
   // TODO: Add query string support to sent to servlet.
   var vendorID = document.getElementById('customer-ids');
+  var queryString = "?vendorID=" + document.getElementById('customer-ids');
+  console.log(queryString);
   
   // Fetch the json configuration and format it to print on the page. 
   fetch('/BillingConfig')

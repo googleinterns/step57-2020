@@ -35,26 +35,6 @@ public class JsonConverter {
     basePath = filePathName;
   }
 
-  public File createFile(String vendorID) {
-    String fileName = basePath + vendorID;
-    // Create a JSON object to write to the file.
-    JSONObject parentObject = new JSONObject();
-    JSONObject JSONCar = new JSONObject();
-    JSONCar.put("Car", "Blue Tacoma");
-    parentObject.put("Vehicle", JSONCar);
-    // Write the JSON object to the file.
-    File file = null;
-    try {
-      file = new File(fileName);
-      BufferedWriter out = new BufferedWriter(new FileWriter(file));
-      out.write(parentObject.toString());
-      out.close();
-    } catch (IOException e) {
-      return null;
-    }
-    return file;
-  }
-
   public boolean updateFile(Vendor vendor) {
     String jsonConfig = vendor.buildJsonConfig();
     // Create and write the contents to a File.
