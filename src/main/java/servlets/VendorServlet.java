@@ -49,9 +49,7 @@ public class VendorServlet extends HttpServlet {
   }
 
   /** Delete the desired Vendor from the fileset and spreadsheets if posible.*/
-  public void doDelete(HttpServletRequest request, HttpServletResponse response) {
-    System.out.println("Got Here");
-    
+  public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {  
     String vendorID = request.getParameter(VENDOR_ID_PARAM);
     String deleteStatus = "success";
 
@@ -60,19 +58,16 @@ public class VendorServlet extends HttpServlet {
       deleteVendorFile(vendorID);
       updateSheets(request);    
     } catch (IOException e) {
-      deleteStatus = "An IOException was thrown.";
+      deleteStatus = "Could not execute, an IOException was thrown.";
     } catch (GeneralSecurityException e) {
-      deleteStatus = "A GeneralSecurityException was thrown.";
+      deleteStatus = "Could not execute, a GeneralSecurityException was thrown.";
     } 
 
     // Convert the String message into a JSON String.
-    String jsonMessage = messageListAsJson(deleteStatus);
-    try {
+    String jsonMessage = messageAsJson(deleteStatus);
+    
     response.setContentType(CONTENT_TYPE);
     response.getWriter().println(jsonMessage);
-    } catch (IOException e ) {
-
-    }
   }
 
   private void deleteVendorFile(String vendorID) throws IOException {
@@ -107,10 +102,8 @@ public class VendorServlet extends HttpServlet {
     sheets.updateSheets(vendors, accessToken);
   }
 
-  /**
-   * Converts a String into a JSON string using Gson.  
-   */
-  private String messageListAsJson(String deleteMessage) {
+  /** Converts a String into a JSON string using Gson. */
+  private String messageAsJson(String deleteMessage) {
     Gson gson = new Gson();
     String jsonMessage = gson.toJson(deleteMessage);
     return jsonMessage;
