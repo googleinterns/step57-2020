@@ -105,17 +105,6 @@ public class JsonConverter {
     return configContents;
   }
 
-  /** Return the vendor that corresponds the given vendorID. */
-  public Vendor getVendor(String vendorID) {
-    Object obj = new JSONParser().parse(new FileReader(basePath + vendorID)); 
-          
-    JSONObject jsonConfig = (JSONObject) obj; 
-          
-    // getting firstName and lastName 
-    String firstName = (String) jsonConfig.get("Ac"); 
-    String lastName = (String) jsonConfig.get("lastName"); 
-  }
-
   /**
    * Map each vendor ID to an array of account IDs.
    * @return JSON dictionary
@@ -147,7 +136,7 @@ public class JsonConverter {
   }
 
   /** Return list of vendor IDs that exist in the filesystem.*/
-  private ArrayList<String> getVendorIDs() {
+  public ArrayList<String> getVendorIDs() {
     File root = new File(basePath);
     return new ArrayList<String>(Arrays.asList(Objects.requireNonNull(root.list())));
   }

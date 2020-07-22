@@ -13,12 +13,20 @@
 // limitations under the License.
 package servlets;
 
+import data.JsonConverter;
+import data.Vendor;
+import data.Account;
+import data.SheetsConverter;
+
+import java.util.*;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import data.JsonConverter;
+import javax.servlet.http.HttpSession;
+import com.google.gson.Gson;
 
 @WebServlet("/VendorServlet")
 public class VendorServlet extends HttpServlet {
@@ -41,40 +49,62 @@ public class VendorServlet extends HttpServlet {
   }
 
   /** Delete the desired Vendor from the fileset and spreadsheets if posible.*/
-  public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void doDelete(HttpServletRequest request, HttpServletResponse response) {
+    System.out.println("Got Here");
+    
     String vendorID = request.getParameter(VENDOR_ID_PARAM);
+    String deleteStatus = "success";
 
-    // Delete the file from the filesystem.
-    deleteVendorFile(vendorID);
-
-    // Update the sheets.
-    updateSheets();
-
-    // Get the status of the delete(ex. success/failure).
-    String deleteMessage = someMethod();
+    // Delete the file from the filesystem and update the sheets.
+    try {
+      deleteVendorFile(vendorID);
+      updateSheets(request);    
+    } catch (IOException e) {
+      deleteStatus = "An IOException was thrown.";
+    } catch (GeneralSecurityException e) {
+      deleteStatus = "A GeneralSecurityException was thrown.";
+    } 
 
     // Convert the String message into a JSON String.
-    String jsonMessage = messageListAsJson(commentList);
-
+    String jsonMessage = messageListAsJson(deleteStatus);
+    try {
     response.setContentType(CONTENT_TYPE);
     response.getWriter().println(jsonMessage);
+    } catch (IOException e ) {
+
+    }
   }
 
-  private void deleteVendorFile(String vendorID) {
-    JsonConverter deleter = new JsonConverter();
-    deleter.deleteFile(vendorID);
+  private void deleteVendorFile(String vendorID) throws IOException {
+    JsonConverter converter = new JsonConverter();
+    ArrayList<String> vendorIDs = converter.getVendorIDs();
+
+    // Validate that the vendorID exists.
+    if(!vendorIDs.contains(vendorID)) {
+        throw new IOException();
+    }
+    converter.deleteFile(vendorID);
   }
 
   /** Rebuild the sheets without the deleted Vendor's data. */
-  private void updateSheets() {
+  private void updateSheets(HttpServletRequest request) 
+      throws IOException, GeneralSecurityException {
     JsonConverter converter = new JsonConverter();
     ArrayList<String> vendorIDs = converter.getVendorIDs();
     ArrayList<Vendor> vendors = new ArrayList<Vendor>(); 
 
+    // Add the Vendors associated with the existing vendorIDs.
     for(int i = 0; i < vendorIDs.size(); i++) {
-      vendors.add(vendorIDs.get(i).)
+      String vendorJson = converter.getConfig(vendorIDs.get(i));
+      vendors.add(new Vendor(vendorJson, vendorIDs.get(i)));
     }
 
+    // Only retrieve the session if one exists.
+    HttpSession session = request.getSession(false);
+    String accessToken = session.getAttribute("accessToken").toString();
+
+    SheetsConverter sheets = new SheetsConverter();
+    sheets.updateSheets(vendors, accessToken);
   }
 
   /**
