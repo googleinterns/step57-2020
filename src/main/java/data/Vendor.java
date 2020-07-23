@@ -63,7 +63,7 @@ public class Vendor {
   }
 
   /** Construct a Vendor object from JSON string. */
-  public Vendor(String json, String vendorID) throws IOException {
+  public Vendor(String json, String vendorID) throws IOException{
     JSONObject vendorJson = new JSONObject(json);
     this.vendorID = vendorID;
     this.legacyVendorID = vendorJson.getString(LEGACY_CUSTOMER_ID_KEY);

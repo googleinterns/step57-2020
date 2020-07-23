@@ -90,19 +90,20 @@ public class BillingConfig extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // POST method --> overwrites the existing configuration or creates a new one
-    // currently assuming there is only one account --> add this to the form @Vincent?
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
-
     try {
       Vendor newVendor = new Vendor(request);
       JsonConverter jsonConverter = new JsonConverter();
-      System.out.println("json config:" + newVendor.buildJsonConfig());
-      response.getWriter().println("Successfully created json configuration");
+      if (jsonConverter.updateFile(newVendor)) {
+        response.getWriter().println("Successfully updated JSON configuration");
+      } else {
+        response.getWriter().println("Failed to update JSON configuration.");
+      }
     } catch(NumberFormatException e) {
-      response.getWriter().println("Failed to parse form data");
+      response.getWriter().println("Failed to parse form data because of a " +
+              "NumberFormatException");
     }
 
-
-//    response.sendRedirect(REDIRECT_READFILE);
+    response.sendRedirect(REDIRECT_READFILE);
   }
 }
