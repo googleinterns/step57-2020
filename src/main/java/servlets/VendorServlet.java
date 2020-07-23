@@ -31,7 +31,7 @@ import com.google.gson.Gson;
 
 @WebServlet("/VendorServlet")
 public class VendorServlet extends HttpServlet {
-  private static final String JSON_TYPE = "application/json";
+  private static final String JSON_TYPE = "application/json;";
   private final String DELETE_PAGE_REDIRECT = "/deletefile.html";
   private final String VENDOR_ID_PARAM = "vendorID";
   private final String TOKEN_ATTRIBUTE = "accessToken";
@@ -54,10 +54,10 @@ public class VendorServlet extends HttpServlet {
 
   /** Delete the desired Vendor from the fileset and spreadsheets.*/
   public void doDelete(HttpServletRequest request, HttpServletResponse response)
-
     throws IOException {  
     String vendorID = request.getParameter(VENDOR_ID_PARAM);
-    String responseString = "success"; 
+    String responseString = String.format(
+      "Config with VendorID:%s was successfuly deleted.", vendorID); 
 
     // Delete the file from the filesystem and update the sheets.
     try {
@@ -72,6 +72,7 @@ public class VendorServlet extends HttpServlet {
 
     response.setContentType(JSON_TYPE);
     response.getWriter().println(jsonMessage);
+    System.out.println(jsonMessage);
   }
 
   private void deleteVendorFile(String vendorID) throws FileNotFoundException {
@@ -101,15 +102,13 @@ public class VendorServlet extends HttpServlet {
   }
 
   public ArrayList<Vendor> getVendors(ArrayList<String> vendorIDs, 
-    JsonConverter converter) throws IOException {
-
+      JsonConverter converter) throws IOException {
     ArrayList<Vendor> vendors = new ArrayList<Vendor>(); 
 
     for(int i = 0; i < vendorIDs.size(); i++) {
       String vendorJson = converter.getConfig(vendorIDs.get(i));
       vendors.add(new Vendor(vendorJson, vendorIDs.get(i)));
     }
-
     return vendors;
   } 
 
