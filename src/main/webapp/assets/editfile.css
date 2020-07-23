@@ -1,7 +1,10 @@
 body {
+  background-image: linear-gradient(to right,rgb(220, 220, 220),rgb(169, 169, 169));
+  background-size: cover;
+  color:black;
   text-align: center;
+  margin: auto;
 }
-
 #links {
   text-align: center;
   border: solid 3px black;
