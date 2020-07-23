@@ -49,15 +49,11 @@ async function populateAccountList() {
   // Loops over the dictionary to find the corresponding value in the dictionary
   // and adds them to the Account ID <select> element.
   var accountHtml = '';
-  for (var key in vendorJson) {
-    if (key == vendorValue) {
-      var array = vendorJson[key];
+      var array = vendorJson[vendorValue];
       for (i = 0; i < array.length; i++) {
         accountHtml += '<option value="' + array[i] + '">'
         + array[i] + '</option>';
       }
-    }
-  }
 
   // Adds the options to the page, allowing them to be viewed.
   document.getElementById('account-ids').innerHTML = accountHtml;
