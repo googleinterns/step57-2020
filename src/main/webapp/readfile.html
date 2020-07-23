@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <title>Read File Configuration</title>
     <link rel="stylesheet" href="assets/readfile.css">
+    <link rel="stylesheet" href="assets/general.css">
     <script src="scripts/appscript.js"></script>
   </head>
   <body onload="javascript:populateCustomerList()">
+    <div class="drop_menu">
+			<button class="menu_button">Page Menu</button>
+			<div class="dropdown_content">
+				<a href="readfile.html">Read Configuration</a>
+        <a href="createfile.html">Create Configuration</a>        
+        <a href="editfile.html">Edit Configuration</a>
+        <a href="deletefile.html">Delete Configuration</a>
+		  </div>
+    </div>
     <h1>Billing Configuration Sync Tool</h1><br>
     <h2>Read Configuration</h2> 
-    <div id="links">
-      <a href="editfile.html">Edit Configuration</a>
-      <a href="createfile.html">Create Configuration</a>
-      <a href="deletefile.html">Delete Configuration</a>
-    </div>
     <div>
     <form id="config-search" action="javascript:addConfigToPage()">
       <p>Customer ID:</p>

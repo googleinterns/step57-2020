@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="assets/deletefile.css">
+    <link rel="stylesheet" href="assets/general.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -17,14 +18,19 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" 
     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </head>
-  <body class="body" onload="javascript:populateCustomerList()">
+  <body onload="javascript:populateCustomerList()">
+    <div class="drop_menu">
+			<button class="menu_button">Page Menu</button>
+			<div class="dropdown_content">
+				<a href="readfile.html">Read Configuration</a>
+        <a href="createfile.html">Create Configuration</a>        
+        <a href="editfile.html">Edit Configuration</a>
+        <a href="deletefile.html">Delete Configuration</a>
+		  </div>
+    </div>
     <h1>Billing Configuration Sync Tool</h1>
     <h2>Delete Configuration</h2>
-    <div id="links">
-      <a href="readfile.html">Read Configuration</a>
-      <a href="editfile.html">Edit Configuration</a>
-      <a href="createfile.html">Create Configuration</a>
-    </div><br>
+    <br>
     <div id="delete-search">
       <form id="delete-form">
         <span>Customer ID:</span>
