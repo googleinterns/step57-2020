@@ -49,23 +49,23 @@ public class VendorServlet extends HttpServlet {
     response.getWriter().println(configMap);
   }
 
-  /** Delete the desired Vendor from the fileset and spreadsheets if posible.*/
+  /** Delete the desired Vendor from the fileset and spreadsheets.*/
   public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {  
     String vendorID = request.getParameter(VENDOR_ID_PARAM);
-    String deleteStatus = "success";
+    String responseString = "success";
 
     // Delete the file from the filesystem and update the sheets.
     try {
       deleteVendorFile(vendorID);
       updateSheets(request);    
     } catch (FileNotFoundException e) {
-      deleteStatus = "Could not execute, an FileNotFoundException was thrown.";
+      responseString = "Failed to Delete File.";
     } catch (GeneralSecurityException e) {
-      deleteStatus = "Could not execute, a GeneralSecurityException was thrown.";
+      responseString = "Failed to Delete File.";
     } 
 
     // Convert the String message into a JSON String.
-    String jsonMessage = messageAsJson(deleteStatus);
+    String jsonMessage = messageAsJson(responseString);
     
     response.setContentType(CONTENT_TYPE);
     response.getWriter().println(jsonMessage);
@@ -112,8 +112,6 @@ public class VendorServlet extends HttpServlet {
 
   /** Converts a String into a JSON string using Gson. */
   private String messageAsJson(String deleteMessage) {
-    Gson gson = new Gson();
-    String jsonMessage = gson.toJson(deleteMessage);
-    return jsonMessage;
+    return new Gson().toJson(deleteMessage)
   }
 }
