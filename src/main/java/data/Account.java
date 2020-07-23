@@ -21,6 +21,7 @@ import java.util.*;
 
 /** A class representing a billing account object. */
 public class Account {
+  // keys for JSON conversion
   public static final String LEGACY_ACCOUNT_ID_KEY = "legacy_account_id";
   public static final String NEXT_GEN_CUSTOMER_ID_KEY = "next_gen_customer_id";
   public static final String SETTLEMENT_ATTRIBUTES_OBJ_KEY =
@@ -32,6 +33,17 @@ public class Account {
   public static final String MATCHING_MODE_KEY = "matching_mode";
   public static final String ACCOUNT_ID_KEY = "account_id";
   public static final String AGGREGATION_MODE_KEY = "aggregation_mode";
+  
+  // names for HttpServletRequest conversion
+  public static final String VENDOR_ID = "vendorID";
+  public static final String ACCOUNT_ID = "accountID";
+  public static final String LEGACY_ACCOUNT_ID = "legacy-account-id";
+  public static final String NEXT_GEN_ACCOUNT_ID = "next-gen-account-id";
+  public static final String CURRENCY_CODE = "currency-code";
+  public static final String DIRECTION = "direction";
+  public static final String ENTITY = "entity";
+  public static final String MATCHING_MODE = "matching-mode";
+  public static final String AGGREGATION_MODE = "aggregation-mode";
 
   private String accountID;
   private String vendorID;
@@ -60,16 +72,16 @@ public class Account {
   }
 
   public Account(HttpServletRequest request) {
-    this.vendorID = request.getParameter(BillingConfig.VENDOR_ID);
-    this.accountID = request.getParameter(BillingConfig.ACCOUNT_ID);
-    this.legacyAccountID = request.getParameter(BillingConfig.LEGACY_ACCOUNT_ID);
+    this.vendorID = request.getParameter(VENDOR_ID);
+    this.accountID = request.getParameter(ACCOUNT_ID);
+    this.legacyAccountID = request.getParameter(LEGACY_ACCOUNT_ID);
     this.nextGenAccountID = Integer.parseInt(
-            request.getParameter(BillingConfig.NEXT_GEN_ACCOUNT_ID));
-    this.currency = request.getParameter(BillingConfig.CURRENCY_CODE);
-    this.direction = request.getParameter(BillingConfig.DIRECTION);
-    this.entity = request.getParameter(BillingConfig.ENTITY);
-    this.matchingMode = request.getParameter(BillingConfig.MATCHING_MODE);
-    this.aggregationMode = request.getParameter(BillingConfig.AGGREGATION_MODE);
+            request.getParameter(NEXT_GEN_ACCOUNT_ID));
+    this.currency = request.getParameter(CURRENCY_CODE);
+    this.direction = request.getParameter(DIRECTION);
+    this.entity = request.getParameter(ENTITY);
+    this.matchingMode = request.getParameter(MATCHING_MODE);
+    this.aggregationMode = request.getParameter(AGGREGATION_MODE);
   }
 
   /** Construct an Account object from JSON representation. */
