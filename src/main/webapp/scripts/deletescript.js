@@ -26,7 +26,7 @@ async function deleteVendor(form) {
     { method: "DELETE"});
   const deleteMessage = await response.json();
 
-  // Write a message if the delete was sucessful or not.
+  // Show an alert if there was a problem during the deletion process.
   window.alert(deleteMessage);
 }
 
