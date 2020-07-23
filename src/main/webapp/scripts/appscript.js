@@ -61,6 +61,26 @@ function buildQueryString() {
   return `/BillingConfig?vendorID=${selectedVendorId}&accountID=${selectedAccountId}`;
 }
 
+function validateEditFormInput() {
+  const form = document.getElementById('edit-config-form');
+  if (!form.hasAttribute('action')) {
+    // Prevent submission without first selecting vendor and account.
+    window.alert("A vendor ID and account ID have not been set!");
+    return false;
+  } else if (isNaN(document.getElementById('next-gen-customer-id').value)) {
+    // Require integer for next-gen-customer-id.
+    window.alert("Next Gen Customer ID must be an integer");
+    return false;
+  } else if (isNaN(document.getElementById('next-gen-account-id').value)) {
+    // Require integer for next-gen-account-id.
+    window.alert("Next Gen Account ID must be an integer");
+    return false;
+  } else {
+    window.alert("Successfully edited configuration. Redirecting to read file page");
+    return true;
+  }
+}
+
 // TODO: Method to populate edit form.
 async function populateEditForm() {
 

@@ -21,11 +21,10 @@
         <p>Account ID:</p>
         <input id="account-ids" type="text" name="account-ids">
         <button type="submit" >Search</button>
-        <!-- add JS function to update edit action attribute with query string -->
       </form>
     </div><br>
     <div id="edit-form">
-      <form id="edit-config-form" method="post">
+      <form id="edit-config-form" method="post" onsubmit="return validateEditFormInput();">
         <span>Legacy Customer ID:</span>
         <input type="text" id="legacy-customer-id" name="legacy-customer-id"><br>
         <span>Next Gen Customer ID:</span>
@@ -33,7 +32,7 @@
         <p>ACCOUNT</p>
         <span>Legacy Account ID:</span>
         <input type="text" id="legacy-account-id" name="legacy-account-id"><br>
-        <span>Next Gen Customer ID:</span>
+        <span>Next Gen Account- ID:</span>
         <input type="text" id="next-gen-account-id" name="next-gen-account-id"><br>
         <p>SETTLEMENT ATTRIBUTES</p>
         <span>Currency Code:</span>

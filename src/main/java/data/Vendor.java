@@ -32,8 +32,6 @@ public class Vendor {
   public static final String LEGACY_CUSTOMER_ID = "legacy-customer-id";
   public static final String NEXT_GEN_CUSTOMER_ID = "next-gen-customer-id";
 
-
-
   private String vendorID;
   private String legacyVendorID;
   private int nextGenVendorID;
