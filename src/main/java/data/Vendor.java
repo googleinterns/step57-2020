@@ -50,11 +50,11 @@ public class Vendor {
     accountList = new ArrayList<Account>();
   }
 
-  public Vendor(HttpServletRequest request) {
+  public Vendor(HttpServletRequest request) throws NumberFormatException {
     this.vendorID = request.getParameter(VENDOR_ID);
     this.legacyVendorID = request.getParameter(LEGACY_CUSTOMER_ID);
-    this.nextGenVendorID = Integer.parseInt(
-            request.getParameter(NEXT_GEN_CUSTOMER_ID));
+    this.nextGenVendorID = Integer.parseInt(request.getParameter(
+            NEXT_GEN_CUSTOMER_ID));
 
     // TODO: add method to parse variable number of accounts?
     Account newAccount = new Account(request);

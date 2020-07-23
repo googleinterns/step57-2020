@@ -71,7 +71,7 @@ public class Account {
     this.aggregationMode = aggregationMode;
   }
 
-  public Account(HttpServletRequest request) {
+  public Account(HttpServletRequest request) throws NumberFormatException {
     this.vendorID = request.getParameter(VENDOR_ID);
     this.accountID = request.getParameter(ACCOUNT_ID);
     this.legacyAccountID = request.getParameter(LEGACY_ACCOUNT_ID);

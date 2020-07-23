@@ -91,11 +91,18 @@ public class BillingConfig extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // POST method --> overwrites the existing configuration or creates a new one
     // currently assuming there is only one account --> add this to the form @Vincent?
-    // TODO: can the vendor ID be appended to the request as a query string @vincent?
-    Vendor newVendor = new Vendor(request);
-
-    JsonConverter jsonConverter = new JsonConverter();
-    System.out.println("json config:" + newVendor.buildJsonConfig());
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
+
+    try {
+      Vendor newVendor = new Vendor(request);
+      JsonConverter jsonConverter = new JsonConverter();
+      System.out.println("json config:" + newVendor.buildJsonConfig());
+      response.getWriter().println("Successfully created json configuration");
+    } catch(NumberFormatException e) {
+      response.getWriter().println("Failed to parse form data");
+    }
+
+
+//    response.sendRedirect(REDIRECT_READFILE);
   }
 }
