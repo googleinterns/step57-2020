@@ -15,24 +15,17 @@
       <a href="deletefile.html">Delete Configuration</a>
     </div>
     <div>
-      <!-- TODO @Vincent: populate form with values returned from JS function -->
-      <form id="config-search" action="javascript:addConfigToPage()">
+      <form id="config-search" onsubmit="buildEditForm(); return false;">
         <p>Customer ID:</p>
-        <!-- todo: fix after testing -->
-        <input id="vendor-id" type="text" name="vendor-id">
+        <input id="customer-ids" type="text" name="customer-ids">
         <p>Account ID:</p>
-        <input list="account-ids">
-        <datalist id="account-ids">
-          <option value="Account 1">
-          <option value="Account 2">
-          <option value="Account 3">
-        </datalist><br>
-        <button type="submit">Search</button>
+        <input id="account-ids" type="text" name="account-ids">
+        <button type="submit" >Search</button>
         <!-- add JS function to update edit action attribute with query string -->
       </form>
     </div><br>
     <div id="edit-form">
-      <form id="edit-config-form" method="post" action="/BillingConfig?vendorID=venid&accountID=accId">
+      <form id="edit-config-form" method="post">
         <span>Legacy Customer ID:</span>
         <input type="text" id="legacy-customer-id" name="legacy-customer-id"><br>
         <span>Next Gen Customer ID:</span>

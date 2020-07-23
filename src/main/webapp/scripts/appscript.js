@@ -36,9 +36,8 @@ async function populateCustomerList() {
  * the readfile page.
  */
 async function addConfigToPage() {
-  // TODO: this should probably be put into a queryStringBuilder method?
   const servletUrl = "/BillingConfig";
-  const queryString = "?vendorID=" + document.getElementById('vendor-id').value;
+  const queryString = "?vendorID=" + document.getElementById('customer-ids').value;
   // + "&accountID=" + document.getElementById('account-id').value;
 
   // Fetch the json configuration and format it to print on the page. 
@@ -46,6 +45,21 @@ async function addConfigToPage() {
     .then(response => response.json())
     .then(data => document.getElementById('json-text').innerText = 
     JSON.stringify(data, undefined, 4));
+}
+
+/**
+ * Build the edit form's action attribute and populates text from existing configuration
+ */
+function buildEditForm() {
+  const editForm = document.getElementById('edit-config-form');
+  const selectedVendorId = document.getElementById('customer-ids').value;
+  const selectedAccountId = document.getElementById('account-ids').value;
+  const queryString = `/BillingConfig?vendorID=${selectedVendorId}&accountID=${selectedAccountId}`;
+  editForm.action = queryString;
+  console.log(selectedAccountId);
+  console.log(queryString);
+  console.log("hi there");
+  return false;
 }
 
 // TODO: Method to populate edit form.
