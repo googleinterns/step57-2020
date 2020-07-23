@@ -52,14 +52,13 @@ async function addConfigToPage() {
  */
 function buildEditForm() {
   const editForm = document.getElementById('edit-config-form');
+  editForm.action = buildQueryString();
+}
+
+function buildQueryString() {
   const selectedVendorId = document.getElementById('customer-ids').value;
   const selectedAccountId = document.getElementById('account-ids').value;
-  const queryString = `/BillingConfig?vendorID=${selectedVendorId}&accountID=${selectedAccountId}`;
-  editForm.action = queryString;
-  console.log(selectedAccountId);
-  console.log(queryString);
-  console.log("hi there");
-  return false;
+  return `/BillingConfig?vendorID=${selectedVendorId}&accountID=${selectedAccountId}`;
 }
 
 // TODO: Method to populate edit form.
