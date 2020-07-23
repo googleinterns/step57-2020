@@ -26,7 +26,7 @@
       <a href="createfile.html">Create Configuration</a>
     </div><br>
     <div id="delete-search">
-      <form onSubmit="javascript:deleteVendor(this)">
+      <form onSubmit="javascript:deleteVendor(this); return false;">
       	<p>Enter the Vendor ID of the configuration you want to delete.</p>
 				<input type="text" name="vendorID" size="25" />
         <button type="button" class="btn-primary" data-toggle="modal"

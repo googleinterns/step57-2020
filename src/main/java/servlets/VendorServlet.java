@@ -69,10 +69,8 @@ public class VendorServlet extends HttpServlet {
 
     // Convert the String message into a JSON String.
     String jsonMessage = messageAsJson(responseString);
-
     response.setContentType(JSON_TYPE);
     response.getWriter().println(jsonMessage);
-    System.out.println(jsonMessage);
   }
 
   private void deleteVendorFile(String vendorID) throws FileNotFoundException {
