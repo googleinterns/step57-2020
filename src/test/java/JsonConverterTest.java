@@ -158,4 +158,19 @@ public final class JsonConverterTest {
     assertFalse("The file existed when it shouldn't have.", 
       vendorIDs.contains(VENDOR_ID));
   }
+
+  /** Test that the correct Vendor IDs are returned. */
+  @Test
+  public void testGetVendorIDs() {
+    ArrayList<String> expectedVendorIDs = new ArrayList<String>();
+    expectedVendorIDs.add("vend_0");
+    expectedVendorIDs.add("vend_1");
+    expectedVendorIDs.add("vend_2");
+    expectedVendorIDs.add("vend_3");
+
+    ArrayList<String> actualVendorIDs = converter.getVendorIDs();
+    Collections.sort(actualVendorIDs);
+
+    assertTrue(expectedVendorIDs.equals(actualVendorIDs));
+  }
 }
