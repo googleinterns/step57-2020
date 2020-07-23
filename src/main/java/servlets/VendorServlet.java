@@ -20,6 +20,7 @@ import data.SheetsConverter;
 
 import java.util.*;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.security.GeneralSecurityException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -57,8 +58,8 @@ public class VendorServlet extends HttpServlet {
     try {
       deleteVendorFile(vendorID);
       updateSheets(request);    
-    } catch (IOException e) {
-      deleteStatus = "Could not execute, an IOException was thrown.";
+    } catch (FileNotFoundException e) {
+      deleteStatus = "Could not execute, an FileNotFoundException was thrown.";
     } catch (GeneralSecurityException e) {
       deleteStatus = "Could not execute, a GeneralSecurityException was thrown.";
     } 
@@ -70,13 +71,13 @@ public class VendorServlet extends HttpServlet {
     response.getWriter().println(jsonMessage);
   }
 
-  private void deleteVendorFile(String vendorID) throws IOException {
+  private void deleteVendorFile(String vendorID) throws FileNotFoundException {
     JsonConverter converter = new JsonConverter();
     ArrayList<String> vendorIDs = converter.getVendorIDs();
 
     // Validate that the vendorID exists.
     if(!vendorIDs.contains(vendorID)) {
-        throw new IOException();
+        throw new FileNotFoundException();
     }
     converter.deleteFile(vendorID);
   }
@@ -86,13 +87,7 @@ public class VendorServlet extends HttpServlet {
       throws IOException, GeneralSecurityException {
     JsonConverter converter = new JsonConverter();
     ArrayList<String> vendorIDs = converter.getVendorIDs();
-    ArrayList<Vendor> vendors = new ArrayList<Vendor>(); 
-
-    // Add the Vendors associated with the existing vendorIDs.
-    for(int i = 0; i < vendorIDs.size(); i++) {
-      String vendorJson = converter.getConfig(vendorIDs.get(i));
-      vendors.add(new Vendor(vendorJson, vendorIDs.get(i)));
-    }
+    ArrayList<Vendor> vendors = getVendors(vendorIDs, converter); 
 
     // Only retrieve the session if one exists.
     HttpSession session = request.getSession(false);
@@ -101,6 +96,19 @@ public class VendorServlet extends HttpServlet {
     SheetsConverter sheets = new SheetsConverter();
     sheets.updateSheets(vendors, accessToken);
   }
+
+  public ArrayList<Vendor> getVendors(ArrayList<String> vendorIDs, 
+    JsonConverter converter) throws IOException {
+
+    ArrayList<Vendor> vendors = new ArrayList<Vendor>(); 
+
+    for(int i = 0; i < vendorIDs.size(); i++) {
+      String vendorJson = converter.getConfig(vendorIDs.get(i));
+      vendors.add(new Vendor(vendorJson, vendorIDs.get(i)));
+    }
+
+    return vendors;
+  } 
 
   /** Converts a String into a JSON string using Gson. */
   private String messageAsJson(String deleteMessage) {
