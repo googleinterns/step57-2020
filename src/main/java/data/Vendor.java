@@ -27,6 +27,19 @@ public class Vendor {
   private static final String NEXT_GEN_CUSTOMER_ID_KEY = "next_gen_customer_id";
   private static final String ACCOUNT_ARRAY_KEY = "accounts";
 
+  public static final String VENDOR_ID = "vendorID";
+  public static final String ACCOUNT_ID = "accountID";
+  public static final String LEGACY_CUSTOMER_ID = "legacy-customer-id";
+  public static final String NEXT_GEN_CUSTOMER_ID = "next-gen-customer-id";
+  public static final String LEGACY_ACCOUNT_ID = "legacy-account-id";
+  public static final String NEXT_GEN_ACCOUNT_ID = "next-gen-account-id";
+  public static final String CURRENCY_CODE = "currency-code";
+  public static final String DIRECTION = "direction";
+  public static final String ENTITY = "entity";
+  public static final String MATCHING_MODE = "matching-mode";
+  public static final String AGGREGATION_MODE = "aggregation-mode";
+
+
   private String vendorID;
   private String legacyVendorID;
   private int nextGenVendorID;
@@ -43,12 +56,13 @@ public class Vendor {
     accountList = new ArrayList<Account>();
   }
 
-  public Vendor(HttpServletRequest request, String vendorID, int numAccounts) {
-    // where does the account ID come from?
-    this.vendorID = vendorID;
-    this.legacyVendorID = request.getParameter(BillingConfig.LEGACY_CUSTOMER_ID);
+  public Vendor(HttpServletRequest request) {
+    this.vendorID = request.getParameter(VENDOR_ID);
+    this.legacyVendorID = request.getParameter(LEGACY_CUSTOMER_ID);
     this.nextGenVendorID = Integer.parseInt(
-            request.getParameter(BillingConfig.NEXT_GEN_CUSTOMER_ID));
+            request.getParameter(NEXT_GEN_CUSTOMER_ID));
+
+    // TODO: add method to parse variable number of accounts?
     Account newAccount = new Account(request);
     accountList = new ArrayList<>();
     accountList.add(newAccount);

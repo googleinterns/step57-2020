@@ -28,10 +28,11 @@
           <option value="Account 3">
         </datalist><br>
         <button type="submit">Search</button>
+        <!-- add JS function to update edit action attribute with query string -->
       </form>
     </div><br>
     <div id="edit-form">
-      <form action="/BillingConfig" method="POST">
+      <form id="edit-config-form" method="post" action="/BillingConfig?vendorID=venid&accountID=accId">
         <span>Legacy Customer ID:</span>
         <input type="text" id="legacy-customer-id" name="legacy-customer-id"><br>
         <span>Next Gen Customer ID:</span>

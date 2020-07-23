@@ -24,6 +24,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.security.GeneralSecurityException;
+import java.util.Enumeration;
+import java.util.stream.Collectors;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,15 +40,6 @@ public class BillingConfig extends HttpServlet {
 
   public static final String VENDOR_ID = "vendorID";
   public static final String ACCOUNT_ID = "accountID";
-  public static final String LEGACY_CUSTOMER_ID = "legacy-customer-id";
-  public static final String NEXT_GEN_CUSTOMER_ID = "next-gen-customer-id";
-  public static final String LEGACY_ACCOUNT_ID = "legacy-account-id";
-  public static final String NEXT_GEN_ACCOUNT_ID = "next-gen-account-id";
-  public static final String CURRENCY_CODE = "currency-code";
-  public static final String DIRECTION = "direction";
-  public static final String ENTITY = "entity";
-  public static final String MATCHING_MODE = "matching-mode";
-  public static final String AGGREGATION_MODE = "aggregation-mode";
 
   private Vendor vendor;
   private Account account;
@@ -72,23 +65,23 @@ public class BillingConfig extends HttpServlet {
      * Vendor List into the updateSheets() method in the SheetsConverter class.
      */
     // Only retrieves the session if one exists.
-//    HttpSession session = request.getSession(false);
-//    String accessToken = session.getAttribute("accessToken").toString();
-//
-//    SheetsConverter sheet = new SheetsConverter();
-//    try {
-//      // Use hard-coded values to test writeToSheets method.
-//      ArrayList<Vendor> vendors = new ArrayList<Vendor>();
-//      vendor = new Vendor("vend_1", "legVend_27", 17);
-//      account = new Account("acc_12", "vend_1", "shopper", "USD", "disbursement",
-//            "legAcc_53", 17, "straight", "totalAgg");
-//      vendor.addAccount(account);
-//      vendors.add(vendor);
-//
-//      sheet.updateSheets(vendors, accessToken);
-//    } catch (GeneralSecurityException e) {
-//      // TODO: @cade Figure out how you want to handle this error.
-//    }
+    HttpSession session = request.getSession(false);
+    String accessToken = session.getAttribute("accessToken").toString();
+
+    SheetsConverter sheet = new SheetsConverter();
+    try {
+      // Use hard-coded values to test writeToSheets method.
+      ArrayList<Vendor> vendors = new ArrayList<Vendor>();
+      vendor = new Vendor("vend_1", "legVend_27", 17);
+      account = new Account("acc_12", "vend_1", "shopper", "USD", "disbursement",
+            "legAcc_53", 17, "straight", "totalAgg");
+      vendor.addAccount(account);
+      vendors.add(vendor);
+
+      sheet.updateSheets(vendors, accessToken);
+    } catch (GeneralSecurityException e) {
+      // TODO: @cade Figure out how you want to handle this error.
+    }
 
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
     response.getWriter().println(configText);
@@ -99,9 +92,10 @@ public class BillingConfig extends HttpServlet {
     // POST method --> overwrites the existing configuration or creates a new one
     // currently assuming there is only one account --> add this to the form @Vincent?
     // TODO: can the vendor ID be appended to the request as a query string @vincent?
-    String tempVendorID = "ALPHA";
-    Vendor newVendor = new Vendor(request, tempVendorID, 1);
+    Vendor newVendor = new Vendor(request);
+
     JsonConverter jsonConverter = new JsonConverter();
+    System.out.println("json config:" + newVendor.buildJsonConfig());
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
   }
 }

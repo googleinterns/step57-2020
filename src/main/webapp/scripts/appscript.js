@@ -36,10 +36,10 @@ async function populateCustomerList() {
  * the readfile page.
  */
 async function addConfigToPage() {
-  // TODO: Add query string support to sent to servlet.
+  // TODO: this should probably be put into a queryStringBuilder method?
   const servletUrl = "/BillingConfig";
-  var queryString = "?vendorID=" + document.getElementById('vendor-id').value;
-        // + "&accountID=" + document.getElementById('account-id').value;
+  const queryString = "?vendorID=" + document.getElementById('vendor-id').value;
+  // + "&accountID=" + document.getElementById('account-id').value;
 
   // Fetch the json configuration and format it to print on the page. 
   fetch(servletUrl + queryString)
