@@ -22,24 +22,6 @@ async function populateCustomerList() {
 
   // Response is a json array that is parsed into json.
   var customerJson = await response.json();
-
-  console.log(customerJson);
-
-  // Loops over this array to make the options for the Customer ID dropdown.
-
-
-  // Commented out for now because it was causing an error.
-
-  /** 
-  var vendorHtml = '';
-  for (var i = 0; i < customerJson.length; i++) {
-    vendorHtml += '<option value="' + customerJson[i] + '">'
-    + customerJson[i] + '</option>';
-  }
-
-  // Adds the options to the page, allowing them to be viewed. 
-  document.getElementById('customer-ids').innerHTML = vendorHtml;
-  */
 }
 
 /**
