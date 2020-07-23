@@ -31,9 +31,10 @@ import com.google.gson.Gson;
 
 @WebServlet("/VendorServlet")
 public class VendorServlet extends HttpServlet {
-  private final String CONTENT_TYPE = "text/html;";
+  private static final String JSON_TYPE = "application/json";
   private final String DELETE_PAGE_REDIRECT = "/deletefile.html";
   private final String VENDOR_ID_PARAM = "vendorID";
+  private final String TOKEN_ATTRIBUTE = "accessToken";
 
   @Override
   /**
@@ -42,15 +43,19 @@ public class VendorServlet extends HttpServlet {
    * e.g., {"vend_1":["account1","account2","account3","account4"],
    *            "vend_2":["account5","account6","account7"]}
    */
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws IOException {
+
     JsonConverter converter = new JsonConverter();
     String configMap = converter.getConfigMap();
-    response.setContentType(CONTENT_TYPE);
+    response.setContentType(JSON_TYPE);
     response.getWriter().println(configMap);
   }
 
   /** Delete the desired Vendor from the fileset and spreadsheets.*/
-  public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {  
+  public void doDelete(HttpServletRequest request, HttpServletResponse response)
+
+    throws IOException {  
     String vendorID = request.getParameter(VENDOR_ID_PARAM);
     String responseString = "success"; 
 
@@ -58,16 +63,14 @@ public class VendorServlet extends HttpServlet {
     try {
       deleteVendorFile(vendorID);
       updateSheets(request);    
-    } catch (IOException e) {
-      responseString = "Failed to Delete File.";
-    } catch (GeneralSecurityException e) {
+    } catch (IOException | GeneralSecurityException e) {
       responseString = "Failed to Delete File.";
     } 
 
     // Convert the String message into a JSON String.
     String jsonMessage = messageAsJson(responseString);
 
-    response.setContentType(CONTENT_TYPE);
+    response.setContentType(JSON_TYPE);
     response.getWriter().println(jsonMessage);
   }
 
@@ -91,7 +94,7 @@ public class VendorServlet extends HttpServlet {
 
     // Only retrieve the session if one exists.
     HttpSession session = request.getSession(false);
-    String accessToken = session.getAttribute("accessToken").toString();
+    String accessToken = session.getAttribute(TOKEN_ATTRIBUTE).toString();
 
     SheetsConverter sheets = new SheetsConverter();
     sheets.updateSheets(vendors, accessToken);
