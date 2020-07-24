@@ -17,11 +17,46 @@
   * Customer ID dropdown.
   */
 async function populateCustomerList() {
-  // TODO: Implement functionality for hashmap parsing instead of simple array.
+  // Fetches json dictionary from VendorServlet.
   var response = await fetch('/VendorServlet');
 
-  // Response is a json array that is parsed into json.
-  var customerJson = await response.json();
+  var vendorJson = await response.json();
+
+  // Loops over this array to make the options for the Customer ID dropdown.
+  var vendorHtml = '';
+  for (var key in vendorJson) {
+    vendorHtml += '<option value="' + key + '">'
+    + key + '</option>';
+  }
+
+  // Adds the options to the page, allowing them to be viewed. 
+  document.getElementById('customer-ids').innerHTML = vendorHtml;
+}
+
+/**
+ * Fetch account IDs from VendorServlet and add them to the Account ID
+ * dropdown.
+ */
+async function populateAccountList() {
+  // Fetches json dictionary from VendorServlet.
+  var response = await fetch('/VendorServlet');
+
+  var vendorJson = await response.json();
+
+  // Takes the value of the Vendor ID <select> element.
+  var vendorValue = document.getElementById('customer-ids').value;
+
+  // Loops over the dictionary to find the corresponding value in the dictionary
+  // and adds them to the Account ID <select> element.
+  var accountHtml = '';
+      var array = vendorJson[vendorValue];
+      for (i = 0; i < array.length; i++) {
+        accountHtml += '<option value="' + array[i] + '">'
+        + array[i] + '</option>';
+      }
+
+  // Adds the options to the page, allowing them to be viewed.
+  document.getElementById('account-ids').innerHTML = accountHtml;
 }
 
 /**
@@ -37,24 +72,4 @@ async function addConfigToPage() {
     .then(response => response.json())
     .then(data => document.getElementById('json-text').innerText = 
     JSON.stringify(data, undefined, 4));
-    
-}
-
-// TODO: Method to populate edit form.
-async function populateEditForm() {
-
-}
-// TODO: Method for enums: Check which of the tags has data under it {isLoggedIn:{loginURL},isLoggedOut:{logooutURL}}}
-async function checkLoginStatus() {
-  
-}
-
-// TODO: Delete config function. /BillingConfig --> doDelete
-async function deleteConfiguration() {
-
-}
-
-// TODO: Create config and redirect/populate edit form. 
-async function createConfiguration() {
-
 }
