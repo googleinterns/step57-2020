@@ -22,6 +22,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import data.JsonConverter;
 import data.Vendor;
@@ -54,6 +55,7 @@ public final class JsonConverterTest {
     vendor = new Vendor(VENDOR_ID, LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID);
     account = new Account(ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION,
             LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE);
+    File file = converter.writeFile(VENDOR_ID, vendor.buildJsonConfig());
   }
 
   /** Test that updateFile() returns true. */
@@ -136,5 +138,39 @@ public final class JsonConverterTest {
   private String removeWhitespace(String in) {
     // Uses regex '\\s+' to remove all internal whitespace
     return in.replaceAll("\\s+", "").trim();
+  }
+
+  /** Test that the desired file gets deleted.*/
+  @Test
+  public void testDeleteFile() {
+    String vendorID = vendor.getVendorID();
+    File file = converter.writeFile(VENDOR_ID, vendor.buildJsonConfig());
+
+    // Test that the file exists.
+    ArrayList<String> vendorIDs = converter.getVendorIDs();
+    assertTrue("The file didn't exist when it should have.", 
+      vendorIDs.contains(VENDOR_ID));
+      
+    converter.deleteFile(VENDOR_ID);
+
+    // Test that the file is gone.
+    vendorIDs = converter.getVendorIDs();
+    assertFalse("The file existed when it shouldn't have.", 
+      vendorIDs.contains(VENDOR_ID));
+  }
+
+  /** Test that the correct Vendor IDs are returned. */
+  @Test
+  public void testGetVendorIDs() {
+    ArrayList<String> expectedVendorIDs = new ArrayList<String>();
+    expectedVendorIDs.add("vend_0");
+    expectedVendorIDs.add("vend_1");
+    expectedVendorIDs.add("vend_2");
+    expectedVendorIDs.add("vend_3");
+
+    ArrayList<String> actualVendorIDs = converter.getVendorIDs();
+    Collections.sort(actualVendorIDs);
+
+    assertTrue(expectedVendorIDs.equals(actualVendorIDs));
   }
 }
