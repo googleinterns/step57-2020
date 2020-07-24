@@ -24,29 +24,20 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.security.GeneralSecurityException;
+import java.util.Enumeration;
+import java.util.stream.Collectors;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import util.FormIdNames;
 
 @WebServlet("/BillingConfig")
 public class BillingConfig extends HttpServlet {
   private static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
   private static final String REDIRECT_READFILE = "/index.html";
-
-  public static final String VENDOR_ID = "vendor-id";
-  public static final String ACCOUNT_ID = "account-id";
-  public static final String LEGACY_CUSTOMER_ID = "legacy-customer-id";
-  public static final String NEXT_GEN_CUSTOMER_ID = "next-gen-customer-id";
-  public static final String LEGACY_ACCOUNT_ID = "legacy-account-id";
-  public static final String NEXT_GEN_ACCOUNT_ID = "next-gen-account-id";
-  public static final String CURRENCY_CODE = "currency-code";
-  public static final String DIRECTION = "direction";
-  public static final String ENTITY = "entity";
-  public static final String MATCHING_MODE = "matching-mode";
-  public static final String AGGREGATION_MODE = "aggregation-mode";
 
   private Vendor vendor;
   private Account account;
@@ -55,10 +46,9 @@ public class BillingConfig extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
     // GET method --> returns entire billing config as JSON
     // return null if vendor ID doesn't exist
-    String vendorID = request.getParameter(VENDOR_ID);
-    // TODO: @cade Add query string functionality to find vendor configs. 
-    vendorID = "sample";
-    String accountID = request.getParameter(ACCOUNT_ID);
+    String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
+    String accountID = request.getParameter(FormIdNames.ACCOUNT_ID);
+
     JsonConverter json = new JsonConverter();
     String configText = "";
 
@@ -76,7 +66,7 @@ public class BillingConfig extends HttpServlet {
     HttpSession session = request.getSession(false);
     String accessToken = session.getAttribute("accessToken").toString();
 
-    SheetsConverter sheet = new SheetsConverter(); 
+    SheetsConverter sheet = new SheetsConverter();
     try {
       // Use hard-coded values to test writeToSheets method.
       ArrayList<Vendor> vendors = new ArrayList<Vendor>();
@@ -97,13 +87,19 @@ public class BillingConfig extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // POST method --> overwrites the existing configuration or creates a new one
-    // currently assuming there is only one account --> add this to the form @Vincent?
-    // TODO: can the vendor ID be appended to the request as a query string @vincent?
-    String tempVendorID = "ALPHA";
-    Vendor newVendor = new Vendor(request, tempVendorID, 1);
-    JsonConverter jsonConverter = new JsonConverter();
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
-    response.sendRedirect("/index.html");
+    try {
+      Vendor newVendor = new Vendor(request);
+      JsonConverter jsonConverter = new JsonConverter();
+      if (jsonConverter.updateFile(newVendor)) {
+        // Redirect only when the operation succeeded
+        response.getWriter().println(newVendor.getVendorID());
+        response.sendRedirect(REDIRECT_READFILE);
+      } else {
+        response.sendError(400, "Something went wrong when we tried to write your file.");
+      }
+    } catch(NumberFormatException e) {
+      response.sendError(400, "A NumberFormatException occurred.");
+    }
   }
 }

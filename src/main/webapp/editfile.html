@@ -15,18 +15,18 @@
       <a href="deletefile.html">Delete Configuration</a>
     </div>
     <div>
-      <form id="config-search">
+      <form id="config-search" onsubmit="buildEditForm(); return false;">
         <p>Customer ID:</p>
         <select id="customer-ids" onchange="javascript:populateAccountList()">
         </select>
         <p>Account ID:</p>
         <select id="account-ids">
         </select><br>
-        <button type="submit">Search</button>
+        <button type="submit">Choose configuration</button>
       </form>
     </div><br>
-    <div id="editform">
-      <form action="/BillingConfig" method="POST">
+    <div id="edit-form">
+      <form id="edit-config-form" method="post" onsubmit="return validateEditFormInput();">
         <span>Legacy Customer ID:</span>
         <input type="text" id="legacy-customer-id" name="legacy-customer-id"><br>
         <span>Next Gen Customer ID:</span>
@@ -34,7 +34,7 @@
         <p>ACCOUNT</p>
         <span>Legacy Account ID:</span>
         <input type="text" id="legacy-account-id" name="legacy-account-id"><br>
-        <span>Next Gen Customer ID:</span>
+        <span>Next Gen Account ID:</span>
         <input type="text" id="next-gen-account-id" name="next-gen-account-id"><br>
         <p>SETTLEMENT ATTRIBUTES</p>
         <span>Currency Code:</span>

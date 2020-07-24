@@ -35,26 +35,6 @@ public class JsonConverter {
     basePath = filePathName;
   }
 
-  public File createFile(String vendorID) {
-    String fileName = basePath + vendorID;
-    // Create a JSON object to write to the file.
-    JSONObject parentObject = new JSONObject();
-    JSONObject JSONCar = new JSONObject();
-    JSONCar.put("Car", "Blue Tacoma");
-    parentObject.put("Vehicle", JSONCar);
-    // Write the JSON object to the file.
-    File file = null;
-    try {
-      file = new File(fileName);
-      BufferedWriter out = new BufferedWriter(new FileWriter(file));
-      out.write(parentObject.toString());
-      out.close();
-    } catch (IOException e) {
-      return null;
-    }
-    return file;
-  }
-
   public boolean updateFile(Vendor vendor) {
     String jsonConfig = vendor.buildJsonConfig();
     // Create and write the contents to a File.
@@ -136,7 +116,7 @@ public class JsonConverter {
   }
 
   /** Return list of vendor IDs that exist in the filesystem.*/
-  private ArrayList<String> getVendorIDs() {
+  public ArrayList<String> getVendorIDs() {
     File root = new File(basePath);
     return new ArrayList<String>(Arrays.asList(Objects.requireNonNull(root.list())));
   }
@@ -159,5 +139,11 @@ public class JsonConverter {
     } catch (IOException e) {
       throw new IOException("Failed to parse JSON configuration");
     }
+  }
+
+  /** Delete the file that is associated with the desired vendorID. */
+  public void deleteFile(String vendorID) {
+    File fileToDelete = new File(basePath + vendorID); 
+    fileToDelete.delete();
   }
 }
