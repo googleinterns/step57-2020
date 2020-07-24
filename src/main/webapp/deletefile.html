@@ -5,9 +5,10 @@
     <title></title>
     <link rel="stylesheet" href="assets/deletefile.css">
     <link rel="stylesheet" href="assets/general.css">
+    <link rel="stylesheet" href="assets/modal.css">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
     <script src="scripts/deletescript.js"></script>
     <script src="scripts/appscript.js"></script>
     <!-- Dependencies for Bootstrap, jQuery, and Popper.js. -->
@@ -36,11 +37,32 @@
       <form onSubmit="javascript:deleteVendor(this); return false;">
       	<p>Enter the Vendor ID of the configuration you want to delete.</p>
 				<input type="text" name="vendorID" size="25" />
-        <button type="button" class="btn-primary" data-toggle="modal"
+
+        <button onclick="document.getElementById('id01').style.display='block'">submit</button>
+
+        <div id="id01" class="modal">
+          <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+          <form class="modal-content" action="/action_page.php">
+            <div class="container">
+              <h1>Delete Account</h1>
+              <p>Are you sure you want to delete your account?</p>
+
+              <div class="clearfix">
+                <button type="button" class="cancelbtn">Cancel</button>
+                <button type="button" class="deletebtn">Delete</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+
+
+
+        <!-- <button type="button" class="btn-primary" data-toggle="modal"
         data-target="#deleteModal">Submit
-        </button> 
+        </button>   -->
         <!-- The class "modal fade" is the necessary syntax for the modal to work. -->
-        <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
+       <!-- <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <form id="delete-confirm" method="POST">
@@ -61,7 +83,8 @@
               </form>
             </div>
           </div>
-        </div>
+        </div>  -->
+
       </form>
     </div>
   </body>
