@@ -116,7 +116,7 @@ public class JsonConverter {
   }
 
   /** Return list of vendor IDs that exist in the filesystem.*/
-  private ArrayList<String> getVendorIDs() {
+  public ArrayList<String> getVendorIDs() {
     File root = new File(basePath);
     return new ArrayList<String>(Arrays.asList(Objects.requireNonNull(root.list())));
   }
@@ -139,5 +139,11 @@ public class JsonConverter {
     } catch (IOException e) {
       throw new IOException("Failed to parse JSON configuration");
     }
+  }
+
+  /** Delete the file that is associated with the desired vendorID. */
+  public void deleteFile(String vendorID) {
+    File fileToDelete = new File(basePath + vendorID); 
+    fileToDelete.delete();
   }
 }

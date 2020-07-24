@@ -17,10 +17,12 @@
     <div>
       <form id="config-search" onsubmit="buildEditForm(); return false;">
         <p>Customer ID:</p>
-        <input id="customer-ids" type="text" name="customer-ids">
+        <select id="customer-ids" onchange="javascript:populateAccountList()">
+        </select>
         <p>Account ID:</p>
-        <input id="account-ids" type="text" name="account-ids">
-        <button type="submit" >Search</button>
+        <select id="account-ids">
+        </select><br>
+        <button type="submit">Choose configuration</button>
       </form>
     </div><br>
     <div id="edit-form">
