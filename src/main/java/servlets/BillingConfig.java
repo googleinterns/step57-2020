@@ -95,15 +95,14 @@ public class BillingConfig extends HttpServlet {
       Vendor newVendor = new Vendor(request);
       JsonConverter jsonConverter = new JsonConverter();
       if (jsonConverter.updateFile(newVendor)) {
-        response.getWriter().println("Successfully updated JSON configuration");
+        // Redirect only when the operation succeeded
+        response.getWriter().println(newVendor.getVendorID());
+        response.sendRedirect(REDIRECT_READFILE);
       } else {
-        response.getWriter().println("Failed to update JSON configuration.");
+        response.sendError(400, "Something went wrong when we tried to write your file.");
       }
     } catch(NumberFormatException e) {
-      response.getWriter().println("Failed to parse form data because of a " +
-              "NumberFormatException");
+      response.sendError(400, "A NumberFormatException occurred.");
     }
-
-    response.sendRedirect(REDIRECT_READFILE);
   }
 }
