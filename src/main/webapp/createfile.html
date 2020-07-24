@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Create File Configuration</title>
     <link rel="stylesheet" href="assets/createfile.css">
+    <script src="scripts/createscript.js"></script>
   </head>
   <body>
     <h1>Billing Configuration Sync Tool</h1><br>
@@ -13,13 +14,13 @@
       <a href="editfile.html">Edit Configuration</a>
       <a href="deletefile.html">Delete Configuration</a>
     </div><br>
-    <div id="createform">
+    <div id="createform" method="POST" action="javascript:postNewConfig()">
       <form>
         <span>Customer ID:</span>
         <input type="text" id="customer-id"><br>
         <span>Account ID:</span>
         <input type="text" id="account-id"><br>
-        <button type="submit">Search</button>
+        <button type="submit">Create</button>
       </form>
     </div>
   </body>
