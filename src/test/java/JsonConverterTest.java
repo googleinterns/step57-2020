@@ -17,9 +17,7 @@ import java.util.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -38,7 +36,7 @@ public final class JsonConverterTest {
   private Vendor vendor;
   private Account account;
   private JsonConverter converter;
-  private final String VENDOR_ID = "vend_1";
+  private final String VENDOR_ID = "vend_0";
   private final String LEGACY_VENDOR_ID = "legVend_27";
   private final int NEXT_GEN_VENDOR_ID = 17;
   private final String ACCOUNT_ID = "acc_12";
@@ -57,6 +55,7 @@ public final class JsonConverterTest {
     vendor = new Vendor(VENDOR_ID, LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID);
     account = new Account(ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION,
             LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE);
+    File file = converter.writeFile(VENDOR_ID, vendor.buildJsonConfig());
   }
 
   /** Test that updateFile() returns true. */
@@ -76,12 +75,10 @@ public final class JsonConverterTest {
    */
   @Test
   public void testGetConfigMethod() {
-    String vendorID = "vend_1";
-    String expectedResponse = "{\"legacy_vendor_id\":legVend_27,\"next_gen_vendor_id\":17,\"accounts\":[]}";
+    String expectedResponse = "{\"legacy_customer_id\":\"legVend_27\",\"next_gen_customer_id\":17,\"accounts\":[]}";
+    String actualResponse = converter.getConfig(VENDOR_ID);
 
-    String actualResponse = converter.getConfig(vendorID);
-
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals(removeWhitespace(expectedResponse), removeWhitespace(actualResponse));
   }
 
   /**
@@ -104,25 +101,76 @@ public final class JsonConverterTest {
   public void testWriteFile() throws FileNotFoundException {
     vendor.addAccount(account);
 
-    String expectedResponse = String.format("{\"legacy_vendor_id\":%s," +
-                    "\"next_gen_vendor_id\":%d,\"accounts\":[{\"legacy_account_id\":%s," +
+    String expectedResponse = String.format("{\"legacy_customer_id\":\"%s\"," +
+                    "\"next_gen_customer_id\":%d,\"accounts\":[{\"legacy_account_id\":\"%s\"," +
                     "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
-                    "\"currency_code\":%s,\"direction\":%s,\"entity\":%s}," +
-                    "\"settlement_config\":{\"matching_mode\":%s},\"account_id\":%s," +
-                    "\"aggregation_mode\":%s}}]}", LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID,
+                    "\"currency_code\":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"}," +
+                    "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
+                    "\"aggregation_mode\":\"%s\"}]}", LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID,
             LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, CURRENCY, DIRECTION, ENTITY,
-            MATCHING_MODE, ACCOUNT_ID,AGGREGATION_MODE);
+            MATCHING_MODE, ACCOUNT_ID, AGGREGATION_MODE);
     String actualResponse = "";
 
     File file = converter.writeFile(vendor.getVendorID(), vendor.buildJsonConfig());
     Scanner input = null;
     input = new Scanner(file);
 
-
     while(input.hasNextLine()) {
       actualResponse += input.nextLine();
     }
 
     assertEquals(expectedResponse, actualResponse);
+  }
+
+  /**
+   * This test depends on the test resources folder having 4 files (vend_0 - vend_3).
+   * vend_1 through vend_3 should be as written in the resources directory, and vend_0 is created
+   * by an earlier method.
+   */
+  @Test
+  public void testGetConfigMap() throws IOException {
+    String expectedResponse = "{\"vend_2\":[\"account1\",\"account2\"],\"vend_3\":[\"account1\"," +
+            "\"account2\",\"account3\"],\"vend_0\":[],\"vend_1\":[\"account1\"]}";
+    String actualResponse = converter.getConfigMap();
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  private String removeWhitespace(String in) {
+    // Uses regex '\\s+' to remove all internal whitespace
+    return in.replaceAll("\\s+", "").trim();
+  }
+
+  /** Test that the desired file gets deleted.*/
+  @Test
+  public void testDeleteFile() {
+    String vendorID = vendor.getVendorID();
+    File file = converter.writeFile(VENDOR_ID, vendor.buildJsonConfig());
+
+    // Test that the file exists.
+    ArrayList<String> vendorIDs = converter.getVendorIDs();
+    assertTrue("The file didn't exist when it should have.", 
+      vendorIDs.contains(VENDOR_ID));
+      
+    converter.deleteFile(VENDOR_ID);
+
+    // Test that the file is gone.
+    vendorIDs = converter.getVendorIDs();
+    assertFalse("The file existed when it shouldn't have.", 
+      vendorIDs.contains(VENDOR_ID));
+  }
+
+  /** Test that the correct Vendor IDs are returned. */
+  @Test
+  public void testGetVendorIDs() {
+    ArrayList<String> expectedVendorIDs = new ArrayList<String>();
+    expectedVendorIDs.add("vend_0");
+    expectedVendorIDs.add("vend_1");
+    expectedVendorIDs.add("vend_2");
+    expectedVendorIDs.add("vend_3");
+
+    ArrayList<String> actualVendorIDs = converter.getVendorIDs();
+    Collections.sort(actualVendorIDs);
+
+    assertTrue(expectedVendorIDs.equals(actualVendorIDs));
   }
 }

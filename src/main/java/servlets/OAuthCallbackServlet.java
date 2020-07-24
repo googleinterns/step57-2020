@@ -38,7 +38,7 @@ import util.OAuthConstants;
 @WebServlet("/api/oauth/callback/sheets")
 public class OAuthCallbackServlet extends HttpServlet {
   private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
-  private final String SECRET_FILEPATH = "../../src/main/resources/secret.txt";
+  private final String SECRET_FILEPATH = "../../src/main/secrets/secret.txt";
   private final String CODE_PARAM = "code";
   private final String ERROR_PARAM = "error";
   private final String STATE_PARAM = "state";
