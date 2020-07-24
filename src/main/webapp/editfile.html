@@ -21,46 +21,46 @@
     <h2>Edit Configuration</h2>
     <div>
       <form id="config-search">
-        <p>Customer ID:</p>
-        <input list="customer-ids">
+        <label>Customer ID:</label>
+        <input list="customer-ids"><br>
         <datalist id="customer-ids">
         </datalist>
-        <p>Account ID:</p>
+        <label>Account ID:</label>
         <input list="account-ids">
         <datalist id="account-ids">
           <option value="Account 1">
           <option value="Account 2">
           <option value="Account 3">
-        </datalist><br>
+        </datalist><br><br>
         <button type="submit">Search</button>
       </form>
     </div><br>
     <div id="editform">
       <form action="/BillingConfig" method="POST">
-        <span>Legacy Customer ID:</span>
+        <label>Legacy Customer ID:</label>
         <input type="text" id="legacy-customer-id" name="legacy-customer-id"><br>
-        <span>Next Gen Customer ID:</span>
+        <label>Next Gen Customer ID:</label>
         <input type="text" id="next-gen-customer-id" name="next-gen-customer-id"><br>
         <p>ACCOUNT</p>
-        <span>Legacy Account ID:</span>
+        <label>Legacy Account ID:</label>
         <input type="text" id="legacy-account-id" name="legacy-account-id"><br>
-        <span>Next Gen Customer ID:</span>
+        <label>Next Gen Account ID:</label>
         <input type="text" id="next-gen-account-id" name="next-gen-account-id"><br>
         <p>SETTLEMENT ATTRIBUTES</p>
-        <span>Currency Code:</span>
+        <label>Currency Code:</label>
         <input type="text" id="currency-code" name="currency-code"><br>
-        <span>Direction:</span>
+        <label>Direction:</label>
         <input type="text" id="direction" name="direction"><br>
-        <span>Entity:</span>
+        <label>Entity:</label>
         <input type="text" id="entity" name="entity"><br>
         <p>SETTLEMENT CONFIG</p>
-        <span>Matching Mode:</span>
+        <label>Matching Mode:</label>
         <input type="text" id="matching-mode" name="matching-mode"><br>
         <p>ACCOUNT</p>
-        <span>Product Account Key/Account ID:</span>
+        <label>Product Account Key/Account ID:</label>
         <input type="text" id="account-id" name="account-id"><br>
-        <span>Aggregation Mode:</span>
-        <input type="text" id="aggregation-mode" name="aggregation-mode"><br>
+        <label>Aggregation Mode:</label>
+        <input type="text" id="aggregation-mode" name="aggregation-mode"><br><br>
         <input type="submit">
       </form>
     </div>

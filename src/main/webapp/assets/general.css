@@ -1,3 +1,9 @@
+label {
+  width: 160px;
+  display: inline-block;
+  text-align: left;
+}
+
 /* Creates a dropdown page menu */
 .drop_menu {
     position: absolute;
@@ -34,6 +40,4 @@
 .dropdown_content a:hover {background-color: rgb(255, 255, 255);}
 
 .drop_menu:hover .dropdown_content {display: block;}
-
-
 
