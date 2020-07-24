@@ -17,18 +17,18 @@
   * Customer ID dropdown.
   */
 async function populateCustomerList() {
-  // // TODO: Implement functionality for hashmap parsing instead of simple array.
-  // var response = await fetch('/VendorServlet');
-  //
-  // // Response is a json array that is parsed into json.
-  // var customerJson = await response.json();
-  // // Loops over this array to make the options for the Customer ID dropdown.
-  // var vendorHtml = '';
-  // for (var i = 0; i < customerJson.length; i++) {
-  //   html += '<option value="' + customerJson[i] + '">'
-  //   + customerJson[i] + '</option>';
-  // }
-  // document.getElementById('vendor-id').innerHTML = vendorHtml;
+  // TODO: Implement functionality for hashmap parsing instead of simple array.
+  var response = await fetch('/VendorServlet');
+
+  // Response is a json array that is parsed into json.
+  var customerJson = await response.json();
+  // Loops over this array to make the options for the Customer ID dropdown.
+  var vendorHtml = '';
+  for (var i = 0; i < customerJson.length; i++) {
+    html += '<option value="' + customerJson[i] + '">'
+    + customerJson[i] + '</option>';
+  }
+  document.getElementById('vendor-id').innerHTML = vendorHtml;
 }
 
 /**
@@ -61,6 +61,10 @@ function buildQueryString() {
   return `/BillingConfig?vendorID=${selectedVendorId}&accountID=${selectedAccountId}`;
 }
 
+/**
+ * Return the form validity. If all checks pass, this function returns true and allows the post request
+ * to occur.
+ */
 function validateEditFormInput() {
   const form = document.getElementById('edit-config-form');
   if (!form.hasAttribute('action')) {
@@ -76,7 +80,8 @@ function validateEditFormInput() {
     window.alert("Next Gen Account ID must be an integer");
     return false;
   } else {
-    window.alert("Successfully edited configuration. Redirecting to read file page");
+    // No problems found with form, so continue to redirect.
+    // TODO: A dialogue box could appear here to confirm changes
     return true;
   }
 }
