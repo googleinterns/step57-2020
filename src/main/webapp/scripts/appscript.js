@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,17 +19,13 @@
 async function populateCustomerList() {
   // Fetches json dictionary from VendorServlet.
   var response = await fetch('/VendorServlet');
-
   var vendorJson = await response.json();
-
   // Loops over this array to make the options for the Customer ID dropdown.
   var vendorHtml = '';
   for (var key in vendorJson) {
     vendorHtml += '<option value="' + key + '">'
     + key + '</option>';
   }
-
-  // Adds the options to the page, allowing them to be viewed. 
   document.getElementById('customer-ids').innerHTML = vendorHtml;
 }
 
@@ -64,12 +60,62 @@ async function populateAccountList() {
  * the readfile page.
  */
 async function addConfigToPage() {
-  // TODO: Add query string support to sent to servlet.
-  var vendorID = document.getElementById('customer-ids');
-  
+  const queryString = buildQueryString();
   // Fetch the json configuration and format it to print on the page. 
-  fetch('/BillingConfig')
+  fetch(queryString)
     .then(response => response.json())
     .then(data => document.getElementById('json-text').innerText = 
     JSON.stringify(data, undefined, 4));
+}
+
+/**
+ * Builds the edit form's action attribute and populates text from existing configuration
+ */
+function buildEditForm() {
+  const editForm = document.getElementById('edit-config-form');
+  editForm.action = buildQueryString();
+}
+
+function buildQueryString() {
+  const selectedVendorId = document.getElementById('customer-ids').value;
+  const selectedAccountId = document.getElementById('account-ids').value;
+  return `/BillingConfig?vendorID=${selectedVendorId}&accountID=${selectedAccountId}`;
+}
+
+/**
+ * Validates the fields in teh edit form input and returns true iff all fields have a valid format
+ */
+function validateEditFormInput() {
+  const form = document.getElementById('edit-config-form');
+  if (!form.hasAttribute('action')) {
+    // Prevent submission without first selecting vendor and account.
+    window.alert("A vendor ID and account ID have not been set!");
+    return false;
+  } else if (isNaN(document.getElementById('next-gen-customer-id').value)) {
+    // Require integer for next-gen-customer-id.
+    window.alert("Next Gen Customer ID must be an integer");
+    return false;
+  } else if (isNaN(document.getElementById('next-gen-account-id').value)) {
+    // Require integer for next-gen-account-id.
+    window.alert("Next Gen Account ID must be an integer");
+    return false;
+  } else {
+    // No problems found with form, so continue to redirect.
+    // TODO: A dialogue box could appear here to confirm changes
+    return true;
+  }
+}
+
+// TODO: Method to populate edit form.
+async function populateEditForm() {
+
+}
+// TODO: Method for enums: Check which of the tags has data under it {isLoggedIn:{loginURL},isLoggedOut:{logooutURL}}}
+async function checkLoginStatus() {
+  
+}
+
+// TODO: Create config and redirect/populate edit form. 
+async function createConfiguration() {
+
 }
