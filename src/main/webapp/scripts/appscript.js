@@ -69,7 +69,7 @@ async function addConfigToPage() {
 }
 
 /**
- * Build the edit form's action attribute and populates text from existing configuration
+ * Builds the edit form's action attribute and populates text from existing configuration
  */
 function buildEditForm() {
   const editForm = document.getElementById('edit-config-form');
@@ -83,8 +83,7 @@ function buildQueryString() {
 }
 
 /**
- * Return the form validity. If all checks pass, this function returns true and allows the post request
- * to occur.
+ * Validates the fields in teh edit form input and returns true iff all fields have a valid format
  */
 function validateEditFormInput() {
   const form = document.getElementById('edit-config-form');
