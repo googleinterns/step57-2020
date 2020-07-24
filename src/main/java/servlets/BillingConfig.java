@@ -89,7 +89,6 @@ public class BillingConfig extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // POST method --> overwrites the existing configuration or creates a new one
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
     try {
       Vendor newVendor = new Vendor(request);

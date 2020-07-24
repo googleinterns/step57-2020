@@ -60,12 +60,9 @@ async function populateAccountList() {
  * the readfile page.
  */
 async function addConfigToPage() {
-  const servletUrl = "/BillingConfig";
-  const queryString = "?vendorID=" + document.getElementById('customer-ids').value;
-  // + "&accountID=" + document.getElementById('account-id').value;
-
+  const queryString = buildQueryString();
   // Fetch the json configuration and format it to print on the page. 
-  fetch(servletUrl + queryString)
+  fetch(queryString)
     .then(response => response.json())
     .then(data => document.getElementById('json-text').innerText = 
     JSON.stringify(data, undefined, 4));
@@ -117,11 +114,6 @@ async function populateEditForm() {
 // TODO: Method for enums: Check which of the tags has data under it {isLoggedIn:{loginURL},isLoggedOut:{logooutURL}}}
 async function checkLoginStatus() {
   
-}
-
-// TODO: Delete config function. /BillingConfig --> doDelete
-async function deleteConfiguration() {
-
 }
 
 // TODO: Create config and redirect/populate edit form. 
