@@ -32,14 +32,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import util.FormIdNames;
 
 @WebServlet("/BillingConfig")
 public class BillingConfig extends HttpServlet {
   private static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
   private static final String REDIRECT_READFILE = "/index.html";
-
-  public static final String VENDOR_ID = "vendorID";
-  public static final String ACCOUNT_ID = "accountID";
 
   private Vendor vendor;
   private Account account;
@@ -48,8 +46,8 @@ public class BillingConfig extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
     // GET method --> returns entire billing config as JSON
     // return null if vendor ID doesn't exist
-    String vendorID = request.getParameter(VENDOR_ID);
-    String accountID = request.getParameter(ACCOUNT_ID);
+    String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
+    String accountID = request.getParameter(FormIdNames.ACCOUNT_ID);
 
     JsonConverter json = new JsonConverter();
     String configText = "";

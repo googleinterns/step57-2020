@@ -18,33 +18,11 @@ import servlets.BillingConfig;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
+import util.JsonKeys;
+import util.FormIdNames;
 
 /** A class representing a billing account object. */
 public class Account {
-  // keys for JSON conversion
-  public static final String LEGACY_ACCOUNT_ID_KEY = "legacy_account_id";
-  public static final String NEXT_GEN_CUSTOMER_ID_KEY = "next_gen_customer_id";
-  public static final String SETTLEMENT_ATTRIBUTES_OBJ_KEY =
-          "settlement_attributes";
-  public static final String CURRENCY_CODE_KEY = "currency_code";
-  public static final String DIRECTION_KEY = "direction";
-  public static final String ENTITY_KEY = "entity";
-  public static final String SETTLEMENT_CONFIG_OBJ_KEY = "settlement_config";
-  public static final String MATCHING_MODE_KEY = "matching_mode";
-  public static final String ACCOUNT_ID_KEY = "account_id";
-  public static final String AGGREGATION_MODE_KEY = "aggregation_mode";
-  
-  // names for HttpServletRequest conversion
-  public static final String VENDOR_ID = "vendorID";
-  public static final String ACCOUNT_ID = "accountID";
-  public static final String LEGACY_ACCOUNT_ID = "legacy-account-id";
-  public static final String NEXT_GEN_ACCOUNT_ID = "next-gen-account-id";
-  public static final String CURRENCY_CODE = "currency-code";
-  public static final String DIRECTION = "direction";
-  public static final String ENTITY = "entity";
-  public static final String MATCHING_MODE = "matching-mode";
-  public static final String AGGREGATION_MODE = "aggregation-mode";
-
   private String accountID;
   private String vendorID;
   private String entity;
@@ -72,35 +50,35 @@ public class Account {
   }
 
   public Account(HttpServletRequest request) throws NumberFormatException {
-    this.vendorID = request.getParameter(VENDOR_ID);
-    this.accountID = request.getParameter(ACCOUNT_ID);
-    this.legacyAccountID = request.getParameter(LEGACY_ACCOUNT_ID);
+    this.vendorID = request.getParameter(FormIdNames.VENDOR_ID);
+    this.accountID = request.getParameter(FormIdNames.ACCOUNT_ID);
+    this.legacyAccountID = request.getParameter(FormIdNames.LEGACY_ACCOUNT_ID);
     this.nextGenAccountID = Integer.parseInt(
-            request.getParameter(NEXT_GEN_ACCOUNT_ID));
-    this.currency = request.getParameter(CURRENCY_CODE);
-    this.direction = request.getParameter(DIRECTION);
-    this.entity = request.getParameter(ENTITY);
-    this.matchingMode = request.getParameter(MATCHING_MODE);
-    this.aggregationMode = request.getParameter(AGGREGATION_MODE);
+            request.getParameter(FormIdNames.NEXT_GEN_ACCOUNT_ID));
+    this.currency = request.getParameter(FormIdNames.CURRENCY_CODE);
+    this.direction = request.getParameter(FormIdNames.DIRECTION);
+    this.entity = request.getParameter(FormIdNames.ENTITY);
+    this.matchingMode = request.getParameter(FormIdNames.MATCHING_MODE);
+    this.aggregationMode = request.getParameter(FormIdNames.AGGREGATION_MODE);
   }
 
   /** Construct an Account object from JSON representation. */
   public Account(JSONObject account) {
-    this.legacyAccountID = account.getString(LEGACY_ACCOUNT_ID_KEY);
-    this.nextGenAccountID = account.getInt(NEXT_GEN_CUSTOMER_ID_KEY);
+    this.legacyAccountID = account.getString(JsonKeys.LEGACY_ACCOUNT_ID);
+    this.nextGenAccountID = account.getInt(JsonKeys.NEXT_GEN_CUSTOMER_ID);
 
     JSONObject settlementAttributesObj = account.
-            getJSONObject(SETTLEMENT_ATTRIBUTES_OBJ_KEY);
-    this.currency = settlementAttributesObj.getString(CURRENCY_CODE_KEY);
-    this.direction = settlementAttributesObj.getString(DIRECTION_KEY);
-    this.entity = settlementAttributesObj.getString(ENTITY_KEY);
+            getJSONObject(JsonKeys.SETTLEMENT_ATTRIBUTES_OBJ);
+    this.currency = settlementAttributesObj.getString(JsonKeys.CURRENCY_CODE);
+    this.direction = settlementAttributesObj.getString(JsonKeys.DIRECTION);
+    this.entity = settlementAttributesObj.getString(JsonKeys.ENTITY);
 
     JSONObject settlementConfigObj = account.
-            getJSONObject(SETTLEMENT_CONFIG_OBJ_KEY);
-    this.matchingMode = settlementConfigObj.getString(MATCHING_MODE_KEY);
+            getJSONObject(JsonKeys.SETTLEMENT_CONFIG_OBJ);
+    this.matchingMode = settlementConfigObj.getString(JsonKeys.MATCHING_MODE);
 
-    this.accountID = account.getString(ACCOUNT_ID_KEY);
-    this.aggregationMode = account.getString(AGGREGATION_MODE_KEY);
+    this.accountID = account.getString(JsonKeys.ACCOUNT_ID);
+    this.aggregationMode = account.getString(JsonKeys.AGGREGATION_MODE);
   }
 
   public String getAccountID() {
