@@ -4,6 +4,13 @@ label {
   text-align: left;
 }
 
+select {
+  width: 200px;
+  display: inline-block;
+  text-align: left;
+  padding: 2px;
+}
+
 /* Creates a dropdown page menu */
 .drop_menu {
     position: absolute;

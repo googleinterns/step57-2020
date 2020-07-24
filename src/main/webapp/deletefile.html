@@ -36,7 +36,10 @@
     <div id="delete-search">
       <form onSubmit="javascript:deleteVendor(this); return false;">
       	<p>Enter the Vendor ID of the configuration you want to delete.</p>
-				<input type="text" name="vendorID" size="25" />
+        <select id="customer-ids" onchange="javascript:populateAccountList()">
+          <option value="sample">
+        </select><br>
+				<!-- <input type="text" name="vendorID" size="25" /> -->
 
         <button onclick="document.getElementById('id01').style.display='block'">submit</button>
 
