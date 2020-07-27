@@ -97,6 +97,16 @@ public class Vendor {
     return accountList;
   }
 
+  public static List<String> getVendorSheetHeader() {
+    String[] accountData = {  
+      FormIdNames.VENDOR_ID, 
+      FormIdNames.LEGACY_CUSTOMER_ID,
+      FormIdNames.NEXT_GEN_CUSTOMER_ID
+    };
+
+    return Arrays.asList(accountData);
+  }
+
   /** Builds one row filled with an Vendor's data for the Sheet. */
   public List<String> getVendorSheetsRow() {
     String[] vendorData = { 

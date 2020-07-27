@@ -81,6 +81,7 @@ public class SheetsConverter {
   public List<List<Object>> buildAccountSheetBody(HashMap<String, ArrayList<Account>> accounts) {
     // TODO: @cfloeder Sort the accounts by some criteria x. 
     List<List<Object>> accountSheetData = new ArrayList<List<Object>>();
+    accountSheetData.add(new ArrayList<Object>(Account.getAccountSheetHeader()));
 
     for(Map.Entry<String, ArrayList<Account>> entry : accounts.entrySet()) { 
       ArrayList<Account> accountList = entry.getValue();
@@ -96,6 +97,7 @@ public class SheetsConverter {
   public List<List<Object>> buildVendorSheetBody(ArrayList<Vendor> vendors) {
     // TODO: @cfloeder Sort the vendors by some criteria x. 
     List<List<Object>> vendorSheetData = new ArrayList<List<Object>>();
+    vendorSheetData.add(new ArrayList<Object>(Vendor.getVendorSheetHeader()));
 
     for(int i = 0; i < vendors.size(); i++) {
       vendorSheetData.add(new ArrayList<Object>(vendors.get(i).
