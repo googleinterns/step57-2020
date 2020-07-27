@@ -15,8 +15,6 @@
 // Call the doDelete method in the VendorServlet to delete the given vendorID.
 async function deleteVendor() {
   const vendorID = document.getElementById('customer-ids').value;
-  console.log("GOT HERE");
-  console.log(vendorID);
   const response = await fetch('/VendorServlet?vendorID=' + vendorID, 
     { method: "DELETE"});
   const deleteMessage = await response.json();
