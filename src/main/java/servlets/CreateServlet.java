@@ -43,7 +43,8 @@ public class CreateServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // POST method --> creates a new configuration file with a pre-made json config 
     // with the given vendor id and account id and all other values as null.
-    
+    response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
+
 
   }
 }

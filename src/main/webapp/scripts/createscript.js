@@ -12,6 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+function addNewAccount() {
+  var accountIdNumber = 1;
+  var form = document.getElementById('create-form');
+  var input = document.createElement('input');
+  input.type = 'text';
+  input.id = 'account-id-' + accountIdNumber;
+  var lineBreak = document.createElement('br');
+  form.appendChild(input);
+  form.appendChild(lineBreak);
+  accountIdNumber += 1;
+}
+
 async function postNewConfig() {
   // TODO: Build query string and post to CreateServlet to create new file.
   var vendorId = document.getElementById('customer-id').value
