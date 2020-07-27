@@ -54,29 +54,6 @@ public class BillingConfig extends HttpServlet {
       configText = "Error finding " + vendorID + "'s configuration";
     }
 
-    /** 
-     * TODO: @cade, eventually you will want to pass this access token and 
-     * Vendor List into the updateSheets() method in the SheetsConverter class.
-     */
-    // Only retrieves the session if one exists.
-    HttpSession session = request.getSession(false);
-    String accessToken = session.getAttribute("accessToken").toString();
-
-    SheetsConverter sheet = new SheetsConverter();
-    try {
-      // Use hard-coded values to test writeToSheets method.
-      ArrayList<Vendor> vendors = new ArrayList<Vendor>();
-      vendor = new Vendor("vend_1", "legVend_27", 17);
-      account = new Account("acc_12", "vend_1", "shopper", "USD", "disbursement",
-            "legAcc_53", 17, "straight", "totalAgg");
-      vendor.addAccount(account);
-      vendors.add(vendor);
-
-      sheet.updateSheets(vendors, accessToken);
-    } catch (GeneralSecurityException e) {
-      // TODO: @cade Figure out how you want to handle this error.
-    }
-
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
     response.getWriter().println(configText);
   }
