@@ -18,21 +18,17 @@ import data.Vendor;
 import data.Account;
 import data.SheetsConverter;
 
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.security.GeneralSecurityException;
-import java.util.Enumeration;
-import java.util.stream.Collectors;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import util.FormIdNames;
+
+import static servlets.VendorServlet.updateSheets;
 
 @WebServlet("/BillingConfig")
 public class BillingConfig extends HttpServlet {
@@ -98,8 +94,13 @@ public class BillingConfig extends HttpServlet {
       } else {
         response.sendError(400, "Something went wrong when we tried to write your file.");
       }
+      // Update Google sheets following update file.
+      updateSheets(request);
     } catch(NumberFormatException e) {
       response.sendError(400, "A NumberFormatException occurred.");
+    } catch(GeneralSecurityException e) {
+      response.sendError(400, "A GeneralSecurityException occurred. Make sure you have authorized" +
+              "the Google Sheets API.");
     }
   }
 }
