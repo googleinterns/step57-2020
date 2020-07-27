@@ -35,12 +35,21 @@ public class JsonConverter {
     basePath = filePathName;
   }
 
+  /**
+   * Checks to see if a vendor's configuration already exists, and updates
+   * it if it does
+   * @param vendor Vendor to update configuration
+   * @return configuration write status
+   */
   public boolean updateFile(Vendor vendor) {
-    String jsonConfig = vendor.buildJsonConfig();
     // Create and write the contents to a File.
-    File billingFile = writeFile(vendor.getVendorID(), jsonConfig);
-
-    return billingFile != null;
+    if (!configExists(vendor.getVendorID())) {
+      return false;
+    } else {
+      String jsonConfig = vendor.buildJsonConfig();
+      File config = writeFile(vendor.getVendorID(), jsonConfig);
+      return true;
+    }
   }
 
   /**
@@ -119,6 +128,10 @@ public class JsonConverter {
   public ArrayList<String> getVendorIDs() {
     File root = new File(basePath);
     return new ArrayList<String>(Arrays.asList(Objects.requireNonNull(root.list())));
+  }
+
+  public boolean configExists(String vendorID) {
+    return getVendorIDs().contains(vendorID);
   }
 
   /**

@@ -68,11 +68,11 @@ public class BillingConfig extends HttpServlet {
         // Redirect only when the operation succeeded
         response.getWriter().println(newVendor.getVendorID());
         response.sendRedirect(REDIRECT_READFILE);
+        // Update Google sheets following update file.
+        updateSheets(request);
       } else {
         response.sendError(400, "Something went wrong when we tried to write your file.");
       }
-      // Update Google sheets following update file.
-      updateSheets(request);
     } catch(NumberFormatException e) {
       response.sendError(400, "A NumberFormatException occurred.");
     } catch(GeneralSecurityException e) {
