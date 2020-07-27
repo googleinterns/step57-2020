@@ -67,11 +67,11 @@ public final class SheetsConverterTest {
     ArrayList<Vendor> vendors = new ArrayList<Vendor>();
     vendors.add(vendor);
 
-    ArrayList<ArrayList<Account>> expectedResponse = new 
-      ArrayList<ArrayList<Account>>();
-    expectedResponse.add(vendor.getAccounts());
+    HashMap<String, ArrayList<Account>> expectedResponse = new 
+       HashMap<String, ArrayList<Account>>();
+    expectedResponse.put(VENDOR_ID, vendor.getAccounts());
 
-    ArrayList<ArrayList<Account>> actualResponse = converter.
+    HashMap<String, ArrayList<Account>> actualResponse = converter.
       getAllAccounts(vendors);
     
     assertEquals(expectedResponse, actualResponse);

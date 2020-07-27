@@ -154,10 +154,10 @@ public class Account {
   }
 
   /** Builds one row filled with an Account's data for the Sheet. */
-  public List<String> getAccountSheetsRow() {
+  public List<String> getAccountSheetsRow(String vendorID) {
     String[] accountData = { 
       getAccountID(), 
-      getVendorID(), 
+      vendorID, 
       getEntity(), 
       getCurrency(), 
       getDirection(),

@@ -112,7 +112,7 @@ public final class AccountTest {
     };
     List<String> expectedResponse = Arrays.asList(expectedArray);
 
-    List<String> actualResponse = account.getAccountSheetsRow();
+    List<String> actualResponse = account.getAccountSheetsRow(VENDOR_ID);
 
     assertEquals(expectedResponse, actualResponse);
   }

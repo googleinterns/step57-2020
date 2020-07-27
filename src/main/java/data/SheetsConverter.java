@@ -17,9 +17,7 @@ import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.*;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /** A class that updates the Account and Vendor spreadsheets. */
 public class SheetsConverter {
@@ -41,7 +39,7 @@ public class SheetsConverter {
 
   public void writeToSheet(ArrayList<Vendor> vendorList, Sheets sheetsService) 
     throws GeneralSecurityException, IOException {
-    ArrayList<ArrayList<Account>> allAccounts = getAllAccounts(vendorList); 
+    HashMap<String, ArrayList<Account>> allAccounts = getAllAccounts(vendorList); 
 
     // Retrieve the latest spreadsheet data as a List<List<Object>> 
     // as required by the Sheets API.
@@ -70,27 +68,28 @@ public class SheetsConverter {
   } 
 
   /** Gets every Account that is associated with any Vendor from the List. */
-  public ArrayList<ArrayList<Account>> getAllAccounts(ArrayList<Vendor> vendors) {
-    ArrayList<ArrayList<Account>> allAccounts =  new ArrayList<ArrayList<Account>>();
+  public HashMap<String, ArrayList<Account>> getAllAccounts(ArrayList<Vendor> vendors) {
+    HashMap<String, ArrayList<Account>> allAccounts =  new HashMap<String, ArrayList<Account>>();
 
     for(int i = 0; i < vendors.size(); i++) {
-      allAccounts.add(vendors.get(i).getAccounts());
+      allAccounts.put(vendors.get(i).getVendorID(), vendors.get(i).getAccounts());
     }
 
     return allAccounts; 
   }
 
-  public List<List<Object>> buildAccountSheetBody(ArrayList<ArrayList<Account>> accounts) {
+  public List<List<Object>> buildAccountSheetBody(HashMap<String, ArrayList<Account>> accounts) {
     // TODO: @cfloeder Sort the accounts by some criteria x. 
     List<List<Object>> accountSheetData = new ArrayList<List<Object>>();
 
-    for(int i = 0; i < accounts.size(); i++) {
-      for(int j = 0; j < accounts.get(i).size(); j++) {
-        accountSheetData.add(new ArrayList<Object>(accounts.get(i).get(j).
-          getAccountSheetsRow()));
+    for(Map.Entry<String, ArrayList<Account>> entry : accounts.entrySet()) { 
+      ArrayList<Account> accountList = entry.getValue();
+      for(int i = 0; i < accountList.size(); i++) {
+        accountSheetData.add(new ArrayList<Object>(accountList.get(i).getAccountSheetsRow(
+        entry.getKey())));
       }
     }
-    
+
     return accountSheetData;
   }
 
