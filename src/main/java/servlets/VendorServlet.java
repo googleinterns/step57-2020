@@ -34,7 +34,7 @@ public class VendorServlet extends HttpServlet {
   private static final String JSON_TYPE = "application/json;";
   private final String DELETE_PAGE_REDIRECT = "/deletefile.html";
   private final String VENDOR_ID_PARAM = "vendorID";
-  private final String TOKEN_ATTRIBUTE = "accessToken";
+  private static final String TOKEN_ATTRIBUTE = "accessToken";
 
   @Override
   /**
@@ -57,7 +57,7 @@ public class VendorServlet extends HttpServlet {
     throws IOException {  
     String vendorID = request.getParameter(VENDOR_ID_PARAM);
     String responseString = String.format(
-      "Config with VendorID:%s was successfuly deleted.", vendorID); 
+      "Config with VendorID:%s was successfully deleted.", vendorID);
 
     // Delete the file from the filesystem and update the sheets.
     try {
@@ -85,8 +85,9 @@ public class VendorServlet extends HttpServlet {
   }
 
   /** Rebuild the sheets without the deleted Vendor's data. */
-  private void updateSheets(HttpServletRequest request) 
-      throws IOException, GeneralSecurityException {
+  public static void updateSheets(HttpServletRequest request) throws
+          IOException, GeneralSecurityException {
+
     JsonConverter converter = new JsonConverter();
     ArrayList<String> vendorIDs = converter.getVendorIDs();
     ArrayList<Vendor> vendors = getVendors(vendorIDs, converter); 
@@ -99,9 +100,9 @@ public class VendorServlet extends HttpServlet {
     sheets.updateSheets(vendors, accessToken);
   }
 
-  public ArrayList<Vendor> getVendors(ArrayList<String> vendorIDs, 
+  private static ArrayList<Vendor> getVendors(ArrayList<String> vendorIDs,
       JsonConverter converter) throws IOException {
-    ArrayList<Vendor> vendors = new ArrayList<Vendor>(); 
+    ArrayList<Vendor> vendors = new ArrayList<Vendor>();
 
     for(int i = 0; i < vendorIDs.size(); i++) {
       String vendorJson = converter.getConfig(vendorIDs.get(i));
