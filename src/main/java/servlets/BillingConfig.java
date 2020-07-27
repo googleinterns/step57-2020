@@ -65,13 +65,13 @@ public class BillingConfig extends HttpServlet {
       Vendor newVendor = new Vendor(request);
       JsonConverter jsonConverter = new JsonConverter();
       if (jsonConverter.updateFile(newVendor)) {
+        // Update Google sheets following update file.
+        updateSheets(request);
         // Redirect only when the operation succeeded
         response.getWriter().println(newVendor.getVendorID());
         response.sendRedirect(REDIRECT_READFILE);
-        // Update Google sheets following update file.
-        updateSheets(request);
       } else {
-        response.sendError(400, "Something went wrong when we tried to write your file.");
+        response.sendError(400, "This configuration does not exist.");
       }
     } catch(NumberFormatException e) {
       response.sendError(400, "A NumberFormatException occurred.");
