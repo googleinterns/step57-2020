@@ -12,16 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Initialize the modal.
-$('#deleteForm').on('submit', function(e){
-  $('#deleteModal').modal('show');
-  e.preventDefault();
-});
-
-
 // Call the doDelete method in the VendorServlet to delete the given vendorID.
-async function deleteVendor(form) {
-  const vendorID = form.vendorID.value;
+async function deleteVendor() {
+  const vendorID = document.getElementById('customer-ids').value;
   const response = await fetch('/VendorServlet?vendorID=' + vendorID, 
     { method: "DELETE"});
   const deleteMessage = await response.json();
