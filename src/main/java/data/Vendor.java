@@ -15,7 +15,9 @@ package data;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import servlets.BillingConfig;
+import util.FormIdNames;
+import util.JsonKeys;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
@@ -23,10 +25,6 @@ import java.util.stream.Collectors;
 
 /** A class representing a billing vendor object. */
 public class Vendor {
-  private static final String LEGACY_CUSTOMER_ID_KEY = "legacy_customer_id";
-  private static final String NEXT_GEN_CUSTOMER_ID_KEY = "next_gen_customer_id";
-  private static final String ACCOUNT_ARRAY_KEY = "accounts";
-
   private String vendorID;
   private String legacyVendorID;
   private int nextGenVendorID;
@@ -43,26 +41,27 @@ public class Vendor {
     accountList = new ArrayList<Account>();
   }
 
-  public Vendor(HttpServletRequest request, String vendorID, int numAccounts) {
-    // where does the account ID come from?
-    this.vendorID = vendorID;
-    this.legacyVendorID = request.getParameter(BillingConfig.LEGACY_CUSTOMER_ID);
-    this.nextGenVendorID = Integer.parseInt(
-            request.getParameter(BillingConfig.NEXT_GEN_CUSTOMER_ID));
+  public Vendor(HttpServletRequest request) throws NumberFormatException {
+    this.vendorID = request.getParameter(FormIdNames.VENDOR_ID);
+    this.legacyVendorID = request.getParameter(FormIdNames.LEGACY_CUSTOMER_ID);
+    this.nextGenVendorID = Integer.parseInt(request.getParameter(
+            FormIdNames.NEXT_GEN_CUSTOMER_ID));
+
+    // TODO: add method to parse variable number of accounts?
     Account newAccount = new Account(request);
     accountList = new ArrayList<>();
     accountList.add(newAccount);
   }
 
   /** Construct a Vendor object from JSON string. */
-  public Vendor(String json, String vendorID) throws IOException {
+  public Vendor(String json, String vendorID) throws IOException{
     JSONObject vendorJson = new JSONObject(json);
     this.vendorID = vendorID;
-    this.legacyVendorID = vendorJson.getString(LEGACY_CUSTOMER_ID_KEY);
-    this.nextGenVendorID = vendorJson.getInt(NEXT_GEN_CUSTOMER_ID_KEY);
+    this.legacyVendorID = vendorJson.getString(JsonKeys.LEGACY_CUSTOMER_ID_KEY);
+    this.nextGenVendorID = vendorJson.getInt(JsonKeys.NEXT_GEN_CUSTOMER_ID);
 
     // Populate account list from JSON
-    JSONArray accountArray = vendorJson.getJSONArray(ACCOUNT_ARRAY_KEY);
+    JSONArray accountArray = vendorJson.getJSONArray(JsonKeys.ACCOUNT_ARRAY_KEY);
     this.accountList = JsonConverter.buildAccountsFromJsonArray(accountArray);
   }
 
