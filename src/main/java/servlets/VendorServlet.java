@@ -78,7 +78,7 @@ public class VendorServlet extends HttpServlet {
     ArrayList<String> vendorIDs = converter.getVendorIDs();
 
     // Validate that the vendorID exists.
-    if(!vendorIDs.contains(vendorID)) {
+    if (!vendorIDs.contains(vendorID)) {
         throw new FileNotFoundException();
     }
     converter.deleteFile(vendorID);
@@ -99,16 +99,15 @@ public class VendorServlet extends HttpServlet {
       SheetsConverter sheets = new SheetsConverter();
       sheets.updateSheets(vendors, accessToken);
     } else {
-      throw new IllegalStateException("OAuth has not yet been set");
+      throw new IllegalStateException();
     }
-
   }
 
   private static ArrayList<Vendor> getVendors(ArrayList<String> vendorIDs,
       JsonConverter converter) throws IOException {
     ArrayList<Vendor> vendors = new ArrayList<Vendor>();
 
-    for(int i = 0; i < vendorIDs.size(); i++) {
+    for (int i = 0; i < vendorIDs.size(); i++) {
       String vendorJson = converter.getConfig(vendorIDs.get(i));
       vendors.add(new Vendor(vendorJson, vendorIDs.get(i)));
     }

@@ -16,16 +16,13 @@ package servlets;
 import data.JsonConverter;
 import data.Vendor;
 import data.Account;
-import data.SheetsConverter;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.security.GeneralSecurityException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import util.FormIdNames;
 
 import static servlets.VendorServlet.updateSheets;
@@ -40,8 +37,6 @@ public class BillingConfig extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
-    // GET method --> returns entire billing config as JSON
-    // return null if vendor ID doesn't exist
     String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
     String accountID = request.getParameter(FormIdNames.ACCOUNT_ID);
 
@@ -67,7 +62,8 @@ public class BillingConfig extends HttpServlet {
       if (jsonConverter.updateFile(newVendor)) {
         // Update Google sheets following update file.
         updateSheets(request);
-        // Redirect only when the operation succeeded
+
+        // Redirect only when the operation succeeded.
         response.getWriter().println(newVendor.getVendorID());
         response.sendRedirect(REDIRECT_READFILE);
       } else {
