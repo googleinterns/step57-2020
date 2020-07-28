@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8">
     <title>Edit File Configuration</title>
-    <link rel="stylesheet" href="assets/editfile.css">
     <link rel="stylesheet" href="assets/common.css">
     <script src="scripts/appscript.js"></script>
   </head>
@@ -19,78 +18,7 @@
     </div>
     <h1>Billing Configuration Sync Tool</h1></br>
     <h2>Edit Configuration</h2>
-    <div>
-      <form id="config-search" onsubmit="buildEditForm(); return false;">
-        <label for="customer-id">Customer ID:</label>
-        <select id="customer-ids" onchange="javascript:populateAccountList()">
-        </select><br>
-        <label for="account-id">Account ID:</label>
-        <select id="account-ids">
-        </select><br><br>
-        <button type="submit">Search</button>
-      </form>
-    </div><br>
-    <button onclick="document.getElementById('edit-form').style.display = 'block';">Edit Existing Account</button> 
-    <button onclick="document.getElementById('add-account').style.display = 'block';">Add New Account</button> 
-    <div id="add-account"> 
-      <p>Add Your New Account</p> 
-      <form id="edit-config-form" method="post" onsubmit="return validateEditFormInput();">
-        <label for="legacy-customer-id">Legacy Customer ID:</label>
-        <input type="text" id="legacy-customer-id" name="legacy-customer-id"><br>
-        <label for="next-gen-customer-id">Next Gen Customer ID:</label>
-        <input type="text" id="next-gen-customer-id" name="next-gen-customer-id"><br>
-        <p>ACCOUNT</p>
-        <label for="legacy-account-id">Legacy Account ID:</label>
-        <input type="text" id="legacy-account-id" name="legacy-account-id"><br>
-        <label for="next-gen-account-id">Next Gen Account ID:</label>
-        <input type="text" id="next-gen-account-id" name="next-gen-account-id"><br>
-        <p>SETTLEMENT ATTRIBUTES</p>
-        <label for="currency-code">Currency Code:</label>
-        <input type="text" id="currency-code" name="currency-code"><br>
-        <label for="direction">Direction:</label>
-        <input type="text" id="direction" name="direction"><br>
-        <label for="entity">Entity:</label>
-        <input type="text" id="entity" name="entity"><br>
-        <p>SETTLEMENT CONFIG</p>
-        <label for="matching-mode">Matching Mode:</label>
-        <input type="text" id="matching-mode" name="matching-mode"><br>
-        <p>ACCOUNT</p>
-        <label for="account-id">Product Account Key/Account ID:</label>
-        <input type="text" id="account-id" name="account-id"><br>
-        <label for="aggregation-mode">Aggregation Mode:</label>
-        <input type="text" id="aggregation-mode" name="aggregation-mode"><br><br>
-        <input type="submit">
-      </form>
-    </div> 
-    <div id="edit-form">
-      <p>Edit Your Existing Config</p> 
-      <form id="edit-config-form" method="post" onsubmit="return validateEditFormInput();">
-        <label for="legacy-customer-id">Legacy Customer ID:</label>
-        <input type="text" id="legacy-customer-id" name="legacy-customer-id"><br>
-        <label for="next-gen-customer-id">Next Gen Customer ID:</label>
-        <input type="text" id="next-gen-customer-id" name="next-gen-customer-id"><br>
-        <p>ACCOUNT</p>
-        <label for="legacy-account-id">Legacy Account ID:</label>
-        <input type="text" id="legacy-account-id" name="legacy-account-id"><br>
-        <label for="next-gen-account-id">Next Gen Account ID:</label>
-        <input type="text" id="next-gen-account-id" name="next-gen-account-id"><br>
-        <p>SETTLEMENT ATTRIBUTES</p>
-        <label for="currency-code">Currency Code:</label>
-        <input type="text" id="currency-code" name="currency-code"><br>
-        <label for="direction">Direction:</label>
-        <input type="text" id="direction" name="direction"><br>
-        <label for="entity">Entity:</label>
-        <input type="text" id="entity" name="entity"><br>
-        <p>SETTLEMENT CONFIG</p>
-        <label for="matching-mode">Matching Mode:</label>
-        <input type="text" id="matching-mode" name="matching-mode"><br>
-        <p>ACCOUNT</p>
-        <label for="account-id">Product Account Key/Account ID:</label>
-        <input type="text" id="account-id" name="account-id"><br>
-        <label for="aggregation-mode">Aggregation Mode:</label>
-        <input type="text" id="aggregation-mode" name="aggregation-mode"><br><br>
-        <input type="submit">
-      </form>
-    </div>
+    <button onclick="location.href ='add-account.html';">Add New Account</button>
+    <button onclick="location.href ='edit-account.html';">Edit Existing Account</button>
   </body>
 </html>
