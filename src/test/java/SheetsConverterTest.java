@@ -67,11 +67,11 @@ public final class SheetsConverterTest {
     ArrayList<Vendor> vendors = new ArrayList<Vendor>();
     vendors.add(vendor);
 
-    ArrayList<ArrayList<Account>> expectedResponse = new 
-      ArrayList<ArrayList<Account>>();
-    expectedResponse.add(vendor.getAccounts());
+    HashMap<String, ArrayList<Account>> expectedResponse = new 
+       HashMap<String, ArrayList<Account>>();
+    expectedResponse.put(VENDOR_ID, vendor.getAccounts());
 
-    ArrayList<ArrayList<Account>> actualResponse = converter.
+    HashMap<String, ArrayList<Account>> actualResponse = converter.
       getAllAccounts(vendors);
     
     assertEquals(expectedResponse, actualResponse);
@@ -88,7 +88,9 @@ public final class SheetsConverterTest {
       ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION, LEGACY_ACCOUNT_ID,
       Integer.toString(NEXT_GEN_ACCOUNT_ID), MATCHING_MODE, AGGREGATION_MODE
     };
-    List<List<Object>> expectedResponse = Arrays.asList(Arrays.asList(expectedArray));
+    List<List<Object>> expectedResponse = new ArrayList<List<Object>>();
+    expectedResponse.add(new ArrayList<Object>(Account.getAccountSheetHeader()));
+    expectedResponse.add(new ArrayList<Object>(Arrays.asList(expectedArray)));
 
     List<List<Object>> actualResponse = converter.buildAccountSheetBody(
       converter.getAllAccounts(vendors));
@@ -105,7 +107,9 @@ public final class SheetsConverterTest {
     Object[] expectedArray = {
       VENDOR_ID, LEGACY_VENDOR_ID, Integer.toString(NEXT_GEN_VENDOR_ID)
     };
-    List<List<Object>> expectedResponse = Arrays.asList(Arrays.asList(expectedArray));
+    List<List<Object>> expectedResponse = new ArrayList<List<Object>>();
+    expectedResponse.add(new ArrayList<Object>(Vendor.getVendorSheetHeader()));
+    expectedResponse.add(new ArrayList<Object>(Arrays.asList(expectedArray)));
 
     List<List<Object>> actualResponse = converter.buildVendorSheetBody(vendors);
       
