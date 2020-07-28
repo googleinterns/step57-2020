@@ -86,7 +86,7 @@ public class VendorServlet extends HttpServlet {
 
   /** Rebuild the sheets without the deleted Vendor's data. */
   public static void updateSheets(HttpServletRequest request) throws
-          IOException, GeneralSecurityException {
+          IOException, GeneralSecurityException, IllegalStateException {
 
     JsonConverter converter = new JsonConverter();
     ArrayList<String> vendorIDs = converter.getVendorIDs();
@@ -94,10 +94,14 @@ public class VendorServlet extends HttpServlet {
 
     // Only retrieve the session if one exists.
     HttpSession session = request.getSession(false);
-    String accessToken = session.getAttribute(TOKEN_ATTRIBUTE).toString();
+    if (session != null) {
+      String accessToken = session.getAttribute(TOKEN_ATTRIBUTE).toString();
+      SheetsConverter sheets = new SheetsConverter();
+      sheets.updateSheets(vendors, accessToken);
+    } else {
+      throw new IllegalStateException("OAuth has not yet been set");
+    }
 
-    SheetsConverter sheets = new SheetsConverter();
-    sheets.updateSheets(vendors, accessToken);
   }
 
   private static ArrayList<Vendor> getVendors(ArrayList<String> vendorIDs,

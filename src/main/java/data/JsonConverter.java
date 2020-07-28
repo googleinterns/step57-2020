@@ -19,7 +19,6 @@ import java.util.*;
 
 import com.google.gson.Gson;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 /** A class that creates a config file from a Vendor object. */
 public class JsonConverter {
