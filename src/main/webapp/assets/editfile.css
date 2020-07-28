@@ -13,7 +13,16 @@ body {
   width: 500px;
 }
 
-#editform {
+#edit-form {
+  display:none;
+  border: solid 3px black;
+  margin: auto;
+  padding: 50px;
+  width: 500px;
+}
+
+#add-account {
+  display:none;
   border: solid 3px black;
   margin: auto;
   padding: 50px;

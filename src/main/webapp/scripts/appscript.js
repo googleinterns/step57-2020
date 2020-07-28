@@ -119,3 +119,9 @@ async function checkLoginStatus() {
 async function createConfiguration() {
 
 }
+
+// Hide the edit and add forms onload.
+window.onload = function(){ 
+document.getElementById('add-account').style.display = "none"; 
+document.getElementById('edit-form').style.display = "none"; 
+};
