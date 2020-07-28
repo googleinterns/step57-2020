@@ -78,6 +78,8 @@ public class BillingConfig extends HttpServlet {
     } catch(GeneralSecurityException e) {
       response.sendError(400, "A GeneralSecurityException occurred. Make sure you have authorized" +
               "the Google Sheets API.");
+    } catch(IllegalStateException | NullPointerException e) {
+      response.sendError(400, "Your OAuth token has expired. Visit /OAuth to refresh");
     }
   }
 }

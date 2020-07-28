@@ -86,7 +86,7 @@ public class VendorServlet extends HttpServlet {
 
   /** Rebuild the sheets without the deleted Vendor's data. */
   public static void updateSheets(HttpServletRequest request) throws
-          IOException, GeneralSecurityException, IllegalStateException {
+          IOException, GeneralSecurityException, IllegalStateException, NullPointerException {
 
     JsonConverter converter = new JsonConverter();
     ArrayList<String> vendorIDs = converter.getVendorIDs();
