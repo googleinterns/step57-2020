@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import data.Account;
 import data.Vendor;
+import util.FormIdNames;
 
 @RunWith(JUnit4.class)
 public final class VendorTest {
@@ -92,6 +93,21 @@ public final class VendorTest {
       LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, CURRENCY, DIRECTION, ENTITY, 
       MATCHING_MODE, ACCOUNT_ID,AGGREGATION_MODE);
     String actualResponse = vendor.buildJsonConfig();
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  /** Test that getVendorSheetHeader returns the correct Vendor headings. */
+  @Test
+  public void testGetAccountSheetHeader() {
+    String[] expectedArray = {
+      FormIdNames.VENDOR_ID, 
+      FormIdNames.LEGACY_CUSTOMER_ID,
+      FormIdNames.NEXT_GEN_CUSTOMER_ID,
+    };
+    List<String> expectedResponse = Arrays.asList(expectedArray);
+
+    List<String> actualResponse = Vendor.getVendorSheetHeader();
 
     assertEquals(expectedResponse, actualResponse);
   }

@@ -15,6 +15,7 @@
 package javatests;
 
 import data.Account;
+import util.FormIdNames;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -101,6 +102,27 @@ public final class AccountTest {
 
     assertTrue(expected.similar(actual));
     assertEquals("Failed to construct Account object from JSON", expectedResponse, actualResponse);
+  }
+
+  /** Test that getAccountSheetHeader returns the correct Account headings. */
+  @Test
+  public void testGetAccountSheetHeader() {
+    String[] expectedArray = {
+      FormIdNames.ACCOUNT_ID, 
+      FormIdNames.VENDOR_ID, 
+      FormIdNames.ENTITY, 
+      FormIdNames.CURRENCY_CODE, 
+      FormIdNames.DIRECTION,
+      FormIdNames.LEGACY_ACCOUNT_ID,
+      FormIdNames.NEXT_GEN_ACCOUNT_ID,
+      FormIdNames.MATCHING_MODE,
+      FormIdNames.AGGREGATION_MODE
+    };
+    List<String> expectedResponse = Arrays.asList(expectedArray);
+
+    List<String> actualResponse = Account.getAccountSheetHeader();
+
+    assertEquals(expectedResponse, actualResponse);
   }
 
   /** Test that getAccountSheetsRow returns a List representing its data. */
