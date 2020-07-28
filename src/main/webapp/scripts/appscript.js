@@ -83,7 +83,7 @@ function buildQueryString() {
 }
 
 /**
- * Validates the fields in teh edit form input and returns true iff all fields have a valid format
+ * Validates the fields in teh edit form input and returns true if all fields have a valid format.
  */
 function validateEditFormInput() {
   const form = document.getElementById('edit-config-form');
@@ -119,9 +119,3 @@ async function checkLoginStatus() {
 async function createConfiguration() {
 
 }
-
-// Hide the edit and add forms onload.
-window.onload = function(){ 
-document.getElementById('edit-account').style.display = "none"; 
-document.getElementById('edit-form').style.display = "none"; 
-};

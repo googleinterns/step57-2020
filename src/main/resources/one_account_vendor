@@ -1,18 +1,1 @@
-{
-	"legacy_customer_id": "STRING",
-	"next_gen_customer_id": 53598,
-	"accounts": [{
-		"legacy_account_id": "STRING",
-		"next_gen_customer_id": 5309,
-		"settlement_attributes": {
-			"currency_code": "STRING",
-			"direction": "STRING",
-			"entity": "STRING"
-		},
-		"settlement_config": {
-			"matching_mode": "STRING"
-		},
-		"account_id": "onlyAccountID",
-		"aggregation_mode": "STRING"
-	}]
-}
+{"legacy_customer_id":"this","next_gen_customer_id":17,"accounts":[{"legacy_account_id":"changed","next_gen_customer_id":7,"settlement_attributes":{"currency_code":"the ","direction":"config","entity":"hopefully"},"settlement_config":{"matching_mode":"maybe"},"account_id":"onlyAccountID","aggregation_mode":"yes"}]}

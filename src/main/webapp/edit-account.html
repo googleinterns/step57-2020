@@ -19,17 +19,22 @@
     </div>
     <h1>Billing Configuration Sync Tool</h1></br>
     <h2>Edit Configuration</h2>
-  
-  
     <div id="edit-account">
-      <label for="customer-id">Customer ID:</label>
+      <form id="config-search" onsubmit="buildEditForm(); return false;">
+        <label for="customer-id">Customer ID:</label>
+        <select id="customer-ids" onchange="javascript:populateAccountList()">
+        </select><br>
+        <label for="account-id">Account ID:</label>
+        <select id="account-ids">
+        </select><br><br>
+        <button type="submit" onclick="document.getElementById('edit-form').style.display = 'block';">Search</button><br><br>
+     </form>
+      <!-- <label for="customer-id">Customer ID:</label>
       <select id="customer-ids" onchange="javascript:populateAccountList()">></select><br><br>
       <label for="account-id-field">Account ID:</label>
-      <select id="account-ids"></select><br><br>
-      <button type="submit" onclick="document.getElementById('edit-form').style.display = 'block';">Search</button><br><br>
+      <select id="account-ids"></select><br><br> 
+      <button type="submit" onclick="document.getElementById('edit-form').style.display = 'block';">Search</button><br><br> -->
     </div>
-
-
     <div id="edit-form">
       <p>Edit Your Existing Config</p> 
       <form id="edit-config-form" method="post" onsubmit="return validateEditFormInput();">
