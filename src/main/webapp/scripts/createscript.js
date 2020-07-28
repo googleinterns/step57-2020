@@ -14,17 +14,18 @@
 
 
 var accountIdNumber = 1;
+/**
+  * Adds additional account ID inputs for the user. 
+  */
 function addNewAccount() {
   var form = document.getElementById('create-form');
   
   var label = document.createElement('label');
   label.innerText = 'Account ID ' + accountIdNumber + ': ';
 
-
   var input = document.createElement('input');
   input.type = 'text';
   input.id = 'account-id-' + accountIdNumber;
-
 
   var lineBreak = document.createElement('br');
   form.appendChild(label);
