@@ -12,15 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
+var accountIdNumber = 1;
 function addNewAccount() {
-  var accountIdNumber = 1;
   var form = document.getElementById('create-form');
+  
+  var label = document.createElement('label');
+  label.innerText = 'Account ID ' + accountIdNumber + ': ';
+
+
   var input = document.createElement('input');
   input.type = 'text';
   input.id = 'account-id-' + accountIdNumber;
+
+
   var lineBreak = document.createElement('br');
+  form.appendChild(label);
   form.appendChild(input);
   form.appendChild(lineBreak);
+  
   accountIdNumber += 1;
 }
 

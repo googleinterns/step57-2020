@@ -11,9 +11,26 @@ body {
 }
 
 #createform {
+  position: relative;
+  display: table;
   text-align: center;
   border: solid 3px black;
   width: 500px;
   padding: 50px;
   margin: auto;
+}
+
+#add-button {
+  position: absolute;
+  align-content: center;
+  bottom: 20px;
+  left: 210px;
+  right: 0px;
+}
+
+#submit-button {
+  position: absolute;
+  align-content: center;
+  bottom: 20px;
+  right: 210px;
 }
