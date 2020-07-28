@@ -31,14 +31,14 @@ public class SheetsConverter {
   private final String INPUT_OPTION = "RAW";
 
   public void updateSheets(ArrayList<Vendor> vendorList, String accessToken) 
-    throws GeneralSecurityException, IOException {
+      throws GeneralSecurityException, IOException {
     sheetsService = SheetsServiceUtil.getSheetsService(accessToken);
     clearSheets(sheetsService);
     writeToSheet(vendorList, sheetsService); 
   }
 
   public void writeToSheet(ArrayList<Vendor> vendorList, Sheets sheetsService) 
-    throws GeneralSecurityException, IOException {
+      throws GeneralSecurityException, IOException {
 
     HashMap<String, ArrayList<Account>> allAccounts = 
       getAllAccounts(vendorList); 
@@ -71,7 +71,7 @@ public class SheetsConverter {
 
   /** Store the Accounts(value) associated to its Vendor(key) in a HashMap. */
   public HashMap<String, ArrayList<Account>> getAllAccounts(
-    ArrayList<Vendor> vendors) {      
+      ArrayList<Vendor> vendors) {      
 
     HashMap<String, ArrayList<Account>> allAccounts =  
       new HashMap<String, ArrayList<Account>>();
@@ -84,7 +84,7 @@ public class SheetsConverter {
   }
 
   public List<List<Object>> buildAccountSheetBody(
-    HashMap<String, ArrayList<Account>> accounts) {
+      HashMap<String, ArrayList<Account>> accounts) {
 
     // TODO: @cfloeder Sort the accounts by some criteria x. 
     List<List<Object>> accountSheetData = new ArrayList<List<Object>>();
