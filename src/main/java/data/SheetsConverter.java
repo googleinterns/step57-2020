@@ -39,7 +39,9 @@ public class SheetsConverter {
 
   public void writeToSheet(ArrayList<Vendor> vendorList, Sheets sheetsService) 
     throws GeneralSecurityException, IOException {
-    HashMap<String, ArrayList<Account>> allAccounts = getAllAccounts(vendorList); 
+
+    HashMap<String, ArrayList<Account>> allAccounts = 
+      getAllAccounts(vendorList); 
 
     // Retrieve the latest spreadsheet data as a List<List<Object>> 
     // as required by the Sheets API.
@@ -67,9 +69,12 @@ public class SheetsConverter {
       .clear(SPREADSHEET_ID, TAB_2, requestBody).execute();
   } 
 
-  /** Gets every Account that is associated with any Vendor from the List. */
-  public HashMap<String, ArrayList<Account>> getAllAccounts(ArrayList<Vendor> vendors) {
-    HashMap<String, ArrayList<Account>> allAccounts =  new HashMap<String, ArrayList<Account>>();
+  /** Store the Accounts(value) associated to its Vendor(key) in a HashMap. */
+  public HashMap<String, ArrayList<Account>> getAllAccounts(
+    ArrayList<Vendor> vendors) {      
+
+    HashMap<String, ArrayList<Account>> allAccounts =  
+      new HashMap<String, ArrayList<Account>>();
 
     for(int i = 0; i < vendors.size(); i++) {
       allAccounts.put(vendors.get(i).getVendorID(), vendors.get(i).getAccounts());
@@ -78,7 +83,9 @@ public class SheetsConverter {
     return allAccounts; 
   }
 
-  public List<List<Object>> buildAccountSheetBody(HashMap<String, ArrayList<Account>> accounts) {
+  public List<List<Object>> buildAccountSheetBody(
+    HashMap<String, ArrayList<Account>> accounts) {
+
     // TODO: @cfloeder Sort the accounts by some criteria x. 
     List<List<Object>> accountSheetData = new ArrayList<List<Object>>();
     accountSheetData.add(new ArrayList<Object>(Account.getAccountSheetHeader()));
@@ -86,8 +93,8 @@ public class SheetsConverter {
     for(Map.Entry<String, ArrayList<Account>> entry : accounts.entrySet()) { 
       ArrayList<Account> accountList = entry.getValue();
       for(int i = 0; i < accountList.size(); i++) {
-        accountSheetData.add(new ArrayList<Object>(accountList.get(i).getAccountSheetsRow(
-        entry.getKey())));
+        accountSheetData.add(new ArrayList<Object>(accountList.get(i)
+        .getAccountSheetsRow(entry.getKey())));
       }
     }
 

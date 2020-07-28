@@ -153,7 +153,6 @@ public class Account {
     this.aggregationMode = aggregationMode;
   }
 
-
   public static List<String> getAccountSheetHeader() {
     String[] accountData = { 
       FormIdNames.ACCOUNT_ID, 

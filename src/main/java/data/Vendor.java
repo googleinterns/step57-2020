@@ -126,7 +126,8 @@ public class Vendor {
       getNextGenVendorID());
 
     if (!accounts.isEmpty()) {
-      config += accounts.stream().map(Account::buildJsonConfig).collect(Collectors.joining(","));
+      config += accounts.stream().map(Account::buildJsonConfig)
+        .collect(Collectors.joining(","));
     }
     config += "]}";
     return config;
