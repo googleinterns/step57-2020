@@ -67,7 +67,7 @@ public final class AccountTest {
   @Test
   public void testToJsonMethod() {
     String expectedResponse = String.format("{\"legacy_account_id\":\"%s\"," +
-                    "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
+                    "\"next_gen_account_id\":%d,\"settlement_attributes\":{" +
                     "\"currency_code\":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"}," +
                     "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
                     "\"aggregation_mode\":\"%s\"}", LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID,
@@ -86,7 +86,7 @@ public final class AccountTest {
   @Test
   public void testConstructorFromJson() {
     String expectedResponse = String.format("{\"legacy_account_id\":\"%s\",\"" +
-            "next_gen_customer_id\":%d,\"settlement_attributes\":{\"currency_code\"" +
+            "next_gen_account_id\":%d,\"settlement_attributes\":{\"currency_code\"" +
             ":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"},\"settlement_config\"" +
             ":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\",\"aggregation_mode\"" +
             ":\"%s\"}",
