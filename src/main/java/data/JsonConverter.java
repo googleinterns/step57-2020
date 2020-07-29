@@ -36,7 +36,8 @@ public class JsonConverter {
 
   /**
    * Checks to see if a vendor's configuration already exists, and updates
-   * it if it does.
+   * it if it does. If a configuration does not exist, return false
+   * without writing changes.
    * @param vendor Vendor to update configuration
    * @return configuration write status
    */
