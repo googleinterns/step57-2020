@@ -35,6 +35,12 @@ function addNewAccount() {
   accountIdNumber += 1;
 }
 
+function buildQueryString() {
+  const vendorId = document.getElementById('customer-id').value;
+  const accountID1 = document.getElementById('account-id-1').value;
+  return `/CreateServlet?vendorID=${vendorId}&accountID=${selectedAccountId}`;
+}
+
 async function postNewConfig() {
   // TODO: Build query string and post to CreateServlet to create new file.
   var vendorId = document.getElementById('customer-id').value
