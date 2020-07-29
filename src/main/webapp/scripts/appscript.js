@@ -74,6 +74,7 @@ async function addConfigToPage() {
 function buildEditForm() {
   const editForm = document.getElementById('edit-config-form');
   editForm.action = buildQueryString();
+  showForm();
 }
 
 function buildQueryString() {
@@ -83,12 +84,19 @@ function buildQueryString() {
   if(selectedAccountId == "") {
     window.alert("A vendor ID and account ID have not been set yet!");
   } else {
-    if(document.getElementById('add-account') != null) {
-      document.getElementById('add-account').style.display = 'block';
-    } else if(document.getElementById('edit-form') != null) {
-      document.getElementById('edit-form').style.display = 'block';
-    }
     return `/BillingConfig?vendorID=${selectedVendorId}&accountID=${selectedAccountId}`;
+  }
+}
+
+function showForm() {
+  const selectedVendorId = document.getElementById('customer-ids').value;
+  const selectedAccountId = document.getElementById('account-ids').value;
+  if(selectedAccountId == "") {
+    // Do nothing.
+  } else if(document.getElementById('add-account') != null) {
+    document.getElementById('add-account').style.display = 'block';
+  } else if(document.getElementById('edit-form') != null) {
+    document.getElementById('edit-form').style.display = 'block';
   }
 }
 
