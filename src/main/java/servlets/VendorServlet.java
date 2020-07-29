@@ -57,7 +57,7 @@ public class VendorServlet extends HttpServlet {
     throws IOException {  
     String vendorID = request.getParameter(VENDOR_ID_PARAM);
     String responseString = String.format(
-      "Config with VendorID:%s was successfully deleted.", vendorID);
+      "Config with VendorID: %s was successfully deleted.", vendorID);
 
     // Delete the file from the filesystem and update the sheets.
     try {
