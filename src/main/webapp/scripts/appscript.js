@@ -93,7 +93,7 @@ function buildQueryString() {
 }
 
 /**
- * Validates the fields in teh edit form input and returns true if all fields have a valid format.
+ * Validates the fields in the edit form input and returns true iff all fields have a valid format.
  */
 function validateEditFormInput() {
   const form = document.getElementById('edit-config-form');
@@ -113,12 +113,6 @@ function validateEditFormInput() {
     // No problems found with form, so continue to redirect.
     // TODO: A dialogue box could appear here to confirm changes
     return true;
-  }
-}
-
-function addAccount() {
-  if(buildEditForm()) {
-    validateEditFormInput();
   }
 }
 
