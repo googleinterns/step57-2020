@@ -7,7 +7,7 @@ body {
 }
 
 label {
-  width: 160px;
+  width: 200px;
   display: inline-block;
   text-align: left;
 }
@@ -16,7 +16,6 @@ select {
   width: 200px;
   display: inline-block;
   text-align: left;
-  padding: 2px;
 }
 
 /* Creates a dropdown page menu */

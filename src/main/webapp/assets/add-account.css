@@ -1,4 +1,10 @@
+#edit-account {
+  margin: auto;
+  width: 500px;
+}
+
 #add-account {
+  display: none;
   border: solid 3px black;
   margin: auto;
   width: 500px;

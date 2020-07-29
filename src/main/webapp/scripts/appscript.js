@@ -79,7 +79,17 @@ function buildEditForm() {
 function buildQueryString() {
   const selectedVendorId = document.getElementById('customer-ids').value;
   const selectedAccountId = document.getElementById('account-ids').value;
-  return `/BillingConfig?vendorID=${selectedVendorId}&accountID=${selectedAccountId}`;
+  // check for space in accountID.
+  if(selectedAccountId == "") {
+    window.alert("A vendor ID and account ID have not been set yet!");
+  } else {
+    if(document.getElementById('add-account') != null) {
+      document.getElementById('add-account').style.display = 'block';
+    } else if(document.getElementById('edit-form') != null) {
+      document.getElementById('edit-form').style.display = 'block';
+    }
+    return `/BillingConfig?vendorID=${selectedVendorId}&accountID=${selectedAccountId}`;
+  }
 }
 
 /**
@@ -103,6 +113,12 @@ function validateEditFormInput() {
     // No problems found with form, so continue to redirect.
     // TODO: A dialogue box could appear here to confirm changes
     return true;
+  }
+}
+
+function addAccount() {
+  if(buildEditForm()) {
+    validateEditFormInput();
   }
 }
 
