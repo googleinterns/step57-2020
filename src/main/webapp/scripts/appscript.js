@@ -108,7 +108,28 @@ function validateEditFormInput() {
 
 // TODO: Method to populate edit form.
 async function populateEditForm() {
-
+  const queryString = buildQueryString();
+  fetch(queryString).then(response => {
+    return response.json();
+    }).then(data => {
+      // Work with JSON data here
+      console.log(data);
+      document.getElementById('legacy-customer-id').value = data.legacy_customer_id;
+      document.getElementById('next-gen-customer-id').value = data.next_gen_customer_id;
+      
+      return data.accounts[0];
+    }).then(account => {
+      
+      console.log(account);
+      document.getElementById('legacy-account-id').value = account.legacy_account_id;
+      document.getElementById('next-gen-account-id').value = account.next_gen_account_id;
+      document.getElementById('currency-code').value = account.settlement_attributes.currency_code;
+      document.getElementById('direction').value = account.settlement_attributes.direction;
+      document.getElementById('entity').value = account.settlement_attributes.entity;
+      document.getElementById('matching-mode').value = account.settlement_config.matching_mode;
+      document.getElementById('account-id').value = account.account_id;
+      document.getElementById('aggregation-mode').value = account.aggregation_mode;
+    });
 }
 // TODO: Method for enums: Check which of the tags has data under it {isLoggedIn:{loginURL},isLoggedOut:{logooutURL}}}
 async function checkLoginStatus() {
