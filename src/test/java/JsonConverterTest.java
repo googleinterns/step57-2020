@@ -47,6 +47,8 @@ public final class JsonConverterTest {
   private final int NEXT_GEN_ACCOUNT_ID = 17;
   private final String MATCHING_MODE = "straight";
   private final String AGGREGATION_MODE = "totalAgg";
+  private final String FAKE_VENDOR_ID = "fake_id";
+
 
   /** Create a Vendor and Account object. */
   @Before
@@ -61,12 +63,20 @@ public final class JsonConverterTest {
   /** Test that updateFile() returns true. */
   @Test
   public void testUpdateFileMethod() throws IOException {
-
     boolean expectedResponse = true;
     boolean actualResponse = converter.updateFile(vendor);
 
-    assertTrue("updateFile() didn't return true when it should have.",
-            expectedResponse == actualResponse);
+    assertEquals("updateFile() refused to update existing file.",
+            expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void testUpdateNonexistentFile() {
+    boolean expected = false;
+    boolean actual = converter.updateFile(new Vendor(FAKE_VENDOR_ID,
+            LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID));
+    assertEquals("updateFile() updated file that does not exist",
+            expected, actual);
   }
 
   /**
