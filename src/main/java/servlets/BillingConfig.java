@@ -35,6 +35,11 @@ public class BillingConfig extends HttpServlet {
   private Vendor vendor;
   private Account account;
 
+  /**
+   * Read data endpoint.
+   * @param request form that contains valid vendor and account IDs
+   * @param response returns a configuration in JSON format
+   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
     String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
@@ -54,7 +59,13 @@ public class BillingConfig extends HttpServlet {
   }
 
   /**
-   * Edit endpoint.
+   * Edit/update endpoint.
+   * Accepts requests that update existing accounts that belong to an existing
+   * vendor or requests that create new accounts under an existing vendor.
+   * @param request  form data
+   * @param response if the operation succeeds, the vendorId is printed to
+   *                 response object. If the operation fails, a 400 error
+   *                 message is sent.
    */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
