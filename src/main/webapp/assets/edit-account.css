@@ -1,0 +1,11 @@
+#edit-account {
+  margin: auto;
+  width: 500px;
+}
+
+#edit-form {
+  display:none;
+  border: solid 3px black;
+  margin: auto;
+  width: 500px;
+}
