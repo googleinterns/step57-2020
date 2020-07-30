@@ -144,6 +144,7 @@ public class Vendor {
   public void editVendorAccount(HttpServletRequest request) {
     String accountId = request.getParameter(FormIdNames.ACCOUNT_ID);
     Account account = getAccountById(accountId);
+    account.update(request);
   }
 
   public void addNewAccount(HttpServletRequest request) {
