@@ -64,7 +64,7 @@ public class BillingConfig extends HttpServlet {
       String vendorId = request.getParameter(FormIdNames.VENDOR_ID);
       String accountId = request.getParameter(FormIdNames.ACCOUNT_ID);
 
-      // Construct vendor object to make changes directly
+      // Construct vendor object from existing JSON to make changes directly
       Vendor vendor = new Vendor(jsonConverter.getConfig(vendorId), vendorId);
 
       if (jsonConverter.accountExists(vendor, accountId)) {
@@ -72,6 +72,7 @@ public class BillingConfig extends HttpServlet {
         vendor.editVendorAccount(request);
       } else {
         // Create a new account under an existing vendor.
+        vendor.addNewAccount(request);
       }
 
       if (jsonConverter.updateFile(vendor)) {

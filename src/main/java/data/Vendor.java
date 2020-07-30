@@ -148,6 +148,7 @@ public class Vendor {
   }
 
   public void addNewAccount(HttpServletRequest request) {
-
+    Account account = new Account(request);
+    addAccount(account);
   }
 }
