@@ -101,8 +101,8 @@ public class Vendor {
         return account;
       }
     }
-    // Throw IllegalArgumentException if the account cannot be found in the list.
-    throw new IllegalArgumentException();
+    // returns null when account isn't found in the list.
+    return null;
   }
 
   public static List<String> getVendorSheetHeader() {
@@ -141,12 +141,24 @@ public class Vendor {
     return config;
   }
 
+  /**
+   * Updates the Account specified in the HttpServletRequest.
+   * @param request a request containing form data to edit an existing account
+   */
   public void editVendorAccount(HttpServletRequest request) {
     String accountId = request.getParameter(FormIdNames.ACCOUNT_ID);
     Account account = getAccountById(accountId);
+
+    // Checked previously to see if the account exists, but this confirms
+    // that assumption.
+    assert account != null;
     account.update(request);
   }
 
+  /**
+   * Adds a new Account to the callee.
+   * @param request a request containing form data to create a new account.
+   */
   public void addNewAccount(HttpServletRequest request) {
     Account account = new Account(request);
     addAccount(account);

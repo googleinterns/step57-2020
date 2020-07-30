@@ -63,7 +63,6 @@ public class BillingConfig extends HttpServlet {
       JsonConverter jsonConverter = new JsonConverter();
       String vendorId = request.getParameter(FormIdNames.VENDOR_ID);
       String accountId = request.getParameter(FormIdNames.ACCOUNT_ID);
-
       // Construct vendor object from existing JSON to make changes directly
       Vendor vendor = new Vendor(jsonConverter.getConfig(vendorId), vendorId);
 
