@@ -53,23 +53,33 @@ public class BillingConfig extends HttpServlet {
     response.getWriter().println(configText);
   }
 
+  /**
+   * Edit endpoint.
+   */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
     try {
       JsonConverter jsonConverter = new JsonConverter();
-      String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
-      assert vendorID != null && !vendorID.equals("null");
+      String vendorId = request.getParameter(FormIdNames.VENDOR_ID);
+      String accountId = request.getParameter(FormIdNames.ACCOUNT_ID);
 
-      Vendor oldConfig = new Vendor(jsonConverter.getConfig(vendorID), vendorID);
-      Vendor newConfig = new Vendor(request);
+      // Construct vendor object to make changes directly
+      Vendor vendor = new Vendor(jsonConverter.getConfig(vendorId), vendorId);
 
-      if (jsonConverter.updateFile(oldConfig)) {
+      if (jsonConverter.accountExists(vendor, accountId)) {
+        // Edit an existing account.
+        vendor.editVendorAccount(request);
+      } else {
+        // Create a new account under an existing vendor.
+      }
+
+      if (jsonConverter.updateFile(vendor)) {
         // Update Google sheets following update file.
         updateSheets(request);
 
         // Redirect only when the operation succeeded.
-        response.getWriter().println(oldConfig.getVendorID());
+        response.getWriter().println(vendor.getVendorID());
         response.sendRedirect(REDIRECT_READFILE);
       } else {
         response.sendError(400, "This configuration does not exist.");
