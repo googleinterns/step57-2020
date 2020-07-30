@@ -93,7 +93,7 @@ function buildQueryString() {
 }
 
 /**
- * Validates the fields in teh edit form input and returns true if all fields have a valid format.
+ * Validates the fields in the edit form input and returns true iff all fields have a valid format.
  */
 function validateEditFormInput() {
   const form = document.getElementById('edit-config-form');
