@@ -177,9 +177,11 @@ public final class AccountTest {
 
     account.updateExistingAccount(request);
 
-    Account expectedAccount = new Account(NEW_ACCOUNT_ID, NEW_VENDOR_ID, NEW_ENTITY, NEW_CURRENCY, NEW_DIRECTION,
-            NEW_LEGACY_ACCOUNT_ID, NEW_NEXT_GEN_ACCOUNT_ID, NEW_MATCHING_MODE, NEW_AGGREGATION_MODE);
+    Account expectedAccount = new Account(NEW_ACCOUNT_ID, NEW_VENDOR_ID,
+            NEW_ENTITY, NEW_CURRENCY, NEW_DIRECTION, NEW_LEGACY_ACCOUNT_ID,
+            NEW_NEXT_GEN_ACCOUNT_ID, NEW_MATCHING_MODE, NEW_AGGREGATION_MODE);
 
-    assertEquals("Failed to update account data", account.buildJsonConfig(), expectedAccount.buildJsonConfig());
+    assertEquals("Failed to update account data", account.buildJsonConfig(),
+            expectedAccount.buildJsonConfig());
   }
 }
