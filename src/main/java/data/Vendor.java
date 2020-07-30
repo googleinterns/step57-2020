@@ -152,7 +152,7 @@ public class Vendor {
     // Checked previously to see if the account exists, but this confirms
     // that assumption.
     assert account != null;
-    account.update(request);
+    account.updateExistingAccount(request);
   }
 
   /**
