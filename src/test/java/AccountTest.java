@@ -15,6 +15,7 @@
 package javatests;
 
 import data.Account;
+import org.mockito.Mockito;
 import util.FormIdNames;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -22,6 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -42,11 +44,22 @@ public final class AccountTest {
   private final String MATCHING_MODE = "straight";
   private final String AGGREGATION_MODE = "totalAgg";
 
+  private final String NEW_ACCOUNT_ID = "new_acc_12";
+  private final String NEW_VENDOR_ID = "new_vend-21";
+  private final String NEW_ENTITY = "new_shopper";
+  private final String NEW_CURRENCY = "new_USD";
+  private final String NEW_DIRECTION = "new_disbursement";
+  private final String NEW_LEGACY_ACCOUNT_ID = "new_legAcc_53";
+  private final int NEW_NEXT_GEN_ACCOUNT_ID = 100;
+  private final String NEW_MATCHING_MODE = "new_straight";
+  private final String NEW_AGGREGATION_MODE = "new_totalAgg";
+
   /** Create an Account object. */
   @Before
   public void setUp() {
     account = new Account(ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION,
             LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE);
+
   }
 
   /** Test that the constructor set the Vendor fields with the correct data. */
@@ -137,5 +150,36 @@ public final class AccountTest {
     List<String> actualResponse = account.getAccountSheetsRow(VENDOR_ID);
 
     assertEquals(expectedResponse, actualResponse);
+  }
+
+  /** Confirm that edits made to an account are applied correctly */
+  @Test
+  public void testUpdateExistingAccount() {
+    HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+    Mockito.when(request.getParameter(FormIdNames.VENDOR_ID))
+            .thenReturn(NEW_VENDOR_ID);
+    Mockito.when(request.getParameter(FormIdNames.ACCOUNT_ID))
+            .thenReturn(NEW_ACCOUNT_ID);
+    Mockito.when(request.getParameter(FormIdNames.LEGACY_ACCOUNT_ID))
+            .thenReturn(NEW_LEGACY_ACCOUNT_ID);
+    Mockito.when(request.getParameter(FormIdNames.NEXT_GEN_ACCOUNT_ID))
+            .thenReturn(String.valueOf(NEW_NEXT_GEN_ACCOUNT_ID));
+    Mockito.when(request.getParameter(FormIdNames.CURRENCY_CODE))
+            .thenReturn(NEW_CURRENCY);
+    Mockito.when(request.getParameter(FormIdNames.DIRECTION))
+            .thenReturn(NEW_DIRECTION);
+    Mockito.when(request.getParameter(FormIdNames.ENTITY))
+            .thenReturn(NEW_ENTITY);
+    Mockito.when(request.getParameter(FormIdNames.MATCHING_MODE))
+            .thenReturn(NEW_MATCHING_MODE);
+    Mockito.when(request.getParameter(FormIdNames.AGGREGATION_MODE))
+            .thenReturn(NEW_AGGREGATION_MODE);
+
+    account.updateExistingAccount(request);
+
+    Account expectedAccount = new Account(NEW_ACCOUNT_ID, NEW_VENDOR_ID, NEW_ENTITY, NEW_CURRENCY, NEW_DIRECTION,
+            NEW_LEGACY_ACCOUNT_ID, NEW_NEXT_GEN_ACCOUNT_ID, NEW_MATCHING_MODE, NEW_AGGREGATION_MODE);
+
+    assertEquals("Failed to update account data", account.buildJsonConfig(), expectedAccount.buildJsonConfig());
   }
 }
