@@ -57,14 +57,19 @@ public class BillingConfig extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
     try {
-      Vendor newVendor = new Vendor(request);
       JsonConverter jsonConverter = new JsonConverter();
-      if (jsonConverter.updateFile(newVendor)) {
+      String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
+      assert vendorID != null && !vendorID.equals("null");
+
+      Vendor oldConfig = new Vendor(jsonConverter.getConfig(vendorID), vendorID);
+      Vendor newConfig = new Vendor(request);
+
+      if (jsonConverter.updateFile(oldConfig)) {
         // Update Google sheets following update file.
         updateSheets(request);
 
         // Redirect only when the operation succeeded.
-        response.getWriter().println(newVendor.getVendorID());
+        response.getWriter().println(oldConfig.getVendorID());
         response.sendRedirect(REDIRECT_READFILE);
       } else {
         response.sendError(400, "This configuration does not exist.");

@@ -9,20 +9,20 @@
   </head>
   <body onload="javascript:populateCustomerList()">
     <div class="drop_menu">
-			<button class="menu_button">Page Menu</button>
-			<div class="dropdown_content">
-				<a href="readfile.html">Read Configuration</a>
+      <button class="menu_button">Page Menu</button>
+      <div class="dropdown_content">
+        <a href="readfile.html">Read Configuration</a>
         <a href="createfile.html">Create Configuration</a>        
         <a href="editfile.html">Edit Configuration</a>
         <a href="deletefile.html">Delete Configuration</a>
-		  </div>
+      </div>
     </div>
     <h1>Billing Configuration Sync Tool</h1></br>
     <h2>Add Account</h2>
     <div id="edit-account">
       <form id="config-search" onsubmit="buildEditForm(); return false;">
-        <label for="customer-id">Customer ID:</label>
-        <select id="customer-ids" onchange="javascript:populateAccountList()">
+        <label for="customer-ids">Customer ID:</label>
+        <select id="customer-ids" onchange="populateAccountList()">
         </select><br>
         <label for="account-id">Account ID:</label>
         <input type="text" id="account-ids" name="legacy-customer-id"><br><br><br>
@@ -53,7 +53,7 @@
         <input type="text" id="matching-mode" name="matching-mode"><br>
         <p>ACCOUNT</p>
         <label for="account-id">Product Account Key/Account ID:</label>
-        <input type="text" id="account-ids" name="account-id"><br>
+        <input type="text" id="account-id" name="account-id"><br>
         <label for="aggregation-mode">Aggregation Mode:</label>
         <input type="text" id="aggregation-mode" name="aggregation-mode"><br><br>
         <input type="submit"><br><br>

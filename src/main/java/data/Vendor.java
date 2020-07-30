@@ -46,8 +46,6 @@ public class Vendor {
     this.legacyVendorID = request.getParameter(FormIdNames.LEGACY_CUSTOMER_ID);
     this.nextGenVendorID = Integer.parseInt(request.getParameter(
             FormIdNames.NEXT_GEN_CUSTOMER_ID));
-
-    // TODO: add method to parse variable number of accounts?
     Account newAccount = new Account(request);
     accountList = new ArrayList<>();
     accountList.add(newAccount);
@@ -132,4 +130,8 @@ public class Vendor {
     config += "]}";
     return config;
   }
+//
+//  public Vendor update(Vendor other) {
+//    return;
+//  }
 }
