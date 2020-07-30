@@ -38,12 +38,18 @@ function addNewAccount() {
 function buildQueryString() {
   const vendorId = document.getElementById('customer-id').value;
   const accountID1 = document.getElementById('account-id-1').value;
-  return `/CreateServlet?vendorID=${vendorId}&accountID=${selectedAccountId}`;
+  return `/CreateServlet?vendorID=${vendorId}&accountID=${accountID1}`;
 }
 
 async function postNewConfig() {
   // TODO: Build query string and post to CreateServlet to create new file.
-  var vendorId = document.getElementById('customer-id').value
-  var accountId = document.getElementById('account-id').value
+  var postResponse = await fetch(buildQueryString(), {
+    method: 'POST'
+  });
+
+  var responseJson = await postResponse.json();
+
+  // TODO: Alerts for errors. 
+
 
 }

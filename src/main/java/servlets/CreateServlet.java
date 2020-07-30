@@ -35,20 +35,36 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 public class CreateServlet extends HttpServlet {
   public static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
   public static final String REDIRECT_EDITFILE = "/editfile.html";
-
-  public static final String VENDOR_ID = "vendor-id";
-  public static final String ACCOUNT_ID = "account-id";
+  private final String VENDOR_ID_PARAM = "vendorID";
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // POST method --> creates a new configuration file with a pre-made json config 
     // with the given vendor id and account id and all other values as null.
-    response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
-
-
+    String vendorID = request.getParameter(VENDOR_ID_PARAM);
+    String responseString = String.format(
+      "New COnfig with VendorID:%s was successfully created.", vendorID);
+    
+    // Check if file doesn't already exist within the file system.
+    try {
+      ArrayList currentVendors = JsonConverter.getVendorIDs();
+      if (currentVendors.contains(vendorID) == true) {
+        response.sendError(400, "File already exists within file system.")
+      } else {
+        String jsonConfig = Vendor.buildJsonConfig();
+        // TODO: Also write this new config to sheets.
+        File newFile = JsonConverter.writeFile(vendorID, jsonConfig);
+        String jsonMessage = messageAsJson(responseString);
+        response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
+        response.getWriter().println(jsonMessage);
+      }
+      // TODO: Validate this exception is being thrown?
+    } catch(NumberFormatException e) {
+      response.sendError(400, "An error ocurred creating your file.");
+    }
   }
 }
 
 
-// TODO: Create endpoint makes a file with a jason with all ids that are null 
+// TODO: Create endpoint makes a file with a json with all ids that are null 
 // except for the vendor/account id 
