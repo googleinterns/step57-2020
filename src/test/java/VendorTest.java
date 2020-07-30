@@ -86,7 +86,7 @@ public final class VendorTest {
     vendor.addAccount(account);
     String expectedResponse = String.format("{\"legacy_customer_id\":\"%s\"," +
       "\"next_gen_customer_id\":%d,\"accounts\":[{\"legacy_account_id\":\"%s\"," +
-      "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
+      "\"next_gen_account_id\":%d,\"settlement_attributes\":{" +
       "\"currency_code\":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"}," +
       "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
       "\"aggregation_mode\":\"%s\"}]}", LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID,
