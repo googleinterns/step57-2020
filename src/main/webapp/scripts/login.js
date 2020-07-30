@@ -1,12 +1,13 @@
+// Load login page if not logged in, or redirect to readfile page. 
 async function loadLogInURL() {
   var response = await fetch('/Login');
   var map = await response.json();
-  console.log(map["loginURL"]);
+
   if (map["loginURL"] != "") {
     window.location = map["loginURL"];
   }
   else {
-    window.location = "OAuth";
+    window.location = "readfile.html";
   }
 }
 

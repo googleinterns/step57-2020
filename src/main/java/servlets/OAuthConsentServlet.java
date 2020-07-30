@@ -20,7 +20,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import data.ResponseBuilder;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -29,7 +28,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import util.UserAuthUtil;
 import util.OAuthConstants;
 
 @WebServlet("/OAuth")
