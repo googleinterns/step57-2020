@@ -26,8 +26,8 @@ import java.util.HashMap;
 
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
-  private static final String COMMENTS_URL = "/readfile.html";
-  private static final String HOME_PAGE_URL = "/login.html";
+  private static final String OAUTH_URL = "/OAuth";
+  private static final String LOG_PAGE_URL = "/login.html";
   private static final String TEXT_TYPE = "text/html";
 
   @Override
@@ -40,10 +40,10 @@ public class LoginServlet extends HttpServlet {
     String loginStatus = "";
 
     if(userService.isUserLoggedIn()) {
-      logoutURL = userService.createLogoutURL(HOME_PAGE_URL); 
+      logoutURL = userService.createLogoutURL(LOG_PAGE_URL); 
       loginStatus = "true"; 
     } else {
-      loginURL = userService.createLoginURL(COMMENTS_URL);
+      loginURL = userService.createLoginURL(OAUTH_URL);
       loginStatus = "false";
     }
 
