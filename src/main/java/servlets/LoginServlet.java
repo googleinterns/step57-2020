@@ -13,27 +13,56 @@
 // limitations under the License.
 package servlets;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+import com.google.gson.Gson;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import data.ResponseBuilder;
-import java.io.PrintWriter;
-import javax.servlet.http.*;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
-import util.UserAuthUtil;
+import java.util.HashMap;
 
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
-  private static final String CONTENT_TYPE_TEXT_HTML = "text/html;";
-  private static final String REDIRECT_LINK = "/Login";
+  private static final String COMMENTS_URL = "/readfile.html";
+  private static final String HOME_PAGE_URL = "/login.html";
+  private static final String TEXT_TYPE = "text/html";
 
-  // Returns a URL to either login or logout.
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType(CONTENT_TYPE_TEXT_HTML);
-    response.getWriter().println(ResponseBuilder.toJson(UserAuthUtil.isUserLoggedIn(), REDIRECT_LINK));
+    response.setContentType(TEXT_TYPE);
+    UserService userService = UserServiceFactory.getUserService();
+    HashMap<String, String> loginObject = new HashMap<String, String>();
+    String loginURL = "";
+    String logoutURL = "";
+    String loginStatus = "";
+
+    if(userService.isUserLoggedIn()) {
+      logoutURL = userService.createLogoutURL(HOME_PAGE_URL); 
+      loginStatus = "true"; 
+    } else {
+      loginURL = userService.createLoginURL(COMMENTS_URL);
+      loginStatus = "false";
+    }
+
+    loginObject.put("loginURL", loginURL);
+    loginObject.put("logoutURL", logoutURL);
+    loginObject.put("loginStatus", loginStatus);
+
+    // Convert the URL to a JSON String.
+    String jsonMessage = messageListAsJson(loginObject);
+
+    // Send the JSON message as the response.
+    response.setContentType(TEXT_TYPE);
+    response.getWriter().println(jsonMessage);
+  }
+
+  /**
+  * Converts a Java HashMap into a JSON string using Gson.  
+  */
+  private String messageListAsJson(HashMap<String, String> output) {
+    return new Gson().toJson(output);
   }
 }
