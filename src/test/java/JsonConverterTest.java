@@ -87,7 +87,6 @@ public final class JsonConverterTest {
   public void testGetConfigMethod() {
     String expectedResponse = "{\"legacy_customer_id\":\"legVend_27\",\"next_gen_customer_id\":17,\"accounts\":[]}";
     String actualResponse = converter.getConfig(VENDOR_ID);
-
     assertEquals(removeWhitespace(expectedResponse), removeWhitespace(actualResponse));
   }
 
@@ -182,5 +181,13 @@ public final class JsonConverterTest {
     Collections.sort(actualVendorIDs);
 
     assertTrue(expectedVendorIDs.equals(actualVendorIDs));
+  }
+
+  @Test
+  public void testAccountExists() {
+    vendor.addAccount(account);
+    boolean actualResponse = converter.accountExists(vendor, ACCOUNT_ID);
+    boolean expectedResponse = true;
+    assertEquals(actualResponse, expectedResponse);
   }
 }
