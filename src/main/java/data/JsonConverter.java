@@ -48,7 +48,6 @@ public class JsonConverter {
     } else {
       String jsonConfig = vendor.buildJsonConfig();
       File config = writeFile(vendor.getVendorID(), jsonConfig);
-      System.out.println("writing file");
       return true;
     }
   }
@@ -147,12 +146,9 @@ public class JsonConverter {
     try {
       String config = getConfig(vendorID);
       Vendor vendor = new Vendor(config, vendorID);
-      ArrayList<Account> accounts = vendor.getAccounts();
       ArrayList<String> accountIds = new ArrayList<String>();
+      vendor.getAccounts().forEach(account -> accountIds.add(account.getAccountID()));
 
-      for (Account account : accounts) {
-        accountIds.add(account.getAccountID());
-      }
       return accountIds;
     } catch (IOException e) {
       throw new IOException("Failed to parse JSON configuration");
@@ -160,12 +156,9 @@ public class JsonConverter {
   }
 
   private ArrayList<String> getAccountIDs(Vendor vendor) {
-    ArrayList<Account> accounts = vendor.getAccounts();
     ArrayList<String> accountIds = new ArrayList<String>();
+    vendor.getAccounts().forEach(account -> accountIds.add(account.getAccountID()));
 
-    for (Account account : accounts) {
-      accountIds.add(account.getAccountID());
-    }
     return accountIds;
   }
 
