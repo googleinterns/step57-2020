@@ -48,6 +48,7 @@ public class JsonConverter {
     } else {
       String jsonConfig = vendor.buildJsonConfig();
       File config = writeFile(vendor.getVendorID(), jsonConfig);
+      System.out.println("writing file");
       return true;
     }
   }
@@ -134,6 +135,10 @@ public class JsonConverter {
     return getVendorIDs().contains(vendorID);
   }
 
+  public boolean accountExists(Vendor vendor, String accountId) {
+    return getAccountIDs(vendor).contains(accountId);
+  }
+
   /**
    * Returns an ArrayList of account ID strings.
    * If none exist for the vendor, an empty ArrayList is returned
@@ -152,6 +157,16 @@ public class JsonConverter {
     } catch (IOException e) {
       throw new IOException("Failed to parse JSON configuration");
     }
+  }
+
+  private ArrayList<String> getAccountIDs(Vendor vendor) {
+    ArrayList<Account> accounts = vendor.getAccounts();
+    ArrayList<String> accountIds = new ArrayList<String>();
+
+    for (Account account : accounts) {
+      accountIds.add(account.getAccountID());
+    }
+    return accountIds;
   }
 
   /** Delete the file that is associated with the desired vendorID. */

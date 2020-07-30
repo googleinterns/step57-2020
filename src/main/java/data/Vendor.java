@@ -95,6 +95,16 @@ public class Vendor {
     return accountList;
   }
 
+  public Account getAccountById(String accountId) {
+    for (Account account : accountList) {
+      if (account.getAccountID().equals(accountId)) {
+        return account;
+      }
+    }
+    // Throw IllegalArgumentException if the account cannot be found in the list.
+    throw new IllegalArgumentException();
+  }
+
   public static List<String> getVendorSheetHeader() {
     String[] accountData = {  
       FormIdNames.VENDOR_ID, 
@@ -130,8 +140,13 @@ public class Vendor {
     config += "]}";
     return config;
   }
-//
-//  public Vendor update(Vendor other) {
-//    return;
-//  }
+
+  public void editVendorAccount(HttpServletRequest request) {
+    String accountId = request.getParameter(FormIdNames.ACCOUNT_ID);
+    Account account = getAccountById(accountId);
+  }
+
+  public void addNewAccount(HttpServletRequest request) {
+
+  }
 }
