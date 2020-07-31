@@ -18,7 +18,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import util.UserAuthUtil;
 
 @WebServlet("/InvalidateSession")
 public class InvalidateSessionServlet extends HttpServlet {
