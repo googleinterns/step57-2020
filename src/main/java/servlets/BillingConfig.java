@@ -52,6 +52,7 @@ public class BillingConfig extends HttpServlet {
       } else {
         configText = json.getAccountConfig(vendorID, accountID);
       }
+      response.getWriter().println(configText);
     } catch (FileNotFoundException e) {
       response.sendError(400, "Error finding " + vendorID + "'s configuration");
     }
