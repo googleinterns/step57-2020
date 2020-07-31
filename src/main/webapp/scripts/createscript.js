@@ -49,6 +49,10 @@ async function postNewConfig() {
 
   var responseJson = await postResponse.json();
 
+  if (confirm(responseJson)) {
+    window.location.reload();
+  }
+
   // TODO: Alerts for errors. 
 
 

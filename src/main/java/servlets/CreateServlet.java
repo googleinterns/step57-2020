@@ -58,6 +58,7 @@ public class CreateServlet extends HttpServlet {
         // TODO: Also write this new config to sheets.
         File newFile = converter.writeFile(vendorID, jsonConfig);
         response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
+        System.out.println(responseString);
         response.getWriter().println(responseString);
       }
       // TODO: Validate this exception is being thrown?
