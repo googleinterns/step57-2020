@@ -15,8 +15,8 @@ package servlets;
 
 import data.JsonConverter;
 import data.Vendor;
-import data.Account;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import javax.servlet.annotation.WebServlet;
@@ -33,21 +33,24 @@ public class BillingConfig extends HttpServlet {
   private static final String REDIRECT_INDEX = "/index.html";
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
     String accountID = request.getParameter(FormIdNames.ACCOUNT_ID);
-
-    JsonConverter json = new JsonConverter();
-    String configText = "";
-
-    if (json.getConfig(vendorID) != null) {
-      configText = json.getConfig(vendorID);
-    } else {
-      configText = "Error finding " + vendorID + "'s configuration";
-    }
-
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
-    response.getWriter().println(configText);
+
+    try {
+      JsonConverter json = new JsonConverter();
+      System.out.println(accountID);
+      if (accountID == null || !accountID.equals("null")) {
+        // If an AccountID is not set, print the entire configuration.
+        String configText = json.getConfigText(vendorID);
+      } else {
+        String configText = json.getAccountConfig(vendorID, accountID);
+      }
+      response.getWriter().println(configText);
+    } catch (FileNotFoundException e) {
+      response.sendError(400, "Error finding " + vendorID + "'s configuration");
+    }
   }
 
   @Override
