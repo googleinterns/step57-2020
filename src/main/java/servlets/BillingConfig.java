@@ -46,13 +46,12 @@ public class BillingConfig extends HttpServlet {
     try {
       JsonConverter json = new JsonConverter();
       String configText;
-      if (accountID == null || !accountID.equals("null")) {
+      if (accountID == null || accountID.equals("null")) {
         // If an AccountID is not set, print the entire configuration.
         configText = json.getConfigText(vendorID);
       } else {
         configText = json.getAccountConfig(vendorID, accountID);
       }
-      response.getWriter().println(configText);
     } catch (FileNotFoundException e) {
       response.sendError(400, "Error finding " + vendorID + "'s configuration");
     }
