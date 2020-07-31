@@ -65,7 +65,7 @@ public class Account {
   /** Construct an Account object from JSON representation. */
   public Account(JSONObject account) {
     this.legacyAccountID = account.getString(JsonKeys.LEGACY_ACCOUNT_ID);
-    this.nextGenAccountID = account.getInt(JsonKeys.NEXT_GEN_CUSTOMER_ID);
+    this.nextGenAccountID = account.getInt(JsonKeys.NEXT_GEN_ACCOUNT_ID);
 
     JSONObject settlementAttributesObj = account.
             getJSONObject(JsonKeys.SETTLEMENT_ATTRIBUTES_OBJ);
@@ -153,11 +153,27 @@ public class Account {
     this.aggregationMode = aggregationMode;
   }
 
+  public static List<String> getAccountSheetHeader() {
+    String[] accountData = { 
+      FormIdNames.ACCOUNT_ID, 
+      FormIdNames.VENDOR_ID, 
+      FormIdNames.ENTITY, 
+      FormIdNames.CURRENCY_CODE, 
+      FormIdNames.DIRECTION,
+      FormIdNames.LEGACY_ACCOUNT_ID,
+      FormIdNames.NEXT_GEN_ACCOUNT_ID,
+      FormIdNames.MATCHING_MODE,
+      FormIdNames.AGGREGATION_MODE
+    };
+
+    return Arrays.asList(accountData);
+  }
+
   /** Builds one row filled with an Account's data for the Sheet. */
-  public List<String> getAccountSheetsRow() {
+  public List<String> getAccountSheetsRow(String vendorID) {
     String[] accountData = { 
       getAccountID(), 
-      getVendorID(), 
+      vendorID, 
       getEntity(), 
       getCurrency(), 
       getDirection(),
@@ -173,7 +189,7 @@ public class Account {
   /** Return a JSON String representation of the fields. */
   public String buildJsonConfig() {
     return String.format("{\"legacy_account_id\":\"%s\"," +
-      "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
+      "\"next_gen_account_id\":%d,\"settlement_attributes\":{" +
       "\"currency_code\":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"}," +
       "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
       "\"aggregation_mode\":\"%s\"}", getLegacyAccountID(), getNextGenAccountID(),

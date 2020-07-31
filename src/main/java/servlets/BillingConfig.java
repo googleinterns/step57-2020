@@ -16,23 +16,16 @@ package servlets;
 import data.JsonConverter;
 import data.Vendor;
 import data.Account;
-import data.SheetsConverter;
 
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.security.GeneralSecurityException;
-import java.util.Enumeration;
-import java.util.stream.Collectors;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import util.FormIdNames;
+
+import static servlets.VendorServlet.updateSheets;
 
 @WebServlet("/BillingConfig")
 public class BillingConfig extends HttpServlet {
@@ -44,8 +37,6 @@ public class BillingConfig extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
-    // GET method --> returns entire billing config as JSON
-    // return null if vendor ID doesn't exist
     String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
     String accountID = request.getParameter(FormIdNames.ACCOUNT_ID);
 
@@ -56,29 +47,6 @@ public class BillingConfig extends HttpServlet {
       configText = json.getConfig(vendorID);
     } else {
       configText = "Error finding " + vendorID + "'s configuration";
-    }
-
-    /** 
-     * TODO: @cade, eventually you will want to pass this access token and 
-     * Vendor List into the updateSheets() method in the SheetsConverter class.
-     */
-    // Only retrieves the session if one exists.
-    HttpSession session = request.getSession(false);
-    String accessToken = session.getAttribute("accessToken").toString();
-
-    SheetsConverter sheet = new SheetsConverter();
-    try {
-      // Use hard-coded values to test writeToSheets method.
-      ArrayList<Vendor> vendors = new ArrayList<Vendor>();
-      vendor = new Vendor("vend_1", "legVend_27", 17);
-      account = new Account("acc_12", "vend_1", "shopper", "USD", "disbursement",
-            "legAcc_53", 17, "straight", "totalAgg");
-      vendor.addAccount(account);
-      vendors.add(vendor);
-
-      sheet.updateSheets(vendors, accessToken);
-    } catch (GeneralSecurityException e) {
-      // TODO: @cade Figure out how you want to handle this error.
     }
 
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
@@ -92,14 +60,22 @@ public class BillingConfig extends HttpServlet {
       Vendor newVendor = new Vendor(request);
       JsonConverter jsonConverter = new JsonConverter();
       if (jsonConverter.updateFile(newVendor)) {
-        // Redirect only when the operation succeeded
+        // Update Google sheets following update file.
+        updateSheets(request);
+
+        // Redirect only when the operation succeeded.
         response.getWriter().println(newVendor.getVendorID());
         response.sendRedirect(REDIRECT_READFILE);
       } else {
-        response.sendError(400, "Something went wrong when we tried to write your file.");
+        response.sendError(400, "This configuration does not exist.");
       }
     } catch(NumberFormatException e) {
       response.sendError(400, "A NumberFormatException occurred.");
+    } catch(GeneralSecurityException e) {
+      response.sendError(400, "A GeneralSecurityException occurred. Make sure you have authorized" +
+              "the Google Sheets API.");
+    } catch(IllegalStateException | NullPointerException e) {
+      response.sendError(400, "Your OAuth token has expired. Visit /OAuth to refresh");
     }
   }
 }

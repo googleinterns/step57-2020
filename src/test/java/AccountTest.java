@@ -15,6 +15,7 @@
 package javatests;
 
 import data.Account;
+import util.FormIdNames;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,7 +67,7 @@ public final class AccountTest {
   @Test
   public void testToJsonMethod() {
     String expectedResponse = String.format("{\"legacy_account_id\":\"%s\"," +
-                    "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
+                    "\"next_gen_account_id\":%d,\"settlement_attributes\":{" +
                     "\"currency_code\":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"}," +
                     "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
                     "\"aggregation_mode\":\"%s\"}", LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID,
@@ -85,7 +86,7 @@ public final class AccountTest {
   @Test
   public void testConstructorFromJson() {
     String expectedResponse = String.format("{\"legacy_account_id\":\"%s\",\"" +
-            "next_gen_customer_id\":%d,\"settlement_attributes\":{\"currency_code\"" +
+            "next_gen_account_id\":%d,\"settlement_attributes\":{\"currency_code\"" +
             ":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"},\"settlement_config\"" +
             ":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\",\"aggregation_mode\"" +
             ":\"%s\"}",
@@ -103,6 +104,27 @@ public final class AccountTest {
     assertEquals("Failed to construct Account object from JSON", expectedResponse, actualResponse);
   }
 
+  /** Test that getAccountSheetHeader returns the correct Account headings. */
+  @Test
+  public void testGetAccountSheetHeader() {
+    String[] expectedArray = {
+      FormIdNames.ACCOUNT_ID, 
+      FormIdNames.VENDOR_ID, 
+      FormIdNames.ENTITY, 
+      FormIdNames.CURRENCY_CODE, 
+      FormIdNames.DIRECTION,
+      FormIdNames.LEGACY_ACCOUNT_ID,
+      FormIdNames.NEXT_GEN_ACCOUNT_ID,
+      FormIdNames.MATCHING_MODE,
+      FormIdNames.AGGREGATION_MODE
+    };
+    List<String> expectedResponse = Arrays.asList(expectedArray);
+
+    List<String> actualResponse = Account.getAccountSheetHeader();
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
   /** Test that getAccountSheetsRow returns a List representing its data. */
   @Test
   public void testGetAccountSheetsRowMethod() {
@@ -112,7 +134,7 @@ public final class AccountTest {
     };
     List<String> expectedResponse = Arrays.asList(expectedArray);
 
-    List<String> actualResponse = account.getAccountSheetsRow();
+    List<String> actualResponse = account.getAccountSheetsRow(VENDOR_ID);
 
     assertEquals(expectedResponse, actualResponse);
   }

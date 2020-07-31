@@ -1,0 +1,44 @@
+/* This holds css specific to modal functionality. */
+
+/* Center cancel and delete buttons that have equal widths. */
+.cancelbtn, .deletebtn {
+  float: center;
+  width: 20%;
+  padding: 6px;
+}
+
+.cancelbtn {
+  background-color: rgb(204, 204, 204);
+}
+
+.deletebtn {
+  background-color: rgb(244, 67, 54);
+}
+
+/* The Modal (background). */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  background-color: rgb(105, 112, 128);
+  padding-top: 50px;
+}
+
+/* The Modal close button (x). */
+.close {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: rgb(241, 241, 241);
+}
+
+.close:hover, .close:focus {
+  color: rgb(244, 67, 54);
+  cursor: pointer;
+}

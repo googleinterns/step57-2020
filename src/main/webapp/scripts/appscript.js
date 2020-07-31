@@ -45,11 +45,11 @@ async function populateAccountList() {
   // Loops over the dictionary to find the corresponding value in the dictionary
   // and adds them to the Account ID <select> element.
   var accountHtml = '';
-      var array = vendorJson[vendorValue];
-      for (i = 0; i < array.length; i++) {
-        accountHtml += '<option value="' + array[i] + '">'
-        + array[i] + '</option>';
-      }
+  var array = vendorJson[vendorValue];
+  for (i = 0; i < array.length; i++) {
+    accountHtml += '<option value="' + array[i] + '">'
+    + array[i] + '</option>';
+  }
 
   // Adds the options to the page, allowing them to be viewed.
   document.getElementById('account-ids').innerHTML = accountHtml;
@@ -74,16 +74,33 @@ async function addConfigToPage() {
 function buildEditForm() {
   const editForm = document.getElementById('edit-config-form');
   editForm.action = buildQueryString();
+  showForm();
 }
 
 function buildQueryString() {
   const selectedVendorId = document.getElementById('customer-ids').value;
   const selectedAccountId = document.getElementById('account-ids').value;
-  return `/BillingConfig?vendorID=${selectedVendorId}&accountID=${selectedAccountId}`;
+  // check for space in accountID.
+  if(selectedAccountId == "") {
+    window.alert("A vendor ID and account ID have not been set yet!");
+  } else {
+    return `/BillingConfig?vendorID=${selectedVendorId}&accountID=${selectedAccountId}`;
+  }
+}
+
+function showForm() {
+  const selectedAccountId = document.getElementById('account-ids').value;
+  if(selectedAccountId == "") {
+    // Do nothing.
+  } else if(document.getElementById('add-account') != null) {
+    document.getElementById('add-account').style.display = 'block';
+  } else if(document.getElementById('edit-form') != null) {
+    document.getElementById('edit-form').style.display = 'block';
+  }
 }
 
 /**
- * Validates the fields in teh edit form input and returns true iff all fields have a valid format
+ * Validates the fields in the edit form input and returns true iff all fields have a valid format.
  */
 function validateEditFormInput() {
   const form = document.getElementById('edit-config-form');
@@ -106,10 +123,27 @@ function validateEditFormInput() {
   }
 }
 
-// TODO: Method to populate edit form.
+// TODO @cade: have BillingConfig return one Account, not enitre config.
 async function populateEditForm() {
-
+  const queryString = buildQueryString();
+  fetch(queryString).then(response => {
+    return response.json();
+  }).then(data => {
+    document.getElementById('legacy-customer-id').value = data.legacy_customer_id;
+    document.getElementById('next-gen-customer-id').value = data.next_gen_customer_id;
+    return data.accounts[0];
+  }).then(account => {
+    document.getElementById('legacy-account-id').value = account.legacy_account_id;
+    document.getElementById('next-gen-account-id').value = account.next_gen_account_id;
+    document.getElementById('currency-code').value = account.settlement_attributes.currency_code;
+    document.getElementById('direction').value = account.settlement_attributes.direction;
+    document.getElementById('entity').value = account.settlement_attributes.entity;
+    document.getElementById('matching-mode').value = account.settlement_config.matching_mode;
+    document.getElementById('account-id').value = account.account_id;
+    document.getElementById('aggregation-mode').value = account.aggregation_mode;
+  });
 }
+
 // TODO: Method for enums: Check which of the tags has data under it {isLoggedIn:{loginURL},isLoggedOut:{logooutURL}}}
 async function checkLoginStatus() {
   

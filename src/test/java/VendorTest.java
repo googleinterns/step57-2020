@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import data.Account;
 import data.Vendor;
+import util.FormIdNames;
 
 @RunWith(JUnit4.class)
 public final class VendorTest {
@@ -85,13 +86,28 @@ public final class VendorTest {
     vendor.addAccount(account);
     String expectedResponse = String.format("{\"legacy_customer_id\":\"%s\"," +
       "\"next_gen_customer_id\":%d,\"accounts\":[{\"legacy_account_id\":\"%s\"," +
-      "\"next_gen_customer_id\":%d,\"settlement_attributes\":{" +
+      "\"next_gen_account_id\":%d,\"settlement_attributes\":{" +
       "\"currency_code\":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"}," +
       "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
       "\"aggregation_mode\":\"%s\"}]}", LEGACY_VENDOR_ID, NEXT_GEN_VENDOR_ID,
       LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, CURRENCY, DIRECTION, ENTITY, 
       MATCHING_MODE, ACCOUNT_ID,AGGREGATION_MODE);
     String actualResponse = vendor.buildJsonConfig();
+
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  /** Test that getVendorSheetHeader returns the correct Vendor headings. */
+  @Test
+  public void testGetAccountSheetHeader() {
+    String[] expectedArray = {
+      FormIdNames.VENDOR_ID, 
+      FormIdNames.LEGACY_CUSTOMER_ID,
+      FormIdNames.NEXT_GEN_CUSTOMER_ID,
+    };
+    List<String> expectedResponse = Arrays.asList(expectedArray);
+
+    List<String> actualResponse = Vendor.getVendorSheetHeader();
 
     assertEquals(expectedResponse, actualResponse);
   }
