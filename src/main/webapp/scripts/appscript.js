@@ -80,16 +80,17 @@ function buildEditForm() {
 
 /**
  * Builds a query string specific to the edit form to fetch an entire configuration
- * @return {string}   contains "vendorID" and "destination", where vendorID is the associated ID and
- *                    destination should equal editForm
+ * @return {string}   contains "vendorID" and "entireConfig", where vendorID is the associated ID and
+ *                    entireConfig is a boolean that should be true, returning the entire config text
  */
 function buildQueryStringEditForm() {
   const selectedVendorId = document.getElementById('customer-ids').value;
-  return `/BillingConfig?vendorID=${selectedVendorId}&destination=editForm`;
+  return `/BillingConfig?vendorID=${selectedVendorId}&entireConfig=true`;
 }
 
 /**
  * Builds a generic query string containing vendor and account IDs
+ * entireConfig=false denotes the response should only contain the specified account
  */
 function buildQueryString() {
   const selectedVendorId = document.getElementById('customer-ids').value;
@@ -98,7 +99,7 @@ function buildQueryString() {
   if (selectedAccountId == "") {
     window.alert("A vendor ID and account ID have not been set yet!");
   } else {
-    return `/BillingConfig?vendorID=${selectedVendorId}&accountID=${selectedAccountId}`;
+    return `/BillingConfig?vendorID=${selectedVendorId}&accountID=${selectedAccountId}&entireConfig=false`;
   }
 }
 

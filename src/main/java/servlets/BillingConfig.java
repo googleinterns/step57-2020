@@ -15,40 +15,41 @@ package servlets;
 
 import data.JsonConverter;
 import data.Vendor;
+import util.FormIdNames;
+import static servlets.VendorServlet.updateSheets;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import util.FormIdNames;
 
-import static servlets.VendorServlet.updateSheets;
 
 @WebServlet("/BillingConfig")
 public class BillingConfig extends HttpServlet {
   private static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
   private static final String REDIRECT_INDEX = "/index.html";
-  private static final String EDIT_FORM_DESTINATION = "editForm";
 
   /**
-   * Read data endpoint.
+   * Read data endpoint for both the edit and read pages.
+   *
    * @param request form that contains valid vendor and account IDs
+   *                required fields: String vendorID & boolean entireConfig
    * @param response returns a configuration in JSON format
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
     String accountID = request.getParameter(FormIdNames.ACCOUNT_ID);
-    String destination = request.getParameter(FormIdNames.DESTINATION);
+    boolean getEntireConfig = Boolean.parseBoolean(request.getParameter(
+            FormIdNames.ENTIRE_CONFIG));
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
 
     try {
       JsonConverter json = new JsonConverter();
       String configText;
-      if (destination != null && destination.equals(EDIT_FORM_DESTINATION)) {
+      if (getEntireConfig) {
         // The edit form endpoint asks for the entire configuration text
         configText = json.getConfigText(vendorID);
       } else {
