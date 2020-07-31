@@ -35,6 +35,11 @@ public class BillingConfig extends HttpServlet {
   private Vendor vendor;
   private Account account;
 
+  /**
+   * Read data endpoint.
+   * @param request form that contains valid vendor and account IDs
+   * @param response returns a configuration in JSON format
+   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
     String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
@@ -53,18 +58,39 @@ public class BillingConfig extends HttpServlet {
     response.getWriter().println(configText);
   }
 
+  /**
+   * Edit/update endpoint.
+   * Accepts requests that update existing accounts that belong to an existing
+   * vendor or requests that create new accounts under an existing vendor.
+   * @param request  form data
+   * @param response if the operation succeeds, the vendorId is printed to
+   *                 response object. If the operation fails, a 400 error
+   *                 message is sent.
+   */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
     try {
-      Vendor newVendor = new Vendor(request);
       JsonConverter jsonConverter = new JsonConverter();
-      if (jsonConverter.updateFile(newVendor)) {
+      String vendorId = request.getParameter(FormIdNames.VENDOR_ID);
+      String accountId = request.getParameter(FormIdNames.ACCOUNT_ID);
+      // Construct vendor object from existing JSON to make changes directly
+      Vendor vendor = new Vendor(jsonConverter.getConfig(vendorId), vendorId);
+
+      if (jsonConverter.accountExists(vendor, accountId)) {
+        // Edit an existing account.
+        vendor.editVendorAccount(request);
+      } else {
+        // Create a new account under an existing vendor.
+        vendor.addNewAccount(request);
+      }
+
+      if (jsonConverter.updateFile(vendor)) {
         // Update Google sheets following update file.
         updateSheets(request);
 
         // Redirect only when the operation succeeded.
-        response.getWriter().println(newVendor.getVendorID());
+        response.getWriter().println(vendor.getVendorID());
         response.sendRedirect(REDIRECT_READFILE);
       } else {
         response.sendError(400, "This configuration does not exist.");
@@ -76,6 +102,8 @@ public class BillingConfig extends HttpServlet {
               "the Google Sheets API.");
     } catch(IllegalStateException | NullPointerException e) {
       response.sendError(400, "Your OAuth token has expired. Visit /OAuth to refresh");
+    } catch(IllegalArgumentException e) {
+      response.sendError(400, "You cannot edit protected fields");
     }
   }
 }

@@ -112,7 +112,7 @@ public final class VendorTest {
     assertEquals(expectedResponse, actualResponse);
   }
 
- /** Test that getVendorSheetsRow returns a List representing its data. */
+  /** Test that getVendorSheetsRow returns a List representing its data. */
   @Test
   public void testGetAccountSheetsRowMethod() {
     String[] expectedArray = {
@@ -123,5 +123,13 @@ public final class VendorTest {
     List<String> actualResponse = vendor.getVendorSheetsRow();
 
     assertEquals(expectedResponse, actualResponse);
+  }
+
+  /** Ensure grabbing accountById doesn't return null. */
+  @Test
+  public void testGetAccountById() {
+    vendor.addAccount(account);
+    // Accounts should have the same memory address, so direct comparison is OK.
+    assertEquals(account, vendor.getAccountById(ACCOUNT_ID));
   }
 }
