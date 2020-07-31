@@ -102,6 +102,8 @@ public class BillingConfig extends HttpServlet {
               "the Google Sheets API.");
     } catch(IllegalStateException | NullPointerException e) {
       response.sendError(400, "Your OAuth token has expired. Visit /OAuth to refresh");
+    } catch(IllegalArgumentException e) {
+      response.sendError(400, "You cannot edit protected fields");
     }
   }
 }

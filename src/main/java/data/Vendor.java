@@ -95,13 +95,16 @@ public class Vendor {
     return accountList;
   }
 
+  /**
+   * Grabs the specified account from account ID. If not found, the method
+   * returns null.
+   */
   public Account getAccountById(String accountId) {
     for (Account account : accountList) {
       if (account.getAccountID().equals(accountId)) {
         return account;
       }
     }
-    // returns null when account isn't found in the list.
     return null;
   }
 
@@ -145,11 +148,9 @@ public class Vendor {
    * Updates the Account specified in the HttpServletRequest.
    * @param request a request containing form data to edit an existing account
    */
-  public void editVendorAccount(HttpServletRequest request) {
+  public void editVendorAccount(HttpServletRequest request) throws IllegalArgumentException {
     String accountId = request.getParameter(FormIdNames.ACCOUNT_ID);
-    Account account = getAccountById(accountId);
-
-    account.updateExistingAccount(request);
+    getAccountById(accountId).updateExistingAccount(request);
   }
 
   /**

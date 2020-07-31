@@ -90,7 +90,7 @@ public class Account {
   }
 
   public String getVendorID() {
-    return vendorID;  
+    return vendorID;
   }
 
   public void setVendorID(String vendorID) {
@@ -154,11 +154,11 @@ public class Account {
   }
 
   public static List<String> getAccountSheetHeader() {
-    String[] accountData = { 
-      FormIdNames.ACCOUNT_ID, 
-      FormIdNames.VENDOR_ID, 
-      FormIdNames.ENTITY, 
-      FormIdNames.CURRENCY_CODE, 
+    String[] accountData = {
+      FormIdNames.ACCOUNT_ID,
+      FormIdNames.VENDOR_ID,
+      FormIdNames.ENTITY,
+      FormIdNames.CURRENCY_CODE,
       FormIdNames.DIRECTION,
       FormIdNames.LEGACY_ACCOUNT_ID,
       FormIdNames.NEXT_GEN_ACCOUNT_ID,
@@ -171,11 +171,11 @@ public class Account {
 
   /** Builds one row filled with an Account's data for the Sheet. */
   public List<String> getAccountSheetsRow(String vendorID) {
-    String[] accountData = { 
-      getAccountID(), 
-      vendorID, 
-      getEntity(), 
-      getCurrency(), 
+    String[] accountData = {
+      getAccountID(),
+      vendorID,
+      getEntity(),
+      getCurrency(),
       getDirection(),
       getLegacyAccountID(),
       Integer.toString(getNextGenAccountID()),
@@ -193,19 +193,27 @@ public class Account {
       "\"currency_code\":\"%s\",\"direction\":\"%s\",\"entity\":\"%s\"}," +
       "\"settlement_config\":{\"matching_mode\":\"%s\"},\"account_id\":\"%s\"," +
       "\"aggregation_mode\":\"%s\"}", getLegacyAccountID(), getNextGenAccountID(),
-      getCurrency(), getDirection(), getEntity(), getMatchingMode(), 
+      getCurrency(), getDirection(), getEntity(), getMatchingMode(),
       getAccountID(), getAggregationMode());
   }
 
   /**
+   * Update existing account information, preventing changes to legacyAccountId
+   * and nextGenAccountId
    * @param request contains form data to edit existing account
+   * @throws IllegalArgumentException thrown when edits are made to protected members
    */
-  public void updateExistingAccount(HttpServletRequest request) {
+  public void updateExistingAccount(HttpServletRequest request)
+          throws IllegalArgumentException {
+    if (!this.legacyAccountID.equals(
+            request.getParameter(FormIdNames.LEGACY_ACCOUNT_ID)) ||
+            this.nextGenAccountID != Integer.parseInt(
+                  request.getParameter(FormIdNames.NEXT_GEN_ACCOUNT_ID))) {
+
+      throw new IllegalArgumentException();
+    }
     this.vendorID = request.getParameter(FormIdNames.VENDOR_ID);
     this.accountID = request.getParameter(FormIdNames.ACCOUNT_ID);
-    this.legacyAccountID = request.getParameter(FormIdNames.LEGACY_ACCOUNT_ID);
-    this.nextGenAccountID = Integer.parseInt(
-            request.getParameter(FormIdNames.NEXT_GEN_ACCOUNT_ID));
     this.currency = request.getParameter(FormIdNames.CURRENCY_CODE);
     this.direction = request.getParameter(FormIdNames.DIRECTION);
     this.entity = request.getParameter(FormIdNames.ENTITY);
