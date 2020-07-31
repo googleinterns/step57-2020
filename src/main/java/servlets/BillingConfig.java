@@ -30,10 +30,7 @@ import static servlets.VendorServlet.updateSheets;
 @WebServlet("/BillingConfig")
 public class BillingConfig extends HttpServlet {
   private static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
-  private static final String REDIRECT_READFILE = "/index.html";
-
-  private Vendor vendor;
-  private Account account;
+  private static final String REDIRECT_INDEX = "/index.html";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
@@ -65,7 +62,7 @@ public class BillingConfig extends HttpServlet {
 
         // Redirect only when the operation succeeded.
         response.getWriter().println(newVendor.getVendorID());
-        response.sendRedirect(REDIRECT_READFILE);
+        response.sendRedirect(REDIRECT_INDEX);
       } else {
         response.sendError(400, "This configuration does not exist.");
       }
