@@ -18,6 +18,7 @@ import data.Vendor;
 import data.Account;
 import data.SheetsConverter;
 
+import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -41,25 +42,26 @@ public class CreateServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // POST method --> creates a new configuration file with a pre-made json config 
     // with the given vendor id and account id and all other values as null.
+    JsonConverter converter = new JsonConverter();
+    Vendor vendor = new Vendor();
     String vendorID = request.getParameter(VENDOR_ID_PARAM);
     String responseString = String.format(
-      "New COnfig with VendorID:%s was successfully created.", vendorID);
+      "New Config with VendorID:%s was successfully created.", vendorID);
     
     // Check if file doesn't already exist within the file system.
     try {
-      ArrayList currentVendors = JsonConverter.getVendorIDs();
+      ArrayList currentVendors = converter.getVendorIDs();
       if (currentVendors.contains(vendorID) == true) {
-        response.sendError(400, "File already exists within file system.")
+        response.sendError(400, "File already exists within file system.");
       } else {
-        String jsonConfig = Vendor.buildJsonConfig();
+        String jsonConfig = vendor.buildJsonConfig();
         // TODO: Also write this new config to sheets.
-        File newFile = JsonConverter.writeFile(vendorID, jsonConfig);
-        String jsonMessage = messageAsJson(responseString);
+        File newFile = converter.writeFile(vendorID, jsonConfig);
         response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
-        response.getWriter().println(jsonMessage);
+        response.getWriter().println(responseString);
       }
       // TODO: Validate this exception is being thrown?
-    } catch(NumberFormatException e) {
+    } catch(IOException e) {
       response.sendError(400, "An error ocurred creating your file.");
     }
   }
