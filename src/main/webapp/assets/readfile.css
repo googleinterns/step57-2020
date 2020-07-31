@@ -10,5 +10,9 @@
   margin: auto;
   padding: 50px;
   width: 500px;
+  background-color: #efefef
 }
 
+pre {
+  text-align: left;
+}
