@@ -198,7 +198,7 @@ public class Account {
   }
 
   /**
-   * @param request a request containing form data to edit existing account
+   * @param request contains form data to edit existing account
    */
   public void updateExistingAccount(HttpServletRequest request) {
     this.vendorID = request.getParameter(FormIdNames.VENDOR_ID);

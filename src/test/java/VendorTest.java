@@ -129,7 +129,7 @@ public final class VendorTest {
   @Test
   public void testGetAccountById() {
     vendor.addAccount(account);
-    // Accounts should have the same memory address, so direct comparison is OK
+    // Accounts should have the same memory address, so direct comparison is OK.
     assertEquals(account, vendor.getAccountById(ACCOUNT_ID));
   }
 }

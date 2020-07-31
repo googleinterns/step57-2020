@@ -59,7 +59,6 @@ public final class AccountTest {
   public void setUp() {
     account = new Account(ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION,
             LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE);
-
   }
 
   /** Test that the constructor set the Vendor fields with the correct data. */
@@ -152,9 +151,11 @@ public final class AccountTest {
     assertEquals(expectedResponse, actualResponse);
   }
 
-  /** Confirm that edits made to an account are applied correctly */
+  /** Confirm that edits made to an account are applied correctly. */
   @Test
   public void testUpdateExistingAccount() {
+    // This request is mocked to return the data that would ordinarily be in
+    // the form that is sent to update an existing account.
     HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
     Mockito.when(request.getParameter(FormIdNames.VENDOR_ID))
             .thenReturn(NEW_VENDOR_ID);

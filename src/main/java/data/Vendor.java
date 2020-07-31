@@ -149,9 +149,6 @@ public class Vendor {
     String accountId = request.getParameter(FormIdNames.ACCOUNT_ID);
     Account account = getAccountById(accountId);
 
-    // Checked previously to see if the account exists, but this confirms
-    // that assumption.
-    assert account != null;
     account.updateExistingAccount(request);
   }
 
