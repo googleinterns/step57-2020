@@ -91,11 +91,14 @@ public class JsonConverter {
   }
 
   public String getAccountConfig(String vendorId, String accountId)
-          throws IllegalArgumentException, FileNotFoundException, IOException {
+          throws IllegalArgumentException, IOException {
 
     String config = getConfigText(vendorId);
     Vendor vendor = new Vendor(config, vendorId);
     Account account = vendor.getAccountById(accountId);
+    if (account == null) {
+      throw new IllegalArgumentException();
+    }
     return account.buildJsonConfig();
   }
 

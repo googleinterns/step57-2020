@@ -53,8 +53,11 @@ public class BillingConfig extends HttpServlet {
         configText = json.getAccountConfig(vendorID, accountID);
       }
       response.getWriter().println(configText);
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       response.sendError(400, "Error finding " + vendorID + "'s configuration");
+    } catch (IllegalArgumentException e) {
+      response.sendError(400, "Failed to find account associated with vendor "
+              + vendorID);
     }
   }
 
