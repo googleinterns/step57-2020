@@ -78,11 +78,19 @@ function buildEditForm() {
   showForm();
 }
 
+/**
+ * Builds a query string specific to the edit form to fetch an entire configuration
+ * @return {string}   contains "vendorID" and "destination", where vendorID is the associated ID and
+ *                    destination should equal editForm
+ */
 function buildQueryStringEditForm() {
   const selectedVendorId = document.getElementById('customer-ids').value;
   return `/BillingConfig?vendorID=${selectedVendorId}&destination=editForm`;
 }
 
+/**
+ * Builds a generic query string containing vendor and account IDs
+ */
 function buildQueryString() {
   const selectedVendorId = document.getElementById('customer-ids').value;
   const selectedAccountId = document.getElementById('account-ids').value;
