@@ -32,6 +32,11 @@ public class BillingConfig extends HttpServlet {
   private static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
   private static final String REDIRECT_INDEX = "/index.html";
 
+  /**
+   * Read data endpoint.
+   * @param request form that contains valid vendor and account IDs
+   * @param response returns a configuration in JSON format
+   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
@@ -40,12 +45,12 @@ public class BillingConfig extends HttpServlet {
 
     try {
       JsonConverter json = new JsonConverter();
-      System.out.println(accountID);
+      String configText;
       if (accountID == null || !accountID.equals("null")) {
         // If an AccountID is not set, print the entire configuration.
-        String configText = json.getConfigText(vendorID);
+        configText = json.getConfigText(vendorID);
       } else {
-        String configText = json.getAccountConfig(vendorID, accountID);
+        configText = json.getAccountConfig(vendorID, accountID);
       }
       response.getWriter().println(configText);
     } catch (FileNotFoundException e) {
@@ -53,18 +58,39 @@ public class BillingConfig extends HttpServlet {
     }
   }
 
+  /**
+   * Edit/update endpoint.
+   * Accepts requests that update existing accounts that belong to an existing
+   * vendor or requests that create new accounts under an existing vendor.
+   * @param request  form data
+   * @param response if the operation succeeds, the vendorId is printed to
+   *                 response object. If the operation fails, a 400 error
+   *                 message is sent.
+   */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
     try {
-      Vendor newVendor = new Vendor(request);
       JsonConverter jsonConverter = new JsonConverter();
-      if (jsonConverter.updateFile(newVendor)) {
+      String vendorId = request.getParameter(FormIdNames.VENDOR_ID);
+      String accountId = request.getParameter(FormIdNames.ACCOUNT_ID);
+      // Construct vendor object from existing JSON to make changes directly
+      Vendor vendor = new Vendor(jsonConverter.getConfigText(vendorId), vendorId);
+
+      if (jsonConverter.accountExists(vendor, accountId)) {
+        // Edit an existing account.
+        vendor.editVendorAccount(request);
+      } else {
+        // Create a new account under an existing vendor.
+        vendor.addNewAccount(request);
+      }
+
+      if (jsonConverter.updateFile(vendor)) {
         // Update Google sheets following update file.
         updateSheets(request);
 
         // Redirect only when the operation succeeded.
-        response.getWriter().println(newVendor.getVendorID());
+        response.getWriter().println(vendor.getVendorID());
         response.sendRedirect(REDIRECT_INDEX);
       } else {
         response.sendError(400, "This configuration does not exist.");

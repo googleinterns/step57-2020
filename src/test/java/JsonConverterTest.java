@@ -181,4 +181,12 @@ public final class JsonConverterTest {
 
     assertTrue(expectedVendorIDs.equals(actualVendorIDs));
   }
+
+  @Test
+  public void testAccountExists() {
+    vendor.addAccount(account);
+    boolean actualResponse = converter.accountExists(vendor, ACCOUNT_ID);
+    boolean expectedResponse = true;
+    assertEquals(actualResponse, expectedResponse);
+  }
 }

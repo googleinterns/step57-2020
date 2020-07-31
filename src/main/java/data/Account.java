@@ -196,4 +196,20 @@ public class Account {
       getCurrency(), getDirection(), getEntity(), getMatchingMode(), 
       getAccountID(), getAggregationMode());
   }
+
+  /**
+   * @param request a request containing form data to edit existing account
+   */
+  public void updateExistingAccount(HttpServletRequest request) {
+    this.vendorID = request.getParameter(FormIdNames.VENDOR_ID);
+    this.accountID = request.getParameter(FormIdNames.ACCOUNT_ID);
+    this.legacyAccountID = request.getParameter(FormIdNames.LEGACY_ACCOUNT_ID);
+    this.nextGenAccountID = Integer.parseInt(
+            request.getParameter(FormIdNames.NEXT_GEN_ACCOUNT_ID));
+    this.currency = request.getParameter(FormIdNames.CURRENCY_CODE);
+    this.direction = request.getParameter(FormIdNames.DIRECTION);
+    this.entity = request.getParameter(FormIdNames.ENTITY);
+    this.matchingMode = request.getParameter(FormIdNames.MATCHING_MODE);
+    this.aggregationMode = request.getParameter(FormIdNames.AGGREGATION_MODE);
+  }
 }
