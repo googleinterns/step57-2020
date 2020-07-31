@@ -74,14 +74,20 @@ async function addConfigToPage() {
 function buildEditForm() {
   const editForm = document.getElementById('edit-config-form');
   editForm.action = buildQueryString();
+  populateEditForm();
   showForm();
+}
+
+function buildQueryStringEditForm() {
+  const selectedVendorId = document.getElementById('customer-ids').value;
+  return `/BillingConfig?vendorID=${selectedVendorId}&destination=editForm`;
 }
 
 function buildQueryString() {
   const selectedVendorId = document.getElementById('customer-ids').value;
   const selectedAccountId = document.getElementById('account-ids').value;
   // check for space in accountID.
-  if(selectedAccountId == "") {
+  if (selectedAccountId == "") {
     window.alert("A vendor ID and account ID have not been set yet!");
   } else {
     return `/BillingConfig?vendorID=${selectedVendorId}&accountID=${selectedAccountId}`;
@@ -123,9 +129,8 @@ function validateEditFormInput() {
   }
 }
 
-// TODO @cade: have BillingConfig return one Account, not enitre config.
 async function populateEditForm() {
-  const queryString = buildQueryString();
+  const queryString = buildQueryStringEditForm();
   fetch(queryString).then(response => {
     return response.json();
   }).then(data => {
@@ -147,9 +152,4 @@ async function populateEditForm() {
 // TODO: Method for enums: Check which of the tags has data under it {isLoggedIn:{loginURL},isLoggedOut:{logooutURL}}}
 async function checkLoginStatus() {
   
-}
-
-// TODO: Create config and redirect/populate edit form. 
-async function createConfiguration() {
-
 }
