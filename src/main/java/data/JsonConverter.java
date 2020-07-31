@@ -95,8 +95,8 @@ public class JsonConverter {
 
     String config = getConfigText(vendorId);
     Vendor vendor = new Vendor(config, vendorId);
-    // get account by ID
-    return "dummy";
+    Account account = vendor.getAccountById(accountId);
+    return account.buildJsonConfig();
   }
 
   /**
