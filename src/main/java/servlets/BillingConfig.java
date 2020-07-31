@@ -31,6 +31,7 @@ import static servlets.VendorServlet.updateSheets;
 public class BillingConfig extends HttpServlet {
   private static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
   private static final String REDIRECT_INDEX = "/index.html";
+  private static final String EDIT_FORM_DESTINATION = "editForm";
 
   /**
    * Read data endpoint.
@@ -41,15 +42,17 @@ public class BillingConfig extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
     String accountID = request.getParameter(FormIdNames.ACCOUNT_ID);
+    String destination = request.getParameter(FormIdNames.DESTINATION);
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
 
     try {
       JsonConverter json = new JsonConverter();
       String configText;
-      if (accountID == null || accountID.equals("null")) {
-        // If an AccountID is not set, print the entire configuration.
+      if (destination != null && destination.equals(EDIT_FORM_DESTINATION)) {
+        // The edit form endpoint asks for the entire configuration text
         configText = json.getConfigText(vendorID);
       } else {
+        // Read data endpoint asks for configuration text of one account
         configText = json.getAccountConfig(vendorID, accountID);
       }
       response.getWriter().println(configText);

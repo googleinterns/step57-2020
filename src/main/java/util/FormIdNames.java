@@ -12,4 +12,5 @@ public final class FormIdNames {
   public static final String ENTITY = "entity";
   public static final String MATCHING_MODE = "matching-mode";
   public static final String AGGREGATION_MODE = "aggregation-mode";
+  public static final String DESTINATION = "destination";
 }
