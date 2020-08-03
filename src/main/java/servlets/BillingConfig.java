@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/BillingConfig")
 public class BillingConfig extends HttpServlet {
   private static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
-  private static final String REDIRECT_INDEX = "/index.html";
+  private static final String REDIRECT_INDEX = "/editfile.html";
 
   /**
    * Read data endpoint for both the edit and read pages.
