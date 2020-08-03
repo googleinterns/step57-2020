@@ -96,7 +96,8 @@ public class JsonConverter {
     Vendor vendor = new Vendor(config, vendorId);
     Account account = vendor.getAccountById(accountId);
     if (account == null) {
-      throw new IllegalArgumentException();
+      // Throw error if account is not found.
+      throw new IllegalArgumentException("Account with ID " + accountId + " not found.");
     }
     return account.buildJsonConfig();
   }

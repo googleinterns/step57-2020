@@ -42,12 +42,14 @@ public class BillingConfig extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
     String accountID = request.getParameter(FormIdNames.ACCOUNT_ID);
-    // When getEntireConfig==true, return the entire configuration string.
-    boolean getEntireConfig = Boolean.parseBoolean(request.getParameter(
-            FormIdNames.ENTIRE_CONFIG));
+
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
 
     try {
+      // When getEntireConfig==true, return the entire configuration string.
+      boolean getEntireConfig = Boolean.parseBoolean(request.getParameter(
+              FormIdNames.ENTIRE_CONFIG));
+
       JsonConverter json = new JsonConverter();
       String configText;
       if (getEntireConfig) {
