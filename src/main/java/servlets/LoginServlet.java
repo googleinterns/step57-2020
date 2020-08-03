@@ -27,7 +27,7 @@ import java.util.HashMap;
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
   private static final String OAUTH_URL = "/OAuth";
-  private static final String LOG_PAGE_URL = "/login.html";
+  private static final String LOG_PAGE_URL = "/index.html";
   private static final String TEXT_TYPE = "text/html";
   private final String LOGOUT_URL = "logoutURL";
   private final String LOGIN_URL = "loginURL";

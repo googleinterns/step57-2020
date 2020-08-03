@@ -3,11 +3,11 @@ async function loadLogInURL() {
   var response = await fetch('/Login');
   var map = await response.json();
 
-  if (map["loginURL"] != "") {
-    window.location = map["loginURL"];
+  if (map["loginStatus"]) {
+    window.location = "OAuth";
   }
   else {
-    window.location = "readfile.html";
+    window.location = map["loginURL"];
   }
 }
 
