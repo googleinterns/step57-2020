@@ -15,7 +15,6 @@ package servlets;
 
 import data.JsonConverter;
 import data.Vendor;
-import data.Account;
 import data.SheetsConverter;
 
 import java.util.*;
@@ -108,7 +107,7 @@ public class VendorServlet extends HttpServlet {
     ArrayList<Vendor> vendors = new ArrayList<Vendor>();
 
     for (int i = 0; i < vendorIDs.size(); i++) {
-      String vendorJson = converter.getConfig(vendorIDs.get(i));
+      String vendorJson = converter.getConfigText(vendorIDs.get(i));
       vendors.add(new Vendor(vendorJson, vendorIDs.get(i)));
     }
     return vendors;

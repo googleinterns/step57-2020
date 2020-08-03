@@ -74,24 +74,32 @@ public class JsonConverter {
 
   /**
    * Retrieve and return the contents of the desired configuration.
+   * @throws FileNotFoundException thrown when configuration is not found.
    */
-  public String getConfig(String vendorID) {
+  public String getConfigText(String vendorID) throws FileNotFoundException {
     String configContents = "";
-
     // Retrieve the file with the corresponding vendorID.
     File config = new File(basePath + vendorID);
 
-    Scanner input;
-    try {
-      input = new Scanner(config);
-    } catch(FileNotFoundException e) {
-      return null;
-    }
+    Scanner input = new Scanner(config);
 
     while (input.hasNextLine()) {
       configContents += input.nextLine();
     }
     return configContents;
+  }
+
+  public String getAccountConfig(String vendorId, String accountId)
+          throws IllegalArgumentException, IOException {
+
+    String config = getConfigText(vendorId);
+    Vendor vendor = new Vendor(config, vendorId);
+    Account account = vendor.getAccountById(accountId);
+    if (account == null) {
+      // Throw error if account is not found.
+      throw new IllegalArgumentException("Account with ID " + accountId + " not found.");
+    }
+    return account.buildJsonConfig();
   }
 
   /**
@@ -134,24 +142,32 @@ public class JsonConverter {
     return getVendorIDs().contains(vendorID);
   }
 
+  public boolean accountExists(Vendor vendor, String accountId) {
+    return getAccountIDs(vendor).contains(accountId);
+  }
+
   /**
    * Returns an ArrayList of account ID strings.
    * If none exist for the vendor, an empty ArrayList is returned
    */
   private ArrayList<String> getAccountIDs(String vendorID) throws IOException {
     try {
-      String config = getConfig(vendorID);
+      String config = getConfigText(vendorID);
       Vendor vendor = new Vendor(config, vendorID);
-      ArrayList<Account> accounts = vendor.getAccounts();
       ArrayList<String> accountIds = new ArrayList<String>();
+      vendor.getAccounts().forEach(account -> accountIds.add(account.getAccountID()));
 
-      for (Account account : accounts) {
-        accountIds.add(account.getAccountID());
-      }
       return accountIds;
     } catch (IOException e) {
       throw new IOException("Failed to parse JSON configuration");
     }
+  }
+
+  private ArrayList<String> getAccountIDs(Vendor vendor) {
+    ArrayList<String> accountIds = new ArrayList<String>();
+    vendor.getAccounts().forEach(account -> accountIds.add(account.getAccountID()));
+
+    return accountIds;
   }
 
   /** Delete the file that is associated with the desired vendorID. */

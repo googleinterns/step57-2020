@@ -46,15 +46,13 @@ public class Vendor {
     this.legacyVendorID = request.getParameter(FormIdNames.LEGACY_CUSTOMER_ID);
     this.nextGenVendorID = Integer.parseInt(request.getParameter(
             FormIdNames.NEXT_GEN_CUSTOMER_ID));
-
-    // TODO: add method to parse variable number of accounts?
     Account newAccount = new Account(request);
     accountList = new ArrayList<>();
     accountList.add(newAccount);
   }
 
   /** Construct a Vendor object from JSON string. */
-  public Vendor(String json, String vendorID) throws IOException{
+  public Vendor(String json, String vendorID) throws IOException {
     JSONObject vendorJson = new JSONObject(json);
     this.vendorID = vendorID;
     this.legacyVendorID = vendorJson.getString(JsonKeys.LEGACY_CUSTOMER_ID_KEY);
@@ -97,6 +95,19 @@ public class Vendor {
     return accountList;
   }
 
+  /**
+   * Grabs the specified account from account ID. If not found, the method
+   * returns null.
+   */
+  public Account getAccountById(String accountId) {
+    for (Account account : accountList) {
+      if (account.getAccountID().equals(accountId)) {
+        return account;
+      }
+    }
+    return null;
+  }
+
   public static List<String> getVendorSheetHeader() {
     String[] accountData = {  
       FormIdNames.VENDOR_ID, 
@@ -131,5 +142,23 @@ public class Vendor {
     }
     config += "]}";
     return config;
+  }
+
+  /**
+   * Updates the Account specified in the HttpServletRequest.
+   * @param request a request containing form data to edit an existing account
+   */
+  public void editVendorAccount(HttpServletRequest request) throws IllegalArgumentException {
+    String accountId = request.getParameter(FormIdNames.ACCOUNT_ID);
+    getAccountById(accountId).updateExistingAccount(request);
+  }
+
+  /**
+   * Adds a new Account to the callee.
+   * @param request a request containing form data to create a new account.
+   */
+  public void addNewAccount(HttpServletRequest request) {
+    Account account = new Account(request);
+    addAccount(account);
   }
 }
