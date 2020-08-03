@@ -24,7 +24,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /** A class representing a billing vendor object. */
-public class Vendor {
+public class Vendor implements Comparable<Vendor> {
   private String vendorID;
   private String legacyVendorID;
   private int nextGenVendorID;
@@ -160,5 +160,10 @@ public class Vendor {
   public void addNewAccount(HttpServletRequest request) {
     Account account = new Account(request);
     addAccount(account);
+  }
+
+  @Override
+  public int compareTo(Vendor vendor) {
+    return this.getVendorID().compareTo(vendor.getVendorID());
   }
 }

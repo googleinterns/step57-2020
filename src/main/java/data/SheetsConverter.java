@@ -128,6 +128,7 @@ public class SheetsConverter {
   public List<List<Object>> buildVendorSheetBody(ArrayList<Vendor> vendors) {
     // TODO: sort the list by vendorID.
     List<List<Object>> vendorSheetData = new ArrayList<List<Object>>();
+    Collections.sort(vendors);
     vendorSheetData.add(new ArrayList<Object>(Vendor.getVendorSheetHeader()));
  
     for(int i = 0; i < vendors.size(); i++) {
