@@ -90,8 +90,7 @@ public class SheetsConverter {
  
   public List<List<Object>> buildAccountSheetBody(
       HashMap<String, ArrayList<Account>> accounts) {
- 
-    // TODO: @cfloeder Sort the accounts by some criteria x. 
+
     List<List<Object>> accountSheetData = new ArrayList<List<Object>>();
  
     // Sort the Account Sheet aphabetically by VendorID.
@@ -104,15 +103,6 @@ public class SheetsConverter {
           .getAccountSheetsRow(sortedKeys.get(i))));
       }
     }
- 
-    // for(Map.Entry<String, ArrayList<Account>> entry : accounts.entrySet()) { 
-    //   ArrayList<Account> accountList = entry.getValue();
-    //   for(int i = 0; i < accountList.size(); i++) {
-    //     accountSheetData.add(new ArrayList<Object>(accountList.get(i)
-    //       .getAccountSheetsRow(entry.getKey())));
-    //   }
-    // }
- 
     // Add Account header.
     accountSheetData.add(0, new ArrayList<Object>(Account.getAccountSheetHeader()));
  
@@ -126,16 +116,17 @@ public class SheetsConverter {
   }
  
   public List<List<Object>> buildVendorSheetBody(ArrayList<Vendor> vendors) {
-    // TODO: sort the list by vendorID.
     List<List<Object>> vendorSheetData = new ArrayList<List<Object>>();
+
+    // Sort the Vendor's alphabetically by vendorID.
     Collections.sort(vendors);
+
     vendorSheetData.add(new ArrayList<Object>(Vendor.getVendorSheetHeader()));
  
     for(int i = 0; i < vendors.size(); i++) {
       vendorSheetData.add(new ArrayList<Object>(vendors.get(i).
         getVendorSheetsRow()));
     }
- 
     return vendorSheetData;
   }
 }
