@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="assets/common.css">
     <script src="scripts/appscript.js"></script>
   </head>
-  <body onload="javascript:populateCustomerList()">
+  <body onload="populateCustomerList()">
     <div class="drop_menu">
       <button class="menu_button">Page Menu</button>
       <div class="dropdown_content">
@@ -22,7 +22,7 @@
     <div id="edit-account">
       <form id="config-search" onsubmit="buildEditForm(); return false;">
         <label for="customer-ids">Customer ID:</label>
-        <select id="customer-ids" onchange="javascript:populateAccountList()">
+        <select id="customer-ids" onchange="populateAccountList()">
         </select><br>
         <label for="account-id">Account ID:</label>
         <select id="account-ids">

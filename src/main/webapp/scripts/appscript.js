@@ -27,6 +27,8 @@ async function populateCustomerList() {
     + key + '</option>';
   }
   document.getElementById('customer-ids').innerHTML = vendorHtml;
+  // Populate account list in text box following loading the customers.
+  populateAccountList();
 }
 
 /**
