@@ -74,24 +74,32 @@ public class JsonConverter {
 
   /**
    * Retrieve and return the contents of the desired configuration.
+   * @throws FileNotFoundException thrown when configuration is not found.
    */
-  public String getConfig(String vendorID) {
+  public String getConfigText(String vendorID) throws FileNotFoundException {
     String configContents = "";
-
     // Retrieve the file with the corresponding vendorID.
     File config = new File(basePath + vendorID);
 
-    Scanner input;
-    try {
-      input = new Scanner(config);
-    } catch(FileNotFoundException e) {
-      return null;
-    }
+    Scanner input = new Scanner(config);
 
     while (input.hasNextLine()) {
       configContents += input.nextLine();
     }
     return configContents;
+  }
+
+  public String getAccountConfig(String vendorId, String accountId)
+          throws IllegalArgumentException, IOException {
+
+    String config = getConfigText(vendorId);
+    Vendor vendor = new Vendor(config, vendorId);
+    Account account = vendor.getAccountById(accountId);
+    if (account == null) {
+      // Throw error if account is not found.
+      throw new IllegalArgumentException("Account with ID " + accountId + " not found.");
+    }
+    return account.buildJsonConfig();
   }
 
   /**
@@ -144,7 +152,7 @@ public class JsonConverter {
    */
   private ArrayList<String> getAccountIDs(String vendorID) throws IOException {
     try {
-      String config = getConfig(vendorID);
+      String config = getConfigText(vendorID);
       Vendor vendor = new Vendor(config, vendorID);
       ArrayList<String> accountIds = new ArrayList<String>();
       vendor.getAccounts().forEach(account -> accountIds.add(account.getAccountID()));

@@ -84,25 +84,24 @@ public final class JsonConverterTest {
    * The vendorID must match an existing filepath in the filesystem.
    */
   @Test
-  public void testGetConfigMethod() {
-    String expectedResponse = "{\"legacy_customer_id\":\"legVend_27\",\"next_gen_customer_id\":17,\"accounts\":[]}";
-    String actualResponse = converter.getConfig(VENDOR_ID);
-    assertEquals(removeWhitespace(expectedResponse), removeWhitespace(actualResponse));
+  public void testGetConfigMethod() throws FileNotFoundException {
+    String expectedResponse = "{\"legacy_customer_id\":\"legVend_27\"," +
+            "\"next_gen_customer_id\":17,\"accounts\":[]}";
+    String actualResponse = converter.getConfigText(VENDOR_ID);
+
+    assertEquals(removeWhitespace(expectedResponse),
+            removeWhitespace(actualResponse));
   }
 
   /**
-   * Test that getConfig() returns null when faulty vendorID is passed in.
+   * Test that getConfig() throws exception when faulty vendorID is passed in.
    * The vendorID must match an existing filepath in the filesystem.
    */
-  @Test
-  public void testGetConfigMethodWithFakeVendorID() {
+  @Test(expected = FileNotFoundException.class)
+  public void testGetConfigMethodWithFakeVendorID() throws FileNotFoundException {
     String vendorID = "fakeVendorID";
     String expectedResponse = null;
-
-    String actualResponse = converter.getConfig(vendorID);
-
-    assertTrue("getConfig() didn't return null when it should have.",
-            expectedResponse == actualResponse);
+    String actualResponse = converter.getConfigText(vendorID);
   }
 
   /** Test that writeFile() returns a File with the expected content. */

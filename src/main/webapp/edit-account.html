@@ -9,26 +9,25 @@
   </head>
   <body onload="javascript:populateCustomerList()">
     <div class="drop_menu">
-			<button class="menu_button">Page Menu</button>
-			<div class="dropdown_content">
-				<a href="readfile.html">Read Configuration</a>
+      <button class="menu_button">Page Menu</button>
+      <div class="dropdown_content">
+        <a href="readfile.html">Read Configuration</a>
         <a href="createfile.html">Create Configuration</a>        
         <a href="editfile.html">Edit Configuration</a>
         <a href="deletefile.html">Delete Configuration</a>
-		  </div>
+      </div>
     </div>
     <h1>Billing Configuration Sync Tool</h1></br>
     <h2>Edit Account</h2>
     <div id="edit-account">
       <form id="config-search" onsubmit="buildEditForm(); return false;">
-        <label for="customer-id">Customer ID:</label>
+        <label for="customer-ids">Customer ID:</label>
         <select id="customer-ids" onchange="javascript:populateAccountList()">
         </select><br>
         <label for="account-id">Account ID:</label>
         <select id="account-ids">
         </select><br><br>
-        <button type="submit" onclick="javascript:populateEditForm()">
-          Edit Account</button><br><br>
+        <button type="submit">Edit Account</button><br><br>
      </form>
     </div>
     <div id="edit-form">
