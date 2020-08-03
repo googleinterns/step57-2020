@@ -42,6 +42,7 @@ public class BillingConfig extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
     String accountID = request.getParameter(FormIdNames.ACCOUNT_ID);
+    // When getEntireConfig==true, return the entire configuration string.
     boolean getEntireConfig = Boolean.parseBoolean(request.getParameter(
             FormIdNames.ENTIRE_CONFIG));
     response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
@@ -50,10 +51,10 @@ public class BillingConfig extends HttpServlet {
       JsonConverter json = new JsonConverter();
       String configText;
       if (getEntireConfig) {
-        // The edit form endpoint asks for the entire configuration text
+        // The edit form endpoint asks for the entire configuration text.
         configText = json.getConfigText(vendorID);
       } else {
-        // Read data endpoint asks for configuration text of one account
+        // Read data endpoint asks for configuration text of one account.
         configText = json.getAccountConfig(vendorID, accountID);
       }
       response.getWriter().println(configText);

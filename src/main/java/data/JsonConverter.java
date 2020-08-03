@@ -74,15 +74,14 @@ public class JsonConverter {
 
   /**
    * Retrieve and return the contents of the desired configuration.
-   * @throws FileNotFoundException thrown when configuration is not found
+   * @throws FileNotFoundException thrown when configuration is not found.
    */
   public String getConfigText(String vendorID) throws FileNotFoundException {
     String configContents = "";
     // Retrieve the file with the corresponding vendorID.
     File config = new File(basePath + vendorID);
 
-    Scanner input;
-    input = new Scanner(config);
+    Scanner input = new Scanner(config);
 
     while (input.hasNextLine()) {
       configContents += input.nextLine();
