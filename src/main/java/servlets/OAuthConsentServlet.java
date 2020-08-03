@@ -43,9 +43,13 @@ public class OAuthConsentServlet extends HttpServlet {
     // Get the current session or create a new one.
     HttpSession session = request.getSession(true);
     session.setAttribute(OAuthConstants.SHEETS_SESSION_KEY, state);
-
-    // Redirect user to OAuthConsentPage.
-    response.sendRedirect(getOAuthRedirectURL(state));
+    try {
+      String redirectUrl = getOAuthRedirectURL(state);
+      // Redirect user to OAuthConsentPage.
+      response.sendRedirect(getOAuthRedirectURL(state));
+    } catch(NullPointerException e) {
+      response.sendError(400, "The domain variable has not been set");
+    }
   }
 
   /** 
