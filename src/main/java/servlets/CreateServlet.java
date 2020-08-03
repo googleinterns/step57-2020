@@ -65,10 +65,14 @@ public class CreateServlet extends HttpServlet {
         response.sendError(400, "File already exists within file system.");
       } else {
         String jsonConfig = vendor.buildJsonConfig();
-        // TODO: Also write this new config to sheets. And send a redirect to the edit page...
-        // Get session, see BillingConfig?
+        
+        // Creates the new vendor configuration file.
         File newFile = converter.writeFile(legacyCustomerID, jsonConfig);
+
+        // Updates the Sheet to reflect the new addition.
         updateSheets(request);
+
+        // TODO: Add redirect to add account page. 
         response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
         System.out.println(responseString);
         response.getWriter().println(responseString);
