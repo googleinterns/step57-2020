@@ -27,7 +27,7 @@ import java.util.HashMap;
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
   private static final String OAUTH_URL = "/OAuth";
-  private static final String LOG_PAGE_URL = "/index.html";
+  private static final String INDEX_PAGE_URL = "/index.html";
   private static final String TEXT_TYPE = "text/html";
   private final String LOGOUT_URL = "logoutURL";
   private final String LOGIN_URL = "loginURL";
@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
     HashMap<String, String> loginObject = new HashMap<String, String>();
 
     if(userService.isUserLoggedIn()) {
-      loginObject.put(LOGOUT_URL, userService.createLogoutURL(LOG_PAGE_URL)); 
+      loginObject.put(LOGOUT_URL, userService.createLogoutURL(INDEX_PAGE_URL)); 
       loginObject.put(LOGIN_STATUS, TRUE); 
     } else {
       loginObject.put(LOGIN_URL, userService.createLoginURL(OAUTH_URL));
