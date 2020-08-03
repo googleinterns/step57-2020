@@ -17,6 +17,7 @@ import data.JsonConverter;
 import data.Vendor;
 import data.Account;
 import data.SheetsConverter;
+import static servlets.VendorServlet.updateSheets;
 
 import com.google.gson.Gson;
 import java.io.File;
@@ -37,8 +38,8 @@ public class CreateServlet extends HttpServlet {
   public static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
   public static final String REDIRECT_EDITFILE = "/editfile.html";
   private static final String TOKEN_ATTRIBUTE = "accessToken";
-  private final String VENDOR_ID_PARAM = "vendorID";
-  private final String ACCOUNT_ID_PARAM = "accountID";
+  private final String LEGACY_CUSTOMER_ID_PARAM = "legacycustomerID";
+  private final String NEXT_GEN_CUSTOMER_ID_PARAM = "nextgencustomerID";
 
 
   @Override
@@ -47,31 +48,39 @@ public class CreateServlet extends HttpServlet {
     // with the given vendor id and account id and all other values as null.
     JsonConverter converter = new JsonConverter();
     Vendor vendor = new Vendor();
-    String vendorID = request.getParameter(VENDOR_ID_PARAM);
-    String accountID = request.getParameter(ACCOUNT_ID_PARAM);
+    String legacyCustomerID = request.getParameter(LEGACY_CUSTOMER_ID_PARAM);
+    String nextGenCustomerID = request.getParameter(NEXT_GEN_CUSTOMER_ID_PARAM);
     String responseString = String.format(
-      "New Config with VendorID:%s was successfully created.", vendorID);
+      "New Config with VendorID:%s was successfully created.", legacyCustomerID);
 
-    // Grab the access token for updating the Sheets
+    // Set initial ids on the new vendor
+    int nextGenCustomerIDInt = Integer.parseInt(nextGenCustomerID);
+    vendor.setLegacyVendorID(legacyCustomerID);
+    vendor.setNextGenVendorID(nextGenCustomerIDInt);
 
-    
     // Check if file doesn't already exist within the file system.
     try {
       ArrayList currentVendors = converter.getVendorIDs();
-      if (currentVendors.contains(vendorID) == true) {
+      if (currentVendors.contains(legacyCustomerID) == true) {
         response.sendError(400, "File already exists within file system.");
       } else {
         String jsonConfig = vendor.buildJsonConfig();
         // TODO: Also write this new config to sheets. And send a redirect to the edit page...
         // Get session, see BillingConfig?
-        File newFile = converter.writeFile(vendorID, jsonConfig);
+        File newFile = converter.writeFile(legacyCustomerID, jsonConfig);
+        updateSheets(request);
         response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
         System.out.println(responseString);
         response.getWriter().println(responseString);
       }
       // TODO: Validate this exception is being thrown?
-    } catch(IOException e) {
+    } catch (IOException e) {
       response.sendError(400, "An error ocurred creating your file.");
+    } catch (NumberFormatException e) {
+      response.sendError(400, "A NumberFormatException ocurred.");
+    } catch (GeneralSecurityException e) {
+      response.sendError(400, "A GeneralSecurityException occurred. Make sure you have authorized" +
+        " the Google Sheets API.");
     }
   }
 }

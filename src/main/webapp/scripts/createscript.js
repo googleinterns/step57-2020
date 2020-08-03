@@ -36,15 +36,14 @@ function addNewAccount() {
 }
 
 function buildQueryString() {
-  const vendorId = document.getElementById('customer-id').value;
-  const accountID1 = document.getElementById('account-id-1').value;
-  return `/CreateServlet?vendorID=${vendorId}&accountID=${accountID1}`;
+  const legacyCustomerID = document.getElementById('legacy-customer-id').value;
+  const nextGenCustomerID = document.getElementById('next-gen-customer-id').value;
+  return `/CreateServlet?legacycustomerID=${legacyCustomerID}&nextgencustomerID=${nextGenCustomerID}`;
 }
 
 async function postNewConfig() {
-  // TODO: Build query string and post to CreateServlet to create new file.
   var postResponse = await fetch(buildQueryString(), {
-    method: 'POST'
+    method: 'POST',
   });
 
   var responseJson = await postResponse.json();

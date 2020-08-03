@@ -21,11 +21,11 @@
     <h2>Create Configuration</h2>
     <br>
     <div id="createform">
-      <form id="create-form" method="POST" onsubmit="javascript:postNewConfig()">
-        <label for="customer-id">Customer ID:</label>
-        <input type="text" id="customer-id"><br>
-        <label for="account-id-1">Account ID 1:</label>
-        <input type="text" id="account-id-1"><br>
+      <form id="create-form" method="POST" action="javascript:postNewConfig()">
+        <label for="legacy-customer-id">Legacy Customer ID:</label>
+        <input type="text" id="legacy-customer-id"><br>
+        <label for="next-gen-customer-id">Next Gen Customer ID:</label>
+        <input type="text" id="next-gen-customer-id"><br>
         <button onclick="javascript:addNewAccount()" id="add-button">Add Account</button>
         <button type="submit" id="submit-button">Create</button>
       </form>
