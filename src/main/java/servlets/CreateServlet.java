@@ -36,7 +36,10 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 public class CreateServlet extends HttpServlet {
   public static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
   public static final String REDIRECT_EDITFILE = "/editfile.html";
+  private static final String TOKEN_ATTRIBUTE = "accessToken";
   private final String VENDOR_ID_PARAM = "vendorID";
+  private final String ACCOUNT_ID_PARAM = "accountID";
+
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -45,8 +48,12 @@ public class CreateServlet extends HttpServlet {
     JsonConverter converter = new JsonConverter();
     Vendor vendor = new Vendor();
     String vendorID = request.getParameter(VENDOR_ID_PARAM);
+    String accountID = request.getParameter(ACCOUNT_ID_PARAM);
     String responseString = String.format(
       "New Config with VendorID:%s was successfully created.", vendorID);
+
+    // Grab the access token for updating the Sheets
+
     
     // Check if file doesn't already exist within the file system.
     try {
@@ -55,7 +62,8 @@ public class CreateServlet extends HttpServlet {
         response.sendError(400, "File already exists within file system.");
       } else {
         String jsonConfig = vendor.buildJsonConfig();
-        // TODO: Also write this new config to sheets.
+        // TODO: Also write this new config to sheets. And send a redirect to the edit page...
+        // Get session, see BillingConfig?
         File newFile = converter.writeFile(vendorID, jsonConfig);
         response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
         System.out.println(responseString);
