@@ -132,4 +132,14 @@ public final class VendorTest {
     // Accounts should have the same memory address, so direct comparison is OK.
     assertEquals(account, vendor.getAccountById(ACCOUNT_ID));
   }
+
+  /** Test that compareTo sorts alphabetically. */
+  @Test
+  public void testCompareTo() {
+    Vendor vendor2 = new Vendor("zfte", "legID", 14);
+ 
+    assertTrue(vendor.compareTo(vendor2) < 0);
+    assertTrue(vendor2.compareTo(vendor) > 0);
+    assertTrue(vendor.compareTo(vendor) == 0);
+  }
 }
