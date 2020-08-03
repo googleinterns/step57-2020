@@ -88,27 +88,28 @@ public class SheetsConverter {
   }
  
   public List<List<Object>> buildAccountSheetBody(
-      HashMap<String, ArrayList<Account>> accounts) {
+      HashMap<String, ArrayList<Account>> vendorIdMap) {
 
     List<List<Object>> accountSheetData = new ArrayList<List<Object>>();
  
     // Sort the Account Sheet aphabetically by VendorID.
-    ArrayList<String> sortedKeys = sortKeys(accounts);
+    ArrayList<String> sortedKeys = sortKeys(vendorIdMap);
  
-    for(int i = 0; i < sortedKeys.size(); i++) {
-      ArrayList<Account> accountList = accounts.get(sortedKeys.get(i));
-      for(int j = 0; j < accountList.size(); j++) {
-        accountSheetData.add(new ArrayList<Object>(accountList.get(j)
-          .getAccountSheetsRow(sortedKeys.get(i))));
+    for(String vendorID : sortedKeys) {
+      ArrayList<Account> accountList = vendorIdMap.get(vendorID);
+      for(Account account : accountList) {
+        accountSheetData.add(new ArrayList<Object>(account
+          .getAccountSheetsRow(vendorID)));
       }
     }
+
     accountSheetData.add(0, new ArrayList<Object>(Account.getAccountSheetHeader()));
  
     return accountSheetData;
   }
  
-  public ArrayList<String> sortKeys(HashMap<String, ArrayList<Account>> accounts) {
-    ArrayList<String> sortedKeys = new ArrayList<String>(accounts.keySet()); 
+  public ArrayList<String> sortKeys(HashMap<String, ArrayList<Account>> vendorIdMap) {
+    ArrayList<String> sortedKeys = new ArrayList<String>(vendorIdMap.keySet()); 
     Collections.sort(sortedKeys);  
     return sortedKeys;
   }
