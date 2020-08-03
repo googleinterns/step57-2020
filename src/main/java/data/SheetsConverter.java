@@ -21,8 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-// Find collections import
-import java.util.*;
+import java.util.Collections;
  
 /** A class that updates the Account and Vendor spreadsheets. */
 public class SheetsConverter {
@@ -103,7 +102,6 @@ public class SheetsConverter {
           .getAccountSheetsRow(sortedKeys.get(i))));
       }
     }
-    // Add Account header.
     accountSheetData.add(0, new ArrayList<Object>(Account.getAccountSheetHeader()));
  
     return accountSheetData;

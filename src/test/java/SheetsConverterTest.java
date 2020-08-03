@@ -135,8 +135,7 @@ public final class SheetsConverterTest {
     expectedKeys.add("adg");
     expectedKeys.add(VENDOR_ID);
     expectedKeys.add("zfte");
-
-    
+        
     assertEquals(actualKeys, expectedKeys);
   }
 }
