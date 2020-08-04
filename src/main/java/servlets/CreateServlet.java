@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@ package servlets;
 import data.JsonConverter;
 import data.Vendor;
 import data.Account;
-import data.SheetsConverter;
+import util.FormIdNames;
 import static servlets.VendorServlet.updateSheets;
 
 import com.google.gson.Gson;
@@ -35,38 +35,34 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 
 @WebServlet("/CreateServlet")
 public class CreateServlet extends HttpServlet {
-  public static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
-  public static final String REDIRECT_EDITFILE = "/editfile.html";
-  private static final String TOKEN_ATTRIBUTE = "accessToken";
+  private static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
   private static final String ADD_ACCOUNT_REDIRECT = "/add-account.html";
-  private final String VENDOR_ID_PARAM = "vendorID";
-  private final String LEGACY_CUSTOMER_ID_PARAM = "legacycustomerID";
-  private final String NEXT_GEN_CUSTOMER_ID_PARAM = "nextgencustomerID";
 
   @Override
+  /** 
+   * Creates a new file with the vendor ID as the name. The file 
+   * contains the legacy customer ID and next gen customer ID and 
+   * an empty array for accounts. 
+   * e.g., {"legacy_customer_id":"cust_1",
+   *          "next_gen_customer_id":12345,"accounts":[]}
+   */
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // POST method --> creates a new configuration file with a pre-made json config 
-    // with the given vendor id and account id and all other values as null.
+
     JsonConverter converter = new JsonConverter();
-    Vendor vendor = new Vendor();
-    String vendorID = request.getParameter(VENDOR_ID_PARAM);
-    System.out.println(VENDOR_ID_PARAM);
-    String legacyCustomerID = request.getParameter(LEGACY_CUSTOMER_ID_PARAM);
-    String nextGenCustomerID = request.getParameter(NEXT_GEN_CUSTOMER_ID_PARAM);
+    String vendorID = request.getParameter(FormIdNames.VENDOR_ID);
+    String legacyCustomerID = request.getParameter(FormIdNames.LEGACY_CUSTOMER_ID_QUERY);
+    String nextGenCustomerID = request.getParameter(FormIdNames.NEXT_GEN_CUSTOMER_ID_QUERY);
     String responseString = String.format(
       "New Config with VendorID: %s was successfully created.", vendorID);
 
-    // Set initial ids on the new vendor
+    // Set initial ids and file name on the new vendor.
     int nextGenCustomerIDInt = Integer.parseInt(nextGenCustomerID);
-    vendor.setVendorID(vendorID);
-    vendor.setLegacyVendorID(legacyCustomerID);
-    vendor.setNextGenVendorID(nextGenCustomerIDInt);
+    Vendor vendor = new Vendor(vendorID, legacyCustomerID, nextGenCustomerIDInt);
 
     // Check if file doesn't already exist within the file system.
     try {
-      ArrayList currentVendors = converter.getVendorIDs();
-      if (currentVendors.contains(vendorID) == true) {
-        System.out.println("File is here");
+      ArrayList<String> currentVendors = converter.getVendorIDs();
+      if (currentVendors.contains(vendorID)) {
         String jsonMessage = new Gson().toJson("File already exists in file system.");
         response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
         response.getWriter().println(jsonMessage);
@@ -79,13 +75,10 @@ public class CreateServlet extends HttpServlet {
         // Updates the Sheet to reflect the new addition.
         updateSheets(request);
 
-        // TODO: Add redirect to add account page. 
         String responseJson = new Gson().toJson(responseString);
         response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
         response.getWriter().println(responseJson);
       }
-      
-      // TODO: Validate this exception is being thrown?
     } catch (IOException e) {
       response.sendError(400, "An error ocurred creating your file.");
     } catch (NumberFormatException e) {
