@@ -38,9 +38,10 @@ public class CreateServlet extends HttpServlet {
   public static final String CONTENT_TYPE_APPLICATION_JSON = "application/json;";
   public static final String REDIRECT_EDITFILE = "/editfile.html";
   private static final String TOKEN_ATTRIBUTE = "accessToken";
+  private static final String ADD_ACCOUNT_REDIRECT = "/add-account.html";
+  private final String VENDOR_ID_PARAM = "vendorID";
   private final String LEGACY_CUSTOMER_ID_PARAM = "legacycustomerID";
   private final String NEXT_GEN_CUSTOMER_ID_PARAM = "nextgencustomerID";
-
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -48,35 +49,42 @@ public class CreateServlet extends HttpServlet {
     // with the given vendor id and account id and all other values as null.
     JsonConverter converter = new JsonConverter();
     Vendor vendor = new Vendor();
+    String vendorID = request.getParameter(VENDOR_ID_PARAM);
+    System.out.println(VENDOR_ID_PARAM);
     String legacyCustomerID = request.getParameter(LEGACY_CUSTOMER_ID_PARAM);
     String nextGenCustomerID = request.getParameter(NEXT_GEN_CUSTOMER_ID_PARAM);
     String responseString = String.format(
-      "New Config with VendorID:%s was successfully created.", legacyCustomerID);
+      "New Config with VendorID: %s was successfully created.", vendorID);
 
     // Set initial ids on the new vendor
     int nextGenCustomerIDInt = Integer.parseInt(nextGenCustomerID);
+    vendor.setVendorID(vendorID);
     vendor.setLegacyVendorID(legacyCustomerID);
     vendor.setNextGenVendorID(nextGenCustomerIDInt);
 
     // Check if file doesn't already exist within the file system.
     try {
       ArrayList currentVendors = converter.getVendorIDs();
-      if (currentVendors.contains(legacyCustomerID) == true) {
-        response.sendError(400, "File already exists within file system.");
+      if (currentVendors.contains(vendorID) == true) {
+        System.out.println("File is here");
+        String jsonMessage = new Gson().toJson("File already exists in file system.");
+        response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
+        response.getWriter().println(jsonMessage);
       } else {
         String jsonConfig = vendor.buildJsonConfig();
         
         // Creates the new vendor configuration file.
-        File newFile = converter.writeFile(legacyCustomerID, jsonConfig);
+        File newFile = converter.writeFile(vendorID, jsonConfig);
 
         // Updates the Sheet to reflect the new addition.
         updateSheets(request);
 
         // TODO: Add redirect to add account page. 
+        String responseJson = new Gson().toJson(responseString);
         response.setContentType(CONTENT_TYPE_APPLICATION_JSON);
-        System.out.println(responseString);
-        response.getWriter().println(responseString);
+        response.getWriter().println(responseJson);
       }
+      
       // TODO: Validate this exception is being thrown?
     } catch (IOException e) {
       response.sendError(400, "An error ocurred creating your file.");
@@ -88,7 +96,3 @@ public class CreateServlet extends HttpServlet {
     }
   }
 }
-
-
-// TODO: Create endpoint makes a file with a json with all ids that are null 
-// except for the vendor/account id 

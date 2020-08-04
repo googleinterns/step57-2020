@@ -36,23 +36,21 @@ function addNewAccount() {
 }
 
 function buildQueryString() {
+  const vendorID = document.getElementById('vendor-id').value;
   const legacyCustomerID = document.getElementById('legacy-customer-id').value;
   const nextGenCustomerID = document.getElementById('next-gen-customer-id').value;
-  return `/CreateServlet?legacycustomerID=${legacyCustomerID}&nextgencustomerID=${nextGenCustomerID}`;
+  return `/CreateServlet?vendorID=${vendorID}&legacycustomerID=${legacyCustomerID}
+    &nextgencustomerID=${nextGenCustomerID}`;
 }
 
+
+// TODO: Send redirect to add account page. 
 async function postNewConfig() {
-  var postResponse = await fetch(buildQueryString(), {
-    method: 'POST',
-  });
+  const queryString = buildQueryString();
+  
+  var response = await fetch(queryString, {method: 'POST'});
 
-  var responseJson = await postResponse.json();
+  var responseJson = await response.json();
 
-  if (confirm(responseJson)) {
-    window.location.reload();
-  }
-
-  // TODO: Alerts for errors. 
-
-
+  window.alert(responseJson);
 }

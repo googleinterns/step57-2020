@@ -22,12 +22,13 @@
     <br>
     <div id="createform">
       <form id="create-form" method="POST" action="javascript:postNewConfig()">
+        <label for="vendor-id">Vendor ID:</label>
+        <input type="text" id="vendor-id"><br>
         <label for="legacy-customer-id">Legacy Customer ID:</label>
         <input type="text" id="legacy-customer-id"><br>
         <label for="next-gen-customer-id">Next Gen Customer ID:</label>
         <input type="text" id="next-gen-customer-id"><br>
-        <button onclick="javascript:addNewAccount()" id="add-button">Add Account</button>
-        <button type="submit" id="submit-button">Create</button>
+        <button type="submit" id="submit-button" onclick="location.href ='add-account.html'; return false">Create</button>
       </form>
     </div>
   </body>
