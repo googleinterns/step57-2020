@@ -88,32 +88,29 @@ public class SheetsConverter {
   }
  
   public List<List<Object>> buildAccountSheetBody(
-      HashMap<String, ArrayList<Account>> vendorIdMap) {
+      HashMap<String, ArrayList<Account>> accountsByVendorId) {
 
     List<List<Object>> accountSheetData = new ArrayList<List<Object>>();
  
-    // Sort the Account Sheet aphabetically by VendorID.
-    ArrayList<String> sortedKeys = sortKeys(vendorIdMap);
+    // Sort the Account Sheet alphabetically by VendorID.
+    ArrayList<String> sortedVendorIds = new ArrayList<String>(
+      accountsByVendorId.keySet()); 
+    Collections.sort(sortedVendorIds);
  
-    for(String vendorID : sortedKeys) {
-      ArrayList<Account> accountList = vendorIdMap.get(vendorID);
+    for(String vendorID : sortedVendorIds) {
+      ArrayList<Account> accountList = accountsByVendorId.get(vendorID);
       for(Account account : accountList) {
         accountSheetData.add(new ArrayList<Object>(account
           .getAccountSheetsRow(vendorID)));
       }
     }
 
-    accountSheetData.add(0, new ArrayList<Object>(Account.getAccountSheetHeader()));
+    accountSheetData.add(0, new ArrayList<Object>(Account
+      .getAccountSheetHeader()));
  
     return accountSheetData;
   }
- 
-  public ArrayList<String> sortKeys(HashMap<String, ArrayList<Account>> vendorIdMap) {
-    ArrayList<String> sortedKeys = new ArrayList<String>(vendorIdMap.keySet()); 
-    Collections.sort(sortedKeys);  
-    return sortedKeys;
-  }
- 
+
   public List<List<Object>> buildVendorSheetBody(ArrayList<Vendor> vendors) {
     List<List<Object>> vendorSheetData = new ArrayList<List<Object>>();
 

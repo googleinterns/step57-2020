@@ -115,28 +115,5 @@ public final class SheetsConverterTest {
       
     assertEquals(expectedResponse, actualResponse);
   }
-
-  /** Test that the sortKeys method sorts a Map's keys. */
-  @Test
-  public void testSortKeys() throws GeneralSecurityException, IOException{
-    vendor.addAccount(account);
-    Vendor vendor2 = new Vendor("zfte", "legID", 14);
-    Vendor vendor3 = new Vendor("adg", "legID", 14);
-
-    ArrayList<Vendor> vendors = new ArrayList<Vendor>();
-    vendors.add(vendor2);
-    vendors.add(vendor);
-    vendors.add(vendor3);   
- 
-    ArrayList<String> actualKeys = converter.sortKeys(converter.
-      getAllAccounts(vendors));
-
-    ArrayList<String> expectedKeys = new ArrayList<String>();
-    expectedKeys.add("adg");
-    expectedKeys.add(VENDOR_ID);
-    expectedKeys.add("zfte");
-        
-    assertEquals(actualKeys, expectedKeys);
-  }
 }
 
