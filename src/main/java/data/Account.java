@@ -201,17 +201,8 @@ public class Account {
    * Update existing account information, preventing changes to legacyAccountId
    * and nextGenAccountId
    * @param request contains form data to edit existing account
-   * @throws IllegalArgumentException thrown when edits are made to protected members
    */
-  public void updateExistingAccount(HttpServletRequest request)
-          throws IllegalArgumentException {
-    if (!this.legacyAccountID.equals(
-            request.getParameter(FormIdNames.LEGACY_ACCOUNT_ID)) ||
-            this.nextGenAccountID != Integer.parseInt(
-                  request.getParameter(FormIdNames.NEXT_GEN_ACCOUNT_ID))) {
-
-      throw new IllegalArgumentException();
-    }
+  public void updateExistingAccount(HttpServletRequest request) {
     this.vendorID = request.getParameter(FormIdNames.VENDOR_ID);
     this.accountID = request.getParameter(FormIdNames.ACCOUNT_ID);
     this.currency = request.getParameter(FormIdNames.CURRENCY_CODE);
