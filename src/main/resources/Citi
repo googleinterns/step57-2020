@@ -1,0 +1,34 @@
+{
+  "legacy_customer_id": "uydlpizw",
+  "next_gen_customer_id": 25439781,
+  "accounts": [
+    {
+      "legacy_account_id": "gjeispin",
+      "next_gen_account_id": 49536829,
+      "settlement_attributes": {
+        "currency_code": "GBP",
+        "direction": "OUTGOING",
+        "entity": "Google Europe"
+      },
+      "settlement_config": {
+        "matching_mode": "AMOUNT"
+      },
+      "account_id": "Citi_GBP_OUTGOING_1",
+      "aggregation_mode": "AGGREGATED"
+    },
+    {
+      "legacy_account_id": "ygmdidig",
+      "next_gen_account_id": 41472366,
+      "settlement_attributes": {
+        "currency_code": "GBP",
+        "direction": "OUTGOING",
+        "entity": "Google Europe"
+      },
+      "settlement_config": {
+        "matching_mode": "AMOUNT"
+      },
+      "account_id": "Citi_GBP_OUTGOING_2",
+      "aggregation_mode": "AGGREGATED"
+    }
+  ]
+}
