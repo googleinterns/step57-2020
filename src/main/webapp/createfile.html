@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Create File Configuration</title>
     <link rel="stylesheet" href="assets/createfile.css">
+    <script src="scripts/createscript.js"></script>
     <link rel="stylesheet" href="assets/common.css">
   </head>
   <body>
@@ -19,13 +20,15 @@
     <h1>Billing Configuration Sync Tool</h1><br>
     <h2>Create Configuration</h2>
     <br>
-    <div id="createform">
-      <form>
-        <label for="customer-id">Customer ID:</label>
-        <input type="text" id="customer-id"><br>
-        <label for="account-id">Account ID:</label>
-        <input type="text" id="account-id"><br><br>
-        <button type="submit">Search</button>
+    <div id="create-div">
+      <form id="create-form" method="POST" action="javascript:postNewConfig()">
+        <label for="vendor-id">Vendor ID:</label>
+        <input type="text" id="vendor-id"><br>
+        <label for="legacy-customer-id">Legacy Customer ID:</label>
+        <input type="text" id="legacy-customer-id"><br>
+        <label for="next-gen-customer-id">Next Gen Customer ID:</label>
+        <input type="text" id="next-gen-customer-id"><br>
+        <button type="submit" id="submit-button">Create</button>
       </form>
     </div>
   </body>
