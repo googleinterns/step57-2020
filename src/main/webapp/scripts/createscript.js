@@ -42,6 +42,7 @@ async function postNewConfig() {
   var responseJson = await response.json();
 
   // Redirect to the add account page when user confirms the alert. 
+  // Confirm method shows an alert for confimration by the user. 
   if (confirm(responseJson)) {
     window.location = 'add-account.html';
   }

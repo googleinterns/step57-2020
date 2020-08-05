@@ -80,9 +80,9 @@ public class CreateServlet extends HttpServlet {
         response.getWriter().println(responseJson);
       }
     } catch (IOException e) {
-      response.sendError(400, "An error ocurred creating your file.");
+      response.sendError(400, "An error occurred creating your file.");
     } catch (NumberFormatException e) {
-      response.sendError(400, "A NumberFormatException ocurred.");
+      response.sendError(400, "A NumberFormatException occurred.");
     } catch (GeneralSecurityException e) {
       response.sendError(400, "A GeneralSecurityException occurred. Make sure you have authorized" +
         " the Google Sheets API.");
