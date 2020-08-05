@@ -20,7 +20,7 @@
     <h1>Billing Configuration Sync Tool</h1></br>
     <h2>Add Account</h2>
     <div id="edit-account">
-      <form id="config-search" onsubmit="buildEditForm(); return false;">
+      <form id="config-search" onsubmit="buildAddForm(); return false;">
         <label for="customer-ids">Customer ID:</label>
         <select id="customer-ids">
         </select><br>
@@ -31,7 +31,7 @@
     </div>
     <div id="add-account"> 
       <p>Add Your New Account</p> 
-      <form id="edit-config-form" method="post" onsubmit="return validateEditFormInput();">
+      <form id="add-account-form" method="post" onsubmit="return validateEditFormInput();">
         <label for="legacy-customer-id">Legacy Customer ID:</label>
         <input type="text" id="legacy-customer-id" name="legacy-customer-id"><br>
         <label for="next-gen-customer-id">Next Gen Customer ID:</label>
@@ -53,7 +53,7 @@
         <input type="text" id="matching-mode" name="matching-mode"><br>
         <p>ACCOUNT</p>
         <label for="account-id">Product Account Key/Account ID:</label>
-        <input type="text" id="account-id" name="account-id"><br>
+        <input type="text" id="account-id" name="account-id" disabled><br>
         <label for="aggregation-mode">Aggregation Mode:</label>
         <input type="text" id="aggregation-mode" name="aggregation-mode"><br><br>
         <input type="submit"><br><br>

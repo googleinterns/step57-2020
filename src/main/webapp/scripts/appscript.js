@@ -80,6 +80,14 @@ function buildEditForm() {
   showForm();
 }
 
+async function buildAddForm() {
+  const form = document.getElementById('add-account-form');
+  form.action = buildQueryString();
+  document.getElementById('account-id').value = document.getElementById('account-ids').value;
+  showForm();
+}
+
+
 
 /**
  * Builds a query string specific to the edit form to fetch an entire configuration
