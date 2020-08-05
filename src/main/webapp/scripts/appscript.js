@@ -27,6 +27,8 @@ async function populateCustomerList() {
     + key + '</option>';
   }
   document.getElementById('customer-ids').innerHTML = vendorHtml;
+  // Populate account list in text box following loading the customers.
+  populateAccountList();
 }
 
 /**
@@ -77,6 +79,7 @@ function buildEditForm() {
   populateEditForm();
   showForm();
 }
+
 
 /**
  * Builds a query string specific to the edit form to fetch an entire configuration
@@ -140,13 +143,19 @@ function validateEditFormInput() {
 
 async function populateEditForm() {
   const queryString = buildQueryStringEditForm();
+  const selectedAccountId = document.getElementById('account-ids').value;
+
   fetch(queryString).then(response => {
     return response.json();
   }).then(data => {
     document.getElementById('legacy-customer-id').value = data.legacy_customer_id;
     document.getElementById('next-gen-customer-id').value = data.next_gen_customer_id;
-    return data.accounts[0];
+    return data.accounts.find(acc => acc.account_id === selectedAccountId);
   }).then(account => {
+    if (account === undefined) {
+      // When a user chooses to add a new account, the function shouldn't populate fields that don't exist.
+      return;
+    }
     document.getElementById('legacy-account-id').value = account.legacy_account_id;
     document.getElementById('next-gen-account-id').value = account.next_gen_account_id;
     document.getElementById('currency-code').value = account.settlement_attributes.currency_code;
