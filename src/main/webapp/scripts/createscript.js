@@ -23,12 +23,12 @@ function buildQueryString() {
 
   // Check if any of the required feilds have not been filled. 
   if (vendorID == '' || legacyCustomerID == '' || nextGenCustomerID == '') {
-    window.alert('All required fields have not been set!')
+    window.alert('One or more required fields have not been set!')
   } else {
     var rawString = `/CreateServlet?vendorID=${vendorID}&legacyCustomerID=${legacyCustomerID}
       &nextGenCustomerID=${nextGenCustomerID}`;
       
-      // Cleans any whitespace that may be in the query string.
+    // Cleans any whitespace that may be in the query string.
     var queryString = rawString.replace(/\s+/g, ' ').trim();
     return queryString;
   }

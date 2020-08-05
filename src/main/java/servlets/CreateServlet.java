@@ -13,12 +13,12 @@
 // limitations under the License.
 package servlets;
 
+import static servlets.VendorServlet.updateSheets;
+
 import data.JsonConverter;
 import data.Vendor;
 import data.Account;
 import util.FormIdNames;
-import static servlets.VendorServlet.updateSheets;
-
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
