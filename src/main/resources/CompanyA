@@ -13,7 +13,7 @@
       "settlement_config": {
         "matching_mode": "AMOUNT"
       },
-      "account_id": "Citi_GBP_OUTGOING_1",
+      "account_id": "CompanyA_GBP_OUTGOING_1",
       "aggregation_mode": "AGGREGATED"
     },
     {
@@ -27,7 +27,7 @@
       "settlement_config": {
         "matching_mode": "AMOUNT"
       },
-      "account_id": "Citi_GBP_OUTGOING_2",
+      "account_id": "CompanyA_GBP_OUTGOING_2",
       "aggregation_mode": "AGGREGATED"
     }
   ]
