@@ -87,6 +87,7 @@ function buildAddForm() {
   const form = document.getElementById('add-account-form');
   form.action = buildQueryString();
   document.getElementById('account-id').value = document.getElementById('account-ids').value;
+  populateEditForm();
   showForm();
 }
 
