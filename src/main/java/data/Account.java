@@ -201,7 +201,7 @@ public class Account {
    * Update existing account information.
    * Changes to legacyCustomerId, nextGenCustomerId, vendorId, and accountId
    *      are disabled in the UI and not propagated to the backend.
-   *
+   *      TODO: Prevent changes from being made in the backend
    * @param request contains form data to edit existing account
    */
   public void updateExistingAccount(HttpServletRequest request) {
