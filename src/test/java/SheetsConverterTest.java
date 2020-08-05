@@ -50,7 +50,7 @@ public final class SheetsConverterTest {
   private final int NEXT_GEN_ACCOUNT_ID = 17;
   private final String MATCHING_MODE = "straight";
   private final String AGGREGATION_MODE = "totalAgg";
-
+ 
   /** Create a Vendor and Account object. */
   @Before
   public void setUp() {
@@ -59,31 +59,31 @@ public final class SheetsConverterTest {
     account = new Account(ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION,
             LEGACY_ACCOUNT_ID, NEXT_GEN_ACCOUNT_ID, MATCHING_MODE, AGGREGATION_MODE);
   }
-
+ 
   /** Check that the getAllAccounts method returns all vendors' accounts. */
   @Test
   public void testGetAllAccounts() throws GeneralSecurityException, IOException{
     vendor.addAccount(account);
     ArrayList<Vendor> vendors = new ArrayList<Vendor>();
     vendors.add(vendor);
-
+ 
     HashMap<String, ArrayList<Account>> expectedResponse = new 
        HashMap<String, ArrayList<Account>>();
     expectedResponse.put(VENDOR_ID, vendor.getAccounts());
-
+ 
     HashMap<String, ArrayList<Account>> actualResponse = converter.
       getAllAccounts(vendors);
     
     assertEquals(expectedResponse, actualResponse);
   }
-
+ 
   /** Check that buildAccountSheetBody returns a List with expected data. */
   @Test
   public void testBuildAccountSheetBody() throws GeneralSecurityException, IOException{
     vendor.addAccount(account);
     ArrayList<Vendor> vendors = new ArrayList<Vendor>();
     vendors.add(vendor);
-
+ 
     Object[] expectedArray = {
       ACCOUNT_ID, VENDOR_ID, ENTITY, CURRENCY, DIRECTION, LEGACY_ACCOUNT_ID,
       Integer.toString(NEXT_GEN_ACCOUNT_ID), MATCHING_MODE, AGGREGATION_MODE
@@ -91,7 +91,7 @@ public final class SheetsConverterTest {
     List<List<Object>> expectedResponse = new ArrayList<List<Object>>();
     expectedResponse.add(new ArrayList<Object>(Account.getAccountSheetHeader()));
     expectedResponse.add(new ArrayList<Object>(Arrays.asList(expectedArray)));
-
+ 
     List<List<Object>> actualResponse = converter.buildAccountSheetBody(
       converter.getAllAccounts(vendors));
       
@@ -103,16 +103,17 @@ public final class SheetsConverterTest {
   public void testBuildVendorSheetBody() throws GeneralSecurityException, IOException{
     ArrayList<Vendor> vendors = new ArrayList<Vendor>();
     vendors.add(vendor);
-
+ 
     Object[] expectedArray = {
       VENDOR_ID, LEGACY_VENDOR_ID, Integer.toString(NEXT_GEN_VENDOR_ID)
     };
     List<List<Object>> expectedResponse = new ArrayList<List<Object>>();
     expectedResponse.add(new ArrayList<Object>(Vendor.getVendorSheetHeader()));
     expectedResponse.add(new ArrayList<Object>(Arrays.asList(expectedArray)));
-
+ 
     List<List<Object>> actualResponse = converter.buildVendorSheetBody(vendors);
       
     assertEquals(expectedResponse, actualResponse);
   }
 }
+
