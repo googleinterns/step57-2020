@@ -80,14 +80,15 @@ function buildEditForm() {
   showForm();
 }
 
-async function buildAddForm() {
+/**
+ * Builds the form to add a new account by setting the action attribute and copying the accountID.
+ */
+function buildAddForm() {
   const form = document.getElementById('add-account-form');
   form.action = buildQueryString();
   document.getElementById('account-id').value = document.getElementById('account-ids').value;
   showForm();
 }
-
-
 
 /**
  * Builds a query string specific to the edit form to fetch an entire configuration
