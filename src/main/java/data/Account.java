@@ -198,13 +198,13 @@ public class Account {
   }
 
   /**
-   * Update existing account information, preventing changes to legacyAccountId
-   * and nextGenAccountId
+   * Update existing account information.
+   * Changes to legacyCustomerId, nextGenCustomerId, vendorId, and accountId
+   *      are disabled in the UI and not propagated to the backend.
+   *
    * @param request contains form data to edit existing account
    */
   public void updateExistingAccount(HttpServletRequest request) {
-    this.vendorID = request.getParameter(FormIdNames.VENDOR_ID);
-    this.accountID = request.getParameter(FormIdNames.ACCOUNT_ID);
     this.currency = request.getParameter(FormIdNames.CURRENCY_CODE);
     this.direction = request.getParameter(FormIdNames.DIRECTION);
     this.entity = request.getParameter(FormIdNames.ENTITY);
