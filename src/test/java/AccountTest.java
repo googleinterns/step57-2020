@@ -162,9 +162,9 @@ public final class AccountTest {
     Mockito.when(request.getParameter(FormIdNames.ACCOUNT_ID))
             .thenReturn(NEW_ACCOUNT_ID);
     Mockito.when(request.getParameter(FormIdNames.LEGACY_ACCOUNT_ID))
-            .thenReturn(LEGACY_ACCOUNT_ID);
+            .thenReturn(NEW_LEGACY_ACCOUNT_ID);
     Mockito.when(request.getParameter(FormIdNames.NEXT_GEN_ACCOUNT_ID))
-            .thenReturn(String.valueOf(NEXT_GEN_ACCOUNT_ID));
+            .thenReturn(String.valueOf(NEW_NEXT_GEN_ACCOUNT_ID));
     Mockito.when(request.getParameter(FormIdNames.CURRENCY_CODE))
             .thenReturn(NEW_CURRENCY);
     Mockito.when(request.getParameter(FormIdNames.DIRECTION))
@@ -178,7 +178,9 @@ public final class AccountTest {
 
     account.updateExistingAccount(request);
 
-    Account expectedAccount = new Account(NEW_ACCOUNT_ID, NEW_VENDOR_ID,
+    // The update method should not edit accountId, vendorId,
+    // legacyAccountId, or nextGenAccountId
+    Account expectedAccount = new Account(ACCOUNT_ID, VENDOR_ID,
             NEW_ENTITY, NEW_CURRENCY, NEW_DIRECTION, LEGACY_ACCOUNT_ID,
             NEXT_GEN_ACCOUNT_ID, NEW_MATCHING_MODE, NEW_AGGREGATION_MODE);
 
