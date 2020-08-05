@@ -32,30 +32,30 @@
     <div id="add-account"> 
       <p>Add Your New Account</p> 
       <form id="add-account-form" method="post" onsubmit="return validateEditFormInput();">
-        <label for="legacy-customer-id">Legacy Customer ID:</label>
-        <input type="text" id="legacy-customer-id" name="legacy-customer-id"><br>
-        <label for="next-gen-customer-id">Next Gen Customer ID:</label>
-        <input type="text" id="next-gen-customer-id" name="next-gen-customer-id"><br>
+        <label class="required" for="legacy-customer-id">Legacy Customer ID:</label>
+        <input type="text" id="legacy-customer-id" name="legacy-customer-id" required><br>
+        <label class="required" for="next-gen-customer-id">Next Gen Customer ID:</label>
+        <input type="text" id="next-gen-customer-id" name="next-gen-customer-id" required><br>
         <p>ACCOUNT</p>
-        <label for="legacy-account-id">Legacy Account ID:</label>
-        <input type="text" id="legacy-account-id" name="legacy-account-id"><br>
-        <label for="next-gen-account-id">Next Gen Account ID:</label>
-        <input type="text" id="next-gen-account-id" name="next-gen-account-id"><br>
+        <label class="required" for="legacy-account-id">Legacy Account ID:</label>
+        <input type="text" id="legacy-account-id" name="legacy-account-id" required><br>
+        <label class="required" for="next-gen-account-id">Next Gen Account ID:</label>
+        <input type="text" id="next-gen-account-id" name="next-gen-account-id" required><br>
         <p>SETTLEMENT ATTRIBUTES</p>
-        <label for="currency-code">Currency Code:</label>
-        <input type="text" id="currency-code" name="currency-code"><br>
-        <label for="direction">Direction:</label>
-        <input type="text" id="direction" name="direction"><br>
-        <label for="entity">Entity:</label>
-        <input type="text" id="entity" name="entity"><br>
+        <label class="required" for="currency-code">Currency Code:</label>
+        <input type="text" id="currency-code" name="currency-code" required><br>
+        <label class="required" for="direction">Direction:</label>
+        <input type="text" id="direction" name="direction" required><br>
+        <label class="required" for="entity">Entity:</label>
+        <input type="text" id="entity" name="entity" required><br>
         <p>SETTLEMENT CONFIG</p>
-        <label for="matching-mode">Matching Mode:</label>
-        <input type="text" id="matching-mode" name="matching-mode"><br>
+        <label class="required" for="matching-mode">Matching Mode:</label>
+        <input type="text" id="matching-mode" name="matching-mode" required><br>
         <p>ACCOUNT</p>
-        <label for="account-id">Product Account Key/Account ID:</label>
-        <input type="text" id="account-id" name="account-id" disabled><br>
-        <label for="aggregation-mode">Aggregation Mode:</label>
-        <input type="text" id="aggregation-mode" name="aggregation-mode"><br><br>
+        <label class="required" for="account-id">Product Account Key/Account ID:</label>
+        <input type="text" id="account-id" name="account-id" disabled required><br>
+        <label class="required" for="aggregation-mode">Aggregation Mode:</label>
+        <input type="text" id="aggregation-mode" name="aggregation-mode" required><br><br>
         <input type="submit"><br><br>
       </form>
     </div> 
