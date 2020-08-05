@@ -54,3 +54,8 @@ select {
 
 .drop_menu:hover .dropdown_content {display: block;}
 
+.required:after {
+  color: #a6350c;
+  content: '*';
+  display:inline;
+}
