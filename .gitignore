@@ -29,3 +29,6 @@ src/main/resources/
 src/main/secrets/
 
 .idea
+
+# Prevent accidental edits to run script
+run.sh
